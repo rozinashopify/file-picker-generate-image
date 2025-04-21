@@ -3,11 +3,12 @@ import {
   TextField,
   ButtonGroup,
   Button,
+  BlockStack,
   ActionList,
   Popover,
   Box,
   DropZone,
-  LegacyStack,
+  InlineStack,
   Text,
   Icon,
 } from '@shopify/polaris'
@@ -46,7 +47,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     <Box
       background="bg-surface"
     >
-      <LegacyStack alignment="center" distribution="equalSpacing">
+      <InlineStack align="space-between" blockAlign="center">
         <div style={{ maxWidth: '320px', flex: 1 }}>
           <TextField
             value={searchValue}
@@ -60,19 +61,27 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
           <Button icon={FilterIcon}>Filter</Button>
           <Button icon={SortIcon}>Sort</Button>
         </ButtonGroup>
-      </LegacyStack>
+      </InlineStack>
     </Box>
   )
 
   const uploadActionsMarkup = (
-    <Box padding="400">
-      <LegacyStack distribution="center">
-        <ButtonGroup variant="segmented">
-          <Button>Upload files</Button>
-          <Button>Create folder</Button>
-        </ButtonGroup>
-        <Button>Generate image</Button>
-      </LegacyStack>
+    <Box paddingBlock="800">
+      <Box >
+        <BlockStack gap="100">
+        <InlineStack align="center" blockAlign="center" gap="400">
+          <ButtonGroup variant="segmented">
+            <Button>Upload files</Button>
+            <Button icon={ChevronDownIcon} accessibilityLabel="Create folder" />
+          </ButtonGroup>
+          <Button>Generate image</Button>
+          
+        </InlineStack>
+        <Text as="p" variant="bodyMd" tone="subdued" alignment="center">
+            Drag and drop images, videos, 3D models, and files
+          </Text>
+        </BlockStack>
+      </Box>
     </Box>
   )
 
