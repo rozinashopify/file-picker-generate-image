@@ -70,12 +70,15 @@
 }
 
 .file-grid-container {
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition: opacity 0.25s ease-out, top 0.25s ease-out;
+  position: absolute;
+  top: 238px;
 }
 
 .file-grid-container.fade-out {
   opacity: 0.2;
-  transform: translateY(250px);
+  position: absolute;
+  top: 591px;
 }
 
 .action-bar-container {
@@ -105,12 +108,10 @@
     width: 640px;
     margin: 0 auto;
     padding-top: 0;
-    transition: padding-top 0.3s ease-in-out;
 }
 
 .generate-mode-container.animate-padding {
-    padding-top: 200px;
-    animation: fade-in 0.25s ease-out forwards;
+    animation: padding-animate 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .generate-mode-container .Polaris-Badge {
@@ -292,5 +293,80 @@
   --pc-box-padding-block-end-xs: 0 !important;
   --pc-box-padding-inline-start-xs: 0 !important;
   --pc-box-padding-inline-end-xs: 0 !important;
+}
+
+.loading-animation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--p-space-200);
+  padding: var(--p-space-400);
+  background: var(--p-color-bg-surface);
+  border-radius: var(--p-border-radius-200);
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.04), 0px 4px 6px -1px rgba(0, 0, 0, 0.04), 0px 1px 2px -0.5px rgba(0, 0, 0, 0.04), 0px 0.5px 0.5px 0px rgba(0, 0, 0, 0.06), 0px 0px 0px 1px rgba(0, 0, 0, 0.05);
+  animation: slide-down 0.3s ease-out forwards;
+}
+
+.generated-image-container {
+  width: 100%;
+  border-radius: var(--p-border-radius-200);
+  overflow: hidden;
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.04), 0px 4px 6px -1px rgba(0, 0, 0, 0.04), 0px 1px 2px -0.5px rgba(0, 0, 0, 0.04), 0px 0.5px 0.5px 0px rgba(0, 0, 0, 0.06), 0px 0px 0px 1px rgba(0, 0, 0, 0.05);
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+.generated-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes container-enter {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes padding-animate {
+    from {
+        padding-top: 0;
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        padding-top: 200px;
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 

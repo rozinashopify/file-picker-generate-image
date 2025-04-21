@@ -180,6 +180,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       <Modal
         open={open}
         onClose={onClose}
+        noScroll
         title={
           <div className={`modal-title ${isGenerateMode ? 'with-back-button' : ''}`}>
             <InlineStack align="center" gap="200">
@@ -213,11 +214,13 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
           <div 
             ref={sectionRef}
             className={`modal-content ${isGenerateMode ? 'generate-mode-content' : ''}`}
-            style={isGenerateMode && sectionHeight ? {
-              height: `${sectionHeight}px`,
-              overflow: 'hidden',
-              padding: '20px'
-            } : undefined}
+            style={{
+              height: '800px',
+              ...(isGenerateMode && {
+                overflow: 'hidden',
+                padding: '20px'
+              })
+            }}
           >
             <div className={`action-bar-container ${isGenerateMode ? 'fade-out' : ''}`}>
               {!isGenerateMode && (
@@ -264,6 +267,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
 
                     <Box paddingBlockEnd="400">
                       <InlineStack gap="200">
+                        <Badge>lush green leaves</Badge>
                         <Badge>Colorful gradient background</Badge>
                         <Badge>A gradient that reflects the colors of the ocean</Badge>
                         <Badge>White marble background with subtle gray veining</Badge>
