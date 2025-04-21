@@ -28,6 +28,7 @@ import {
 } from '@shopify/polaris-icons'
 import { useState, useEffect, useRef } from 'react'
 import { FileGrid } from './FileGrid'
+import { ImageLoader } from './ImageLoader'
 import './FilePicker.css'
 
 interface FilePickerProps {
@@ -270,12 +271,10 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                 <BlockStack gap="400">
                   {isLoading ? (
                     <div className={`loading-container ${isLoading ? 'animate' : ''}`}>
-                      <Box paddingInline="400">
+                      <Box>
                         <BlockStack gap="400" align="center">
-                          <Spinner size="large" />
-                          <Text as="p" variant="bodyMd" alignment="center">
-                            Generating your image...
-                          </Text>
+                          <ImageLoader />
+
                         </BlockStack>
                       </Box>
                     </div>
@@ -296,33 +295,28 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                   ) : null}
 
                   <div className="generate-mode-input">
-                    
-                  <Box as="div" className="faux-input">
-                  <InlineStack  wrap={false} blockAlign="center" align="space-between">
-                    <InlineStack gap="200" wrap={false} blockAlign="center">
-                      
-                      <Box>
-                        <Icon source={ImageMagicIcon} tone="magic" />
-                      </Box>
-                      
-                      <TextField
-                        label="Prompt"
-                        labelHidden
-                        autoComplete="off"
-                        placeholder="Describe what you want to see"
-                        value={promptValue}
-                        onChange={handlePromptChange}
-                      />
+                    <div className="faux-input">
+                      <InlineStack wrap={false} blockAlign="center" align="space-between">
+                        <InlineStack gap="200" wrap={false} blockAlign="center">
+                          <Box>
+                            <Icon source={ImageMagicIcon} tone="magic" />
+                          </Box>
+                          
+                          <TextField
+                            label="Prompt"
+                            labelHidden
+                            autoComplete="off"
+                            placeholder="Describe what you want to see"
+                            value={promptValue}
+                            onChange={handlePromptChange}
+                          />
+                        </InlineStack>
+
+                        <Box>
+                          <Button size="slim">Generate</Button>
+                        </Box>
                       </InlineStack>
-
-                      <Box>
-                        <Button size="slim">Generate</Button>
-                      </Box>
-
-                     
-                    </InlineStack>
-                  </Box> 
-                    
+                    </div>
                   </div>
 
                   {!isLoading && !generatedImage && (

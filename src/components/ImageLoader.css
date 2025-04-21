@@ -1,0 +1,175 @@
+.image-loader-container {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.loader-rectangle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-origin: border-box;
+  background-clip: content-box;
+  padding: 0;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 73%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+.rectangle-1 {
+  padding: 1px;
+  background: linear-gradient(to bottom,
+    #FFD8B7 0%,
+    #F4C2FF 9%,
+    #D1BDFF 18%,
+    #A0CBFF 27%,
+    #A0CBFF 36%,
+    #D1BDFF 45%,
+    #F4C2FF 55%,
+    #FFD8B7 64%,
+    #FFD8B7 73%,
+    #F4C2FF 82%,
+    #D1BDFF 91%,
+    #A0CBFF 100%
+  );
+  background-size: 100% 400%;
+  filter: blur(2px) opacity(32%);
+  animation: gradientShift 2s linear infinite;
+}
+
+.rectangle-2 {
+  padding: 2px;
+  background: linear-gradient(to bottom,
+    #FFD8B7 0%,
+    #F4C2FF 9%,
+    #D1BDFF 18%,
+    #A0CBFF 27%,
+    #A0CBFF 36%,
+    #D1BDFF 45%,
+    #F4C2FF 55%,
+    #FFD8B7 64%,
+    #FFD8B7 73%,
+    #F4C2FF 82%,
+    #D1BDFF 91%,
+    #A0CBFF 100%
+  );
+  background-size: 100% 400%;
+  filter: blur(4px) opacity(32%);
+  animation: gradientShift 2s linear infinite;
+  animation-delay: 0.1s;
+}
+
+.rectangle-3 {
+  padding: 4px;
+  background: linear-gradient(to bottom,
+    #FFD8B7 0%,
+    #F4C2FF 9%,
+    #D1BDFF 18%,
+    #A0CBFF 27%,
+    #A0CBFF 36%,
+    #D1BDFF 45%,
+    #F4C2FF 55%,
+    #FFD8B7 64%,
+    #FFD8B7 73%,
+    #F4C2FF 82%,
+    #D1BDFF 91%,
+    #A0CBFF 100%
+  );
+  background-size: 100% 400%;
+  filter: blur(8px) opacity(24%);
+  animation: gradientShift 2s linear infinite;
+  animation-delay: 0.2s;
+}
+
+.rectangle-4 {
+  padding: 8px;
+  background: linear-gradient(to bottom,
+    #FFD8B7 0%,
+    #F4C2FF 9%,
+    #D1BDFF 18%,
+    #A0CBFF 27%,
+    #A0CBFF 36%,
+    #D1BDFF 45%,
+    #F4C2FF 55%,
+    #FFD8B7 64%,
+    #FFD8B7 73%,
+    #F4C2FF 82%,
+    #D1BDFF 91%,
+    #A0CBFF 100%
+  );
+  background-size: 100% 400%;
+  filter: blur(16px) opacity(24%);
+  animation: gradientShift 2s linear infinite;
+  animation-delay: 0.3s;
+}
+
+.rectangle-5 {
+  padding: 16px;
+  background: linear-gradient(to bottom,
+    #FFD8B7 0%,
+    #F4C2FF 9%,
+    #D1BDFF 18%,
+    #A0CBFF 27%,
+    #A0CBFF 36%,
+    #D1BDFF 45%,
+    #F4C2FF 55%,
+    #FFD8B7 64%,
+    #FFD8B7 73%,
+    #F4C2FF 82%,
+    #D1BDFF 91%,
+    #A0CBFF 100%
+  );
+  background-size: 100% 400%;
+  filter: blur(32px) opacity(24%);
+  animation: gradientShift 2s linear infinite;
+  animation-delay: 0.4s;
+}
+
+.rectangle-6 {
+  padding: 32px;
+  background: linear-gradient(to bottom,
+    #FFD8B7 0%,
+    #F4C2FF 9%,
+    #D1BDFF 18%,
+    #A0CBFF 27%,
+    #A0CBFF 36%,
+    #D1BDFF 45%,
+    #F4C2FF 55%,
+    #FFD8B7 64%,
+    #FFD8B7 73%,
+    #F4C2FF 82%,
+    #D1BDFF 91%,
+    #A0CBFF 100%
+  );
+  background-size: 100% 400%;
+  filter: blur(64px) opacity(32%);
+  animation: gradientShift 2s linear infinite;
+  animation-delay: 0.5s;
+}
+
+.loader-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 128px);
+  height: calc(100% - 128px);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  font-family: Arial, sans-serif;
+} 
