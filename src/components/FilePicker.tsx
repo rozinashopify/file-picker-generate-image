@@ -212,6 +212,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
         <Modal.Section>
           <div 
             ref={sectionRef}
+            className={`modal-content ${isGenerateMode ? 'generate-mode-content' : ''}`}
             style={isGenerateMode && sectionHeight ? {
               height: `${sectionHeight}px`,
               overflow: 'hidden',
@@ -226,20 +227,40 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
               )}
             </div>
             
-            <div className="generate-mode-container">
+            {isGenerateMode && (
+              <div className={`generate-mode-container ${isGenerateMode ? 'animate-padding' : ''}`}>
                
                <Box>
                 <BlockStack gap="400">
                   <div className="generate-mode-input">
-                    <TextField
-                      label="Prompt"
-                      prefix="$"
-                      labelHidden
-                      autoComplete="off"
-                      placeholder="Describe what you want to see"
-                      />
+                    
+                  <Box as="div" className="faux-input">
+                  <InlineStack  wrap={false} blockAlign="center" align="space-between">
+                    <InlineStack gap="200" wrap={false} blockAlign="center">
                       
-                    </div>
+                      <Box>
+                        <Icon source={ImageMagicIcon} tone="magic" />
+                      </Box>
+                      
+                      <TextField
+                        label="Prompt"
+                        labelHidden
+                        autoComplete="off"
+                        placeholder="Describe what you want to see"
+                        value={promptValue}
+                        onChange={handlePromptChange}
+                      />
+                      </InlineStack>
+
+                      <Box>
+                        <Button size="slim">Generate</Button>
+                      </Box>
+
+                     
+                    </InlineStack>
+                  </Box> 
+                    
+                  </div>
 
                     <Box paddingBlockEnd="400">
                       <InlineStack gap="200">
@@ -252,7 +273,8 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                     
                 </BlockStack>
                </Box>
-            </div>
+              </div>
+            )}
             
             <div className={`upload-actions-container ${isGenerateMode ? 'fade-out' : ''}`}>
               <Box paddingBlockEnd="400">
