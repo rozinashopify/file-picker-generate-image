@@ -24,7 +24,7 @@ import {
   ArrowLeftIcon,
   ImageMagicIcon,
 } from '@shopify/polaris-icons'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { FileGrid } from './FileGrid'
 import './FilePicker.css'
 
@@ -38,6 +38,9 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
   const [actionsPopoverActive, setActionsPopoverActive] = useState(false)
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [isGenerateMode, setIsGenerateMode] = useState(false)
+  const [promptValue, setPromptValue] = useState('')
+  const [showGenerateInput, setShowGenerateInput] = useState(false)
+  const magicButtonRef = useRef<HTMLDivElement>(null)
 
   const toggleActionsPopover = () => setActionsPopoverActive(!actionsPopoverActive)
 
@@ -45,13 +48,47 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     setSearchValue(value)
   }
 
+  const handlePromptChange = (value: string) => {
+    setPromptValue(value)
+  }
+
   const handleGenerateClick = () => {
-    setIsGenerateMode(true)
+    // Add the expand class to the magic button
+    if (magicButtonRef.current) {
+      magicButtonRef.current.classList.add('expand');
+    }
+    
+    // Set generate mode after a short delay to allow the button to expand
+    setTimeout(() => {
+      setIsGenerateMode(true);
+      // Show the generate input after another short delay
+      setTimeout(() => {
+        setShowGenerateInput(true);
+      }, 300);
+    }, 300);
   }
 
   const handleBackClick = () => {
-    setIsGenerateMode(false)
+    setShowGenerateInput(false);
+    
+    // Remove the expand class from the magic button
+    if (magicButtonRef.current) {
+      magicButtonRef.current.classList.remove('expand');
+    }
+    
+    // Add a small delay to allow the input to fade out before changing mode
+    setTimeout(() => {
+      setIsGenerateMode(false);
+    }, 300);
   }
+
+  // Reset state when modal is closed
+  useEffect(() => {
+    if (!open) {
+      setIsGenerateMode(false)
+      setShowGenerateInput(false)
+    }
+  }, [open])
 
   const actionBarMarkup = (
     <Box
@@ -87,7 +124,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
               <Button icon={ChevronDownIcon} accessibilityLabel="Create folder" />
             </ButtonGroup>
             <div onClick={(e) => e.stopPropagation()}>
-              <div className="magic-button">
+              <div className={`magic-button ${isGenerateMode ? 'expand' : ''}`} ref={magicButtonRef}>
                 <Button onClick={handleGenerateClick} icon={ImageMagicIcon}>Generate image</Button>
               </div>
             </div>
@@ -142,19 +179,38 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
               </Box>
             )}
           </div>
+          
+          {/* Generate input container - separate from the upload-actions-container */}
+          {isGenerateMode && showGenerateInput && (
+            <div className="generate-mode-container">
+              <Box paddingBlock="800">
+                <div className="generate-input-container">
+                  <TextField
+                    label="Prompt"
+                    labelHidden
+                    value={promptValue}
+                    onChange={handlePromptChange}
+                    placeholder="Describe the image you want to generate..."
+                    autoComplete="off"
+                    multiline={3}
+                  />
+                  <Button variant="primary">Generate</Button>
+                </div>
+              </Box>
+            </div>
+          )}
+          
+          {/* Upload actions container - only visible in default mode */}
           <div className={`upload-actions-container ${isGenerateMode ? 'fade-out' : ''}`}>
             <Box paddingBlockEnd="400">
-              {isGenerateMode ? (
-                <Box paddingBlock="800">
-                  <Button onClick={handleGenerateClick}>Generate image</Button>
-                </Box>
-              ) : (
+              {!isGenerateMode && (
                 <DropZone onDrop={() => {}}>
                   {uploadActionsMarkup}
                 </DropZone>
               )}
             </Box>
           </div>
+          
           <div className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''}`}>
             <Box>
               <FileGrid />

@@ -26,6 +26,8 @@
   --angle: 0deg;
 }
 
+/*
+
 .magic-button:before {
   content: '';
   position: absolute;
@@ -35,6 +37,30 @@
   left: -4px;
   border-radius: var(--p-border-radius-200);
   filter: blur(0.375rem);
+  background: conic-gradient(
+    from var(--angle) at 50% 50%,
+    #a0cbff 0deg,
+    #d1bdff 90deg,
+    #f4c2ff 126deg,
+    #ffb9a2 180deg,
+    #f4c2ff 234deg,
+    #d1bdff 270deg,
+    #a0cbff 306deg
+  );
+  animation: rotate-gradient var(--p-motion-duration-5000) linear infinite;
+  z-index: 0;
+}*/
+
+
+.magic-button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--p-border-radius-200);
+  filter: blur(2px);
   background: conic-gradient(
     from var(--angle) at 50% 50%,
     #a0cbff 0deg,
@@ -58,6 +84,9 @@
   position: relative;
   z-index: 1;
   background: var(--p-color-bg-surface) !important;
+  box-shadow: 0rem -0.0625rem 0rem 0rem rgba(181, 181, 181, 0.9) inset,
+  0rem 0rem 0rem 0.0625rem rgba(0, 0, 0, 0.15) inset,
+  0rem 0.03125rem 0rem 0.09375rem rgba(255, 255, 255, 0.05) inset !important
 }
 
 /* Mode transition animations */
@@ -94,5 +123,83 @@
 
 .modal-title {
   transition: all 0.3s ease-in-out;
+}
+
+/* Generate mode container styles */
+.generate-mode-container {
+  animation: fade-in 0.5s ease-out forwards;
+  margin-top: 20px;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Generate input container styles */
+.generate-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px;
+  border-radius: var(--p-border-radius-200);
+  background: var(--p-color-bg-surface);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  animation: expand-input 0.5s ease-out forwards;
+}
+
+@keyframes expand-input {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation for the magic button to input field transition */
+.magic-button {
+  transition: all 0.5s ease-in-out;
+}
+
+.magic-button.expand {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Custom styles for the generate input field */
+.generate-input-container .Polaris-TextField {
+  width: 100%;
+}
+
+.generate-input-container .Polaris-TextField__Input {
+  min-height: 100px;
+  font-size: 16px;
+  padding: 12px;
+  border-radius: var(--p-border-radius-200);
+  border: 1px solid var(--p-color-border-subdued);
+  transition: border-color 0.2s ease-in-out;
+}
+
+.generate-input-container .Polaris-TextField__Input:focus {
+  border-color: var(--p-color-border-focused);
+  box-shadow: 0 0 0 1px var(--p-color-border-focused);
+}
+
+.generate-input-container .Polaris-Button {
+  align-self: flex-end;
+  min-width: 120px;
 }
 
