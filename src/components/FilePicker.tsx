@@ -49,7 +49,6 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       <LegacyStack alignment="center" distribution="equalSpacing">
         <div style={{ maxWidth: '320px', flex: 1 }}>
           <TextField
-            label="Search files"
             value={searchValue}
             onChange={handleSearchChange}
             prefix={<Icon source={SearchIcon} />}
