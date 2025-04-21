@@ -16,13 +16,13 @@ import {
   ChevronDownIcon,
   SortIcon,
   ViewIcon,
-  ListIcon,
   FilterIcon,
   SearchIcon,
   FolderIcon,
   ImageIcon,
   AppsIcon,
   ArrowLeftIcon,
+  ImageMagicIcon,
 } from '@shopify/polaris-icons'
 import { useState } from 'react'
 import { FileGrid } from './FileGrid'
@@ -60,6 +60,8 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       <InlineStack align="space-between" blockAlign="center">
         <div style={{ maxWidth: '320px', flex: 1 }}>
           <TextField
+            label="Search"
+            labelHidden
             value={searchValue}
             onChange={handleSearchChange}
             prefix={<Icon source={SearchIcon} />}
@@ -85,7 +87,9 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
               <Button icon={ChevronDownIcon} accessibilityLabel="Create folder" />
             </ButtonGroup>
             <div onClick={(e) => e.stopPropagation()}>
-              <Button onClick={handleGenerateClick}>Generate image</Button>
+              <div className="magic-button">
+                <Button onClick={handleGenerateClick} icon={ImageMagicIcon}>Generate image</Button>
+              </div>
             </div>
           </InlineStack>
           <Text as="p" variant="bodyMd" tone="subdued" alignment="center">
@@ -102,19 +106,21 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
         open={open}
         onClose={onClose}
         title={
-          <InlineStack align="center" gap="200">
-            {isGenerateMode && (
-              <Button
-                icon={ArrowLeftIcon}
-                onClick={handleBackClick}
-                variant="tertiary"
-                accessibilityLabel="Back"
-              />
-            )}
-            <Text as="span" variant="headingMd">
-              {isGenerateMode ? "Generate image" : "Select files"}
-            </Text>
-          </InlineStack>
+          <div className={`modal-title ${isGenerateMode ? 'with-back-button' : ''}`}>
+            <InlineStack align="center" gap="200">
+              {isGenerateMode && (
+                <Button
+                  icon={ArrowLeftIcon}
+                  onClick={handleBackClick}
+                  variant="tertiary"
+                  accessibilityLabel="Back"
+                />
+              )}
+              <Text as="span" variant="headingMd">
+                {isGenerateMode ? "Generate image" : "Select files"}
+              </Text>
+            </InlineStack>
+          </div>
         }
         size="large"
         primaryAction={{
@@ -129,23 +135,27 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
         ]}
       >
         <Modal.Section>
-          {!isGenerateMode && (
-            <Box paddingBlockEnd="400">
-              {actionBarMarkup}
-            </Box>
-          )}
-          <Box paddingBlockEnd="400">
-            {isGenerateMode ? (
-              <Box paddingBlock="800">
-                <Button onClick={handleGenerateClick}>Generate image</Button>
+          <div className={`action-bar-container ${isGenerateMode ? 'fade-out' : ''}`}>
+            {!isGenerateMode && (
+              <Box paddingBlockEnd="400">
+                {actionBarMarkup}
               </Box>
-            ) : (
-              <DropZone onDrop={() => {}}>
-                {uploadActionsMarkup}
-              </DropZone>
             )}
-          </Box>
-          <div style={{ opacity: isGenerateMode ? 0.3 : 1, pointerEvents: isGenerateMode ? 'none' : 'auto' }}>
+          </div>
+          <div className={`upload-actions-container ${isGenerateMode ? 'fade-out' : ''}`}>
+            <Box paddingBlockEnd="400">
+              {isGenerateMode ? (
+                <Box paddingBlock="800">
+                  <Button onClick={handleGenerateClick}>Generate image</Button>
+                </Box>
+              ) : (
+                <DropZone onDrop={() => {}}>
+                  {uploadActionsMarkup}
+                </DropZone>
+              )}
+            </Box>
+          </div>
+          <div className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''}`}>
             <Box>
               <FileGrid />
             </Box>
