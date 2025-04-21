@@ -111,7 +111,11 @@
 }
 
 .generate-mode-container.animate-padding {
-    animation: padding-animate 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: padding-animate 0.3s ease-in-out forwards;
+}
+
+.generate-mode-container.no-padding {
+    animation: padding-collapse 0.3s ease-in-out forwards;
 }
 
 .generate-mode-container .Polaris-Badge {
@@ -368,5 +372,55 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+@keyframes padding-collapse {
+    from {
+        padding-top: 200px;
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        padding-top: 0;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes height-expand {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+    to {
+        height: 427px;
+        opacity: 1;
+    }
+}
+
+@keyframes height-collapse {
+    from {
+        height: 427px;
+        opacity: 1;
+    }
+    to {
+        height: 0;
+        opacity: 0;
+    }
+}
+
+/* Add styles for the loading and image containers */
+.loading-container, .image-container {
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+}
+
+.loading-container.animate, .image-container.animate {
+    animation: height-expand 0.3s ease-in-out forwards;
+}
+
+.loading-container.collapse, .image-container.collapse {
+    animation: height-collapse 0.3s ease-in-out forwards;
 }
 

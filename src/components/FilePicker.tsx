@@ -12,6 +12,7 @@ import {
   InlineStack,
   Text,
   Icon,
+  Spinner,
 } from '@shopify/polaris'
 import {
   ChevronDownIcon,
@@ -40,6 +41,9 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [isGenerateMode, setIsGenerateMode] = useState(false)
   const [promptValue, setPromptValue] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null)
+  const [isCollapsing, setIsCollapsing] = useState(false)
   const magicButtonRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const [sectionHeight, setSectionHeight] = useState<number | null>(null)
@@ -99,7 +103,33 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     setTimeout(() => {
       setIsGenerateMode(false)
       setButtonPosition(null)
+      // Reset generated image and loading state when going back
+      setGeneratedImage(null)
+      setIsLoading(false)
+      setIsCollapsing(false)
     }, 300)
+  }
+
+  const handleBadgeClick = (badgeText: string) => {
+    setPromptValue(badgeText)
+    
+    // If there's already an image, collapse it first
+    if (generatedImage) {
+      setIsCollapsing(true)
+      setTimeout(() => {
+        setGeneratedImage(null)
+        setIsCollapsing(false)
+        setIsLoading(true)
+      }, 300)
+    } else {
+      setIsLoading(true)
+    }
+    
+    // Simulate loading for 5 seconds then show the image
+    setTimeout(() => {
+      setIsLoading(false)
+      setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
+    }, 5000)
   }
 
   // Reset state when modal is closed
@@ -107,6 +137,9 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     if (!open) {
       setIsGenerateMode(false)
       setButtonPosition(null)
+      setGeneratedImage(null)
+      setIsLoading(false)
+      setIsCollapsing(false)
     }
   }, [open])
 
@@ -231,10 +264,37 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
             </div>
             
             {isGenerateMode && (
-              <div className={`generate-mode-container ${isGenerateMode ? 'animate-padding' : ''}`}>
+              <div className={`generate-mode-container ${isGenerateMode && !isLoading && !generatedImage ? 'animate-padding' : ''} ${(isLoading || generatedImage) ? 'no-padding' : ''}`}>
                
                <Box>
                 <BlockStack gap="400">
+                  {isLoading ? (
+                    <div className={`loading-container ${isLoading ? 'animate' : ''}`}>
+                      <Box paddingInline="400">
+                        <BlockStack gap="400" align="center">
+                          <Spinner size="large" />
+                          <Text as="p" variant="bodyMd" alignment="center">
+                            Generating your image...
+                          </Text>
+                        </BlockStack>
+                      </Box>
+                    </div>
+                  ) : generatedImage ? (
+                    <div className={`image-container ${generatedImage ? 'animate' : ''} ${isCollapsing ? 'collapse' : ''}`}>
+                      <Box>
+                        <img 
+                          src={generatedImage} 
+                          alt="Generated image" 
+                          style={{ 
+                            width: '100%', 
+                            borderRadius: '8px',
+                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                          }} 
+                        />
+                      </Box>
+                    </div>
+                  ) : null}
+
                   <div className="generate-mode-input">
                     
                   <Box as="div" className="faux-input">
@@ -265,16 +325,24 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                     
                   </div>
 
+                  {!isLoading && !generatedImage && (
                     <Box paddingBlockEnd="400">
                       <InlineStack gap="200">
-                        <Badge>lush green leaves</Badge>
-                        <Badge>Colorful gradient background</Badge>
-                        <Badge>A gradient that reflects the colors of the ocean</Badge>
-                        <Badge>White marble background with subtle gray veining</Badge>
+                        <div onClick={() => handleBadgeClick("lush green leaves")} style={{ cursor: 'pointer' }}>
+                          <Badge>lush green leaves</Badge>
+                        </div>
+                        <div onClick={() => handleBadgeClick("Colorful gradient background")} style={{ cursor: 'pointer' }}>
+                          <Badge>Colorful gradient background</Badge>
+                        </div>
+                        <div onClick={() => handleBadgeClick("A gradient that reflects the colors of the ocean")} style={{ cursor: 'pointer' }}>
+                          <Badge>A gradient that reflects the colors of the ocean</Badge>
+                        </div>
+                        <div onClick={() => handleBadgeClick("White marble background with subtle gray veining")} style={{ cursor: 'pointer' }}>
+                          <Badge>White marble background with subtle gray veining</Badge>
+                        </div>
                       </InlineStack>
                     </Box>
-
-                    
+                  )}
                 </BlockStack>
                </Box>
               </div>
