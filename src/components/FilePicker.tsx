@@ -7,6 +7,7 @@ import {
   ActionList,
   Popover,
   Box,
+  Badge,
   DropZone,
   InlineStack,
   Text,
@@ -39,10 +40,10 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [isGenerateMode, setIsGenerateMode] = useState(false)
   const [promptValue, setPromptValue] = useState('')
-  const [showGenerateInput, setShowGenerateInput] = useState(false)
   const magicButtonRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const [sectionHeight, setSectionHeight] = useState<number | null>(null)
+  const [buttonPosition, setButtonPosition] = useState<{ top: number; left: number } | null>(null)
 
   // Measure section height when component mounts and when open changes
   useEffect(() => {
@@ -63,74 +64,74 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
   }
 
   const handleGenerateClick = () => {
-    // Add the expand class to the magic button
     if (magicButtonRef.current) {
-      magicButtonRef.current.classList.add('expand');
+
+      // console.log('magicButtonRef.current', magicButtonRef.current)
+      const modalSection = document.querySelector('.Polaris-Modal-Section > section.Polaris-Box')
+      if (modalSection) {
+        const buttonRect = magicButtonRef.current.getBoundingClientRect()
+        const modalRect = modalSection.getBoundingClientRect()
+
+        //console.log('modalSection', modalSection)
+        
+        // Calculate position relative to the modal section
+        const relativeTop = buttonRect.top - modalRect.top
+        const relativeLeft = buttonRect.left - modalRect.left
+
+        //console.log(relativeLeft, relativeTop)
+        
+        setButtonPosition({ top: relativeTop, left: relativeLeft })
+        
+        magicButtonRef.current.classList.add('expand')
+        
+        setTimeout(() => {
+          setIsGenerateMode(true)
+        }, 300)
+      }
     }
-    
-    // Set generate mode after a short delay to allow the button to expand
-    setTimeout(() => {
-      setIsGenerateMode(true);
-      // Show the generate input after another short delay
-      setTimeout(() => {
-        setShowGenerateInput(true);
-      }, 300);
-    }, 300);
   }
 
   const handleBackClick = () => {
-    setShowGenerateInput(false);
-    
-    // Remove the expand class from the magic button
     if (magicButtonRef.current) {
-      magicButtonRef.current.classList.remove('expand');
+      magicButtonRef.current.classList.remove('expand')
     }
     
-    // Add a small delay to allow the input to fade out before changing mode
     setTimeout(() => {
-      setIsGenerateMode(false);
-    }, 300);
+      setIsGenerateMode(false)
+      setButtonPosition(null)
+    }, 300)
   }
 
   // Reset state when modal is closed
   useEffect(() => {
     if (!open) {
       setIsGenerateMode(false)
-      setShowGenerateInput(false)
+      setButtonPosition(null)
     }
   }, [open])
 
   // Add a useEffect to handle the padding removal when in generate mode
   useEffect(() => {
     if (isGenerateMode) {
-      // Find the Modal.Section element
-      const modalSection = document.querySelector('.Polaris-Modal-Section > section.Polaris-Box');
+      const modalSection = document.querySelector('.Polaris-Modal-Section > section.Polaris-Box')
       if (modalSection) {
-        // Store the original styles to restore later
-        const originalStyle = modalSection.getAttribute('style');
-        
-        // Set the padding to 0
-        modalSection.setAttribute('style', '--pc-box-padding-block-start-xs: 0 !important; --pc-box-padding-block-end-xs: 0 !important; --pc-box-padding-inline-start-xs: 0 !important; --pc-box-padding-inline-end-xs: 0 !important;');
-        
-        // Store the original style in a data attribute to restore later
-        modalSection.setAttribute('data-original-style', originalStyle || '');
+        const originalStyle = modalSection.getAttribute('style')
+        modalSection.setAttribute('style', '--pc-box-padding-block-start-xs: 0 !important; --pc-box-padding-block-end-xs: 0 !important; --pc-box-padding-inline-start-xs: 0 !important; --pc-box-padding-inline-end-xs: 0 !important; position: relative !important;')
+        modalSection.setAttribute('data-original-style', originalStyle || '')
       }
     } else {
-      // Restore the original styles when not in generate mode
-      const modalSection = document.querySelector('.Polaris-Modal-Section > section.Polaris-Box');
+      const modalSection = document.querySelector('.Polaris-Modal-Section > section.Polaris-Box')
       if (modalSection) {
-        const originalStyle = modalSection.getAttribute('data-original-style');
+        const originalStyle = modalSection.getAttribute('data-original-style')
         if (originalStyle) {
-          modalSection.setAttribute('style', originalStyle);
+          modalSection.setAttribute('style', originalStyle)
         }
       }
     }
-  }, [isGenerateMode]);
+  }, [isGenerateMode])
 
   const actionBarMarkup = (
-    <Box
-      background="bg-surface"
-    >
+    <Box background="bg-surface">
       <InlineStack align="space-between" blockAlign="center">
         <div style={{ maxWidth: '320px', flex: 1 }}>
           <TextField
@@ -213,7 +214,8 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
             ref={sectionRef}
             style={isGenerateMode && sectionHeight ? {
               height: `${sectionHeight}px`,
-              overflow: 'hidden'
+              overflow: 'hidden',
+              padding: '20px'
             } : undefined}
           >
             <div className={`action-bar-container ${isGenerateMode ? 'fade-out' : ''}`}>
@@ -224,27 +226,34 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
               )}
             </div>
             
-            {/* Generate input container - separate from the upload-actions-container */}
-            {isGenerateMode && showGenerateInput && (
-              <div className="generate-mode-container">
-                <Box paddingBlock="800">
-                  <div className="generate-input-container">
+            <div className="generate-mode-container">
+               
+               <Box>
+                <BlockStack gap="400">
+                  <div className="generate-mode-input">
                     <TextField
                       label="Prompt"
+                      prefix="$"
                       labelHidden
-                      value={promptValue}
-                      onChange={handlePromptChange}
-                      placeholder="Describe the image you want to generate..."
                       autoComplete="off"
-                      multiline={3}
-                    />
-                    <Button variant="primary">Generate</Button>
-                  </div>
-                </Box>
-              </div>
-            )}
+                      placeholder="Describe what you want to see"
+                      />
+                      
+                    </div>
+
+                    <Box paddingBlockEnd="400">
+                      <InlineStack gap="200">
+                        <Badge>Colorful gradient background</Badge>
+                        <Badge>A gradient that reflects the colors of the ocean</Badge>
+                        <Badge>White marble background with subtle gray veining</Badge>
+                      </InlineStack>
+                    </Box>
+
+                    
+                </BlockStack>
+               </Box>
+            </div>
             
-            {/* Upload actions container - only visible in default mode */}
             <div className={`upload-actions-container ${isGenerateMode ? 'fade-out' : ''}`}>
               <Box paddingBlockEnd="400">
                 {!isGenerateMode && (
