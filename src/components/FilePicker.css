@@ -203,3 +203,24 @@
   min-width: 120px;
 }
 
+/* Remove padding from Modal.Section in generate mode */
+.generate-mode .Polaris-Modal-Section {
+  padding: 0 !important;
+}
+
+/* Target the section element with class Polaris-Box directly with higher specificity */
+.generate-mode .Polaris-Modal-Section > section.Polaris-Box[style*="--pc-box-padding"] {
+  --pc-box-padding-block-start-xs: 0 !important;
+  --pc-box-padding-block-end-xs: 0 !important;
+  --pc-box-padding-inline-start-xs: 0 !important;
+  --pc-box-padding-inline-end-xs: 0 !important;
+}
+
+/* Additional rule to target the element.style directly */
+.generate-mode .Polaris-Modal-Section > section.Polaris-Box {
+  --pc-box-padding-block-start-xs: 0 !important;
+  --pc-box-padding-block-end-xs: 0 !important;
+  --pc-box-padding-inline-start-xs: 0 !important;
+  --pc-box-padding-inline-end-xs: 0 !important;
+}
+

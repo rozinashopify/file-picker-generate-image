@@ -41,6 +41,16 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
   const [promptValue, setPromptValue] = useState('')
   const [showGenerateInput, setShowGenerateInput] = useState(false)
   const magicButtonRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [sectionHeight, setSectionHeight] = useState<number | null>(null)
+
+  // Measure section height when component mounts and when open changes
+  useEffect(() => {
+    if (open && sectionRef.current && !isGenerateMode) {
+      const height = sectionRef.current.offsetHeight
+      setSectionHeight(height)
+    }
+  }, [open, isGenerateMode])
 
   const toggleActionsPopover = () => setActionsPopoverActive(!actionsPopoverActive)
 
@@ -90,6 +100,33 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     }
   }, [open])
 
+  // Add a useEffect to handle the padding removal when in generate mode
+  useEffect(() => {
+    if (isGenerateMode) {
+      // Find the Modal.Section element
+      const modalSection = document.querySelector('.Polaris-Modal-Section > section.Polaris-Box');
+      if (modalSection) {
+        // Store the original styles to restore later
+        const originalStyle = modalSection.getAttribute('style');
+        
+        // Set the padding to 0
+        modalSection.setAttribute('style', '--pc-box-padding-block-start-xs: 0 !important; --pc-box-padding-block-end-xs: 0 !important; --pc-box-padding-inline-start-xs: 0 !important; --pc-box-padding-inline-end-xs: 0 !important;');
+        
+        // Store the original style in a data attribute to restore later
+        modalSection.setAttribute('data-original-style', originalStyle || '');
+      }
+    } else {
+      // Restore the original styles when not in generate mode
+      const modalSection = document.querySelector('.Polaris-Modal-Section > section.Polaris-Box');
+      if (modalSection) {
+        const originalStyle = modalSection.getAttribute('data-original-style');
+        if (originalStyle) {
+          modalSection.setAttribute('style', originalStyle);
+        }
+      }
+    }
+  }, [isGenerateMode]);
+
   const actionBarMarkup = (
     <Box
       background="bg-surface"
@@ -138,7 +175,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
   )
 
   return (
-    <div className="custom-modal">
+    <div className={`custom-modal ${isGenerateMode ? 'generate-mode' : ''}`}>
       <Modal
         open={open}
         onClose={onClose}
@@ -172,49 +209,57 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
         ]}
       >
         <Modal.Section>
-          <div className={`action-bar-container ${isGenerateMode ? 'fade-out' : ''}`}>
-            {!isGenerateMode && (
-              <Box paddingBlockEnd="400">
-                {actionBarMarkup}
-              </Box>
+          <div 
+            ref={sectionRef}
+            style={isGenerateMode && sectionHeight ? {
+              height: `${sectionHeight}px`,
+              overflow: 'hidden'
+            } : undefined}
+          >
+            <div className={`action-bar-container ${isGenerateMode ? 'fade-out' : ''}`}>
+              {!isGenerateMode && (
+                <Box paddingBlockEnd="400">
+                  {actionBarMarkup}
+                </Box>
+              )}
+            </div>
+            
+            {/* Generate input container - separate from the upload-actions-container */}
+            {isGenerateMode && showGenerateInput && (
+              <div className="generate-mode-container">
+                <Box paddingBlock="800">
+                  <div className="generate-input-container">
+                    <TextField
+                      label="Prompt"
+                      labelHidden
+                      value={promptValue}
+                      onChange={handlePromptChange}
+                      placeholder="Describe the image you want to generate..."
+                      autoComplete="off"
+                      multiline={3}
+                    />
+                    <Button variant="primary">Generate</Button>
+                  </div>
+                </Box>
+              </div>
             )}
-          </div>
-          
-          {/* Generate input container - separate from the upload-actions-container */}
-          {isGenerateMode && showGenerateInput && (
-            <div className="generate-mode-container">
-              <Box paddingBlock="800">
-                <div className="generate-input-container">
-                  <TextField
-                    label="Prompt"
-                    labelHidden
-                    value={promptValue}
-                    onChange={handlePromptChange}
-                    placeholder="Describe the image you want to generate..."
-                    autoComplete="off"
-                    multiline={3}
-                  />
-                  <Button variant="primary">Generate</Button>
-                </div>
+            
+            {/* Upload actions container - only visible in default mode */}
+            <div className={`upload-actions-container ${isGenerateMode ? 'fade-out' : ''}`}>
+              <Box paddingBlockEnd="400">
+                {!isGenerateMode && (
+                  <DropZone onDrop={() => {}}>
+                    {uploadActionsMarkup}
+                  </DropZone>
+                )}
               </Box>
             </div>
-          )}
-          
-          {/* Upload actions container - only visible in default mode */}
-          <div className={`upload-actions-container ${isGenerateMode ? 'fade-out' : ''}`}>
-            <Box paddingBlockEnd="400">
-              {!isGenerateMode && (
-                <DropZone onDrop={() => {}}>
-                  {uploadActionsMarkup}
-                </DropZone>
-              )}
-            </Box>
-          </div>
-          
-          <div className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''}`}>
-            <Box>
-              <FileGrid />
-            </Box>
+            
+            <div className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''}`}>
+              <Box>
+                <FileGrid />
+              </Box>
+            </div>
           </div>
         </Modal.Section>
       </Modal>
