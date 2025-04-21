@@ -14,9 +14,12 @@ import {
 import {
   ChevronDownIcon,
   SortIcon,
-  ViewMajorIcon,
-  ContentIcon,
+  ViewIcon,
+  ListIcon,
   FilterIcon,
+  SearchIcon,
+  FolderIcon,
+  ImageIcon,
 } from '@shopify/polaris-icons'
 import { useState } from 'react'
 import { FileGrid } from './FileGrid'
@@ -33,6 +36,10 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
 
   const toggleActionsPopover = () => setActionsPopoverActive(!actionsPopoverActive)
 
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value)
+  }
+
   const actionBarMarkup = (
     <Box
       padding="300"
@@ -43,25 +50,28 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       <LegacyStack alignment="center" distribution="equalSpacing">
         <div style={{ maxWidth: '320px', flex: 1 }}>
           <TextField
+            label="Search files"
             value={searchValue}
-            onChange={setSearchValue}
-            placeholder="Search files"
+            onChange={handleSearchChange}
+            prefix={<Icon source={SearchIcon} />}
+            placeholder="Search for files..."
             autoComplete="off"
+            helpText="Enter keywords to search through your files"
           />
         </div>
         <ButtonGroup>
           <Button icon={FilterIcon}>Filter</Button>
           <Button icon={SortIcon}>Sort</Button>
-          <ButtonGroup segmented>
+          <ButtonGroup variant="segmented">
             <Button
               pressed={viewMode === 'grid'}
               onClick={() => setViewMode('grid')}
-              icon={ViewMajorIcon}
+              icon={ViewIcon}
             />
             <Button
               pressed={viewMode === 'list'}
               onClick={() => setViewMode('list')}
-              icon={ContentIcon}
+              icon={ViewIcon}
             />
           </ButtonGroup>
         </ButtonGroup>
@@ -73,19 +83,8 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     <Box padding="400">
       <LegacyStack distribution="center">
         <ButtonGroup variant="segmented">
-          <Button>Add files</Button>
-          <Popover
-            active={actionsPopoverActive}
-            activator={
-              <Button onClick={toggleActionsPopover} icon={ChevronDownIcon} />
-            }
-            onClose={toggleActionsPopover}
-          >
-            <ActionList
-              actionRole="menuitem"
-              items={[{ content: 'Add from URL' }]}
-            />
-          </Popover>
+          <Button>Upload files</Button>
+          <Button>Create folder</Button>
         </ButtonGroup>
         <Button>Generate image</Button>
       </LegacyStack>
