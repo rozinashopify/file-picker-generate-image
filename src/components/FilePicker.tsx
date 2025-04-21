@@ -20,9 +20,11 @@ import {
   SearchIcon,
   FolderIcon,
   ImageIcon,
+  AppsIcon,
 } from '@shopify/polaris-icons'
 import { useState } from 'react'
 import { FileGrid } from './FileGrid'
+import './FilePicker.css'
 
 interface FilePickerProps {
   open: boolean
@@ -42,9 +44,6 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
 
   const actionBarMarkup = (
     <Box
-      padding="300"
-      borderBlockEndWidth="025"
-      borderColor="border"
       background="bg-surface"
     >
       <LegacyStack alignment="center" distribution="equalSpacing">
@@ -56,24 +55,11 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
             prefix={<Icon source={SearchIcon} />}
             placeholder="Search for files..."
             autoComplete="off"
-            helpText="Enter keywords to search through your files"
           />
         </div>
         <ButtonGroup>
           <Button icon={FilterIcon}>Filter</Button>
           <Button icon={SortIcon}>Sort</Button>
-          <ButtonGroup variant="segmented">
-            <Button
-              pressed={viewMode === 'grid'}
-              onClick={() => setViewMode('grid')}
-              icon={ViewIcon}
-            />
-            <Button
-              pressed={viewMode === 'list'}
-              onClick={() => setViewMode('list')}
-              icon={ViewIcon}
-            />
-          </ButtonGroup>
         </ButtonGroup>
       </LegacyStack>
     </Box>
@@ -92,28 +78,37 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
   )
 
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      title="Select files"
-      primaryAction={{
-        content: 'Done',
-        onAction: onClose,
-      }}
-      secondaryActions={[
-        {
-          content: 'Cancel',
+    <div className="custom-modal">
+      <Modal
+        open={open}
+        onClose={onClose}
+        title="Select files"
+        size="large"
+        primaryAction={{
+          content: 'Done',
           onAction: onClose,
-        },
-      ]}
-    >
-      <Modal.Section>
-        {actionBarMarkup}
-        <DropZone onDrop={() => {}}>
-          {uploadActionsMarkup}
-          <FileGrid />
-        </DropZone>
-      </Modal.Section>
-    </Modal>
+        }}
+        secondaryActions={[
+          {
+            content: 'Cancel',
+            onAction: onClose,
+          },
+        ]}
+      >
+        <Modal.Section>
+          <Box paddingBlockEnd="400">
+            {actionBarMarkup}
+          </Box>
+          <Box paddingBlockEnd="400">
+            <DropZone onDrop={() => {}}>
+              {uploadActionsMarkup}
+            </DropZone>
+          </Box>
+          <Box>
+            <FileGrid />
+          </Box>
+        </Modal.Section>
+      </Modal>
+    </div>
   )
 }
