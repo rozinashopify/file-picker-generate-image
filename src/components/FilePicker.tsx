@@ -304,7 +304,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
             ref={sectionRef}
             className={`modal-content ${isGenerateMode ? 'generate-mode-content' : ''}`}
             style={{
-              height: '800px',
+              height: '600px',
               ...(isGenerateMode && {
                 overflow: 'hidden',
                 padding: '20px'
@@ -415,41 +415,6 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                       </InlineStack>
                     </div>
                   </div>
-
-                  {!isLoading && !generatedImage && (
-                    <Box paddingBlockEnd="400">
-                      <InlineStack gap="200">
-                        <div onClick={() => handleBadgeClick("lush green leaves")} style={{ cursor: 'pointer' }}>
-                          <Badge>lush green leaves</Badge>
-                        </div>
-                        <div onClick={() => handleBadgeClick("Colorful gradient background")} style={{ cursor: 'pointer' }}>
-                          <Badge>Colorful gradient background</Badge>
-                        </div>
-                        <div onClick={() => handleBadgeClick("A gradient that reflects the colors of the ocean")} style={{ cursor: 'pointer' }}>
-                          <Badge>A gradient that reflects the colors of the ocean</Badge>
-                        </div>
-                        <div onClick={() => handleBadgeClick("White marble background with subtle gray veining")} style={{ cursor: 'pointer' }}>
-                          <Badge>White marble background with subtle gray veining</Badge>
-                        </div>
-                      </InlineStack>
-                    </Box>
-                  )}
-
-                  {isPostImageLoad && (
-                    <Box paddingBlockEnd="400">
-                      <InlineStack gap="200">
-                        <div onClick={() => handleBadgeClick("Various leaf textures and patterns")} style={{ cursor: 'pointer' }}>
-                          <Badge>Various leaf textures and patterns</Badge>
-                        </div>
-                        <div onClick={() => handleBadgeClick("Green leaves intertwined with sustainable packaging materials")} style={{ cursor: 'pointer' }}>
-                          <Badge>Green leaves intertwined with sustainable packaging materials</Badge>
-                        </div>
-                        <div onClick={() => handleBadgeClick("Aerial view of a dense forest canopy")} style={{ cursor: 'pointer' }}>
-                          <Badge>Aerial view of a dense forest canopy</Badge>
-                        </div>
-                      </InlineStack>
-                    </Box>
-                  )}
                 </BlockStack>
                </Box>
               </div>
