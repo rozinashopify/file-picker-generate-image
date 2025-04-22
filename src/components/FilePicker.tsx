@@ -36,6 +36,7 @@ import { FileGrid } from './FileGrid'
 import { ImageLoader } from './ImageLoader'
 import { ImagePreview } from './ImagePreview'
 import './FilePicker.css'
+import tabIcon from './tab.svg'
 
 interface FilePickerProps {
   open: boolean
@@ -74,6 +75,17 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
 
   const handlePromptChange = (value: string) => {
     setPromptValue(value)
+  }
+
+  const handleTabKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Tab' && !promptValue) {
+      e.preventDefault()
+      if (generatedImage) {
+        setPromptValue('add a magical glow to the leaves')
+      } else {
+        setPromptValue('lush green leaves')
+      }
+    }
   }
 
   const handleGenerateClick = () => {
@@ -170,6 +182,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       setIsLoading(false)
       setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
       setIsPostImageLoad(true)
+      setPromptValue("")
     }, 7000)
   }
 
@@ -417,15 +430,38 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                             <Icon source={ImageMagicIcon} tone="magic" />
                           </Box>
                           
-                          <TextField
-                            label="Prompt"
-                            labelHidden
-                            autoComplete="off"
-                            placeholder="Describe what you want to see in your generated image"
-                            value={promptValue}
-                            onChange={handlePromptChange}
-                            disabled={isLoading}
-                          />
+                          <div onKeyDown={handleTabKeyPress} tabIndex={0} style={{ position: 'relative' }}>
+                            <TextField
+                              label="Prompt"
+                              labelHidden
+                              autoComplete="off"
+                              placeholder=""
+                              value={isLoading ? "" : promptValue}
+                              onChange={handlePromptChange}
+                              disabled={isLoading}
+                            />
+                            {!promptValue && !isLoading && !generatedImage && (
+                              <div className="suggestion-indicator">
+                                <div className="suggestion-text">lush green leaves</div>
+                                <div className="tab-indicator">
+                                  <img src={tabIcon} alt="Press Tab" />
+                                </div>
+                              </div>
+                            )}
+                            {!promptValue && !isLoading && generatedImage && (
+                              <div className="suggestion-indicator">
+                                <div className="suggestion-text">add a magical glow to the leaves</div>
+                                <div className="tab-indicator">
+                                  <img src={tabIcon} alt="Press Tab" />
+                                </div>
+                              </div>
+                            )}
+                            {isLoading && (
+                              <div className="generating-indicator">
+                                <div className="generating-text">Generating image</div>
+                              </div>
+                            )}
+                          </div>
                         </InlineStack>
 
                         <Box>
