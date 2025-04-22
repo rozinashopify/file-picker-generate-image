@@ -411,6 +411,7 @@
 
 /* Add styles for the loading and image containers */
 .loading-container, .image-container {
+    border-radius: var(--p-border-radius-200);
     overflow: hidden;
     height: 0;
     opacity: 0;
