@@ -140,7 +140,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       setIsLoading(false)
       setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
       setIsPostImageLoad(true)
-    }, 500)
+    }, 7000)
   }
 
   const handleStopGeneration = () => {

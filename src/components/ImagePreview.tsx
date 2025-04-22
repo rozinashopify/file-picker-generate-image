@@ -86,21 +86,21 @@ export function ImagePreview({
           <div className="image-preview-sidebar">
             <Box padding="400">
               
-                <InlineStack align="start">
+                <InlineStack align="start" gap="200">
                     <Icon source={InfoIcon} />
                     <Text as="h2" variant="headingMd">Information</Text>
                 </InlineStack>
               <Box paddingBlockStart="200">
                 <Text as="p" variant="bodyMd" fontWeight="bold">Prompt</Text>
-                <Text as="p" variant="bodyMd">lush green leaves</Text>
+                <Text as="p" variant="bodyMd" tone="subdued">lush green leaves</Text>
               </Box>
               <Box paddingBlockStart="200">
                 <Text as="p" variant="bodyMd" fontWeight="bold">Expires in</Text>
-                <Text as="p" variant="bodyMd">7 days</Text>
+                <Text as="p" variant="bodyMd" tone="subdued">7 days</Text>
               </Box>
               <Box paddingBlockStart="200">
                 <Text as="p" variant="bodyMd" fontWeight="bold">Details</Text>
-                <Text as="p" variant="bodyMd">JPG | 1920 x 1080 | 1.08 MB</Text>
+                <Text as="p" variant="bodyMd" tone="subdued">JPG | 1920 x 1080 | 1.08 MB</Text>
               </Box>
               
             </Box>

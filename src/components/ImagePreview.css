@@ -71,6 +71,13 @@
   z-index: 10;
 }
 
+.image-preview-sidebar .Polaris-Icon {
+    margin: unset !important;
+}
+.image-preview-sidebar .Polaris-Text--subdued {
+    color: rgb(181, 181, 181) !important;
+}
+
 /* Dark mode overrides for Polaris components */
 .image-preview-overlay .Polaris-Button {
   color: white;
