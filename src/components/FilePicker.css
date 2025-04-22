@@ -441,3 +441,8 @@
 .image-action-button .Polaris-Button.Polaris-Button svg {
     fill: var(--p-color-icon-inverse) !important;
 }
+
+/* Set fill color for all icons in the toolbar */
+.image-preview-toolbar .Polaris-Icon {
+  fill: var(--p-color-icon-inverse) !important;
+}

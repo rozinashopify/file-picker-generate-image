@@ -33,6 +33,7 @@ import {
 import { useState, useEffect, useRef } from 'react'
 import { FileGrid } from './FileGrid'
 import { ImageLoader } from './ImageLoader'
+import { ImagePreview } from './ImagePreview'
 import './FilePicker.css'
 
 interface FilePickerProps {
@@ -54,6 +55,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [sectionHeight, setSectionHeight] = useState<number | null>(null)
   const [buttonPosition, setButtonPosition] = useState<{ top: number; left: number } | null>(null)
+  const [isPreviewMode, setIsPreviewMode] = useState(false)
 
   // Measure section height when component mounts and when open changes
   useEffect(() => {
@@ -145,6 +147,44 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     setIsLoading(false)
     setGeneratedImage(null)
     setPromptValue("")
+  }
+
+  const handlePreviewClick = () => {
+    setIsPreviewMode(true)
+  }
+
+  const handleClosePreview = () => {
+    setIsPreviewMode(false)
+  }
+
+  const handleDownloadImage = () => {
+    if (generatedImage) {
+      const link = document.createElement('a')
+      link.href = generatedImage
+      link.download = 'generated-image.jpg'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
+  }
+
+  const handleReportImage = () => {
+    // Implement report functionality
+    console.log('Report image clicked')
+  }
+
+  const handleTryAgain = () => {
+    setIsPreviewMode(false)
+    setGeneratedImage(null)
+    setIsLoading(true)
+    setIsPostImageLoad(false)
+    
+    // Simulate loading for 5 seconds then show the image
+    setTimeout(() => {
+      setIsLoading(false)
+      setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
+      setIsPostImageLoad(true)
+    }, 500)
   }
 
   // Reset state when modal is closed
@@ -333,6 +373,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                                     icon={ViewIcon}
                                     variant="tertiary"
                                     size="medium"
+                                    onClick={handlePreviewClick}
                                   />
                                 </div>
                               </Tooltip>
@@ -432,6 +473,16 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
           </div>
         </Modal.Section>
       </Modal>
+
+      {isPreviewMode && generatedImage && (
+        <ImagePreview
+          imageUrl={generatedImage}
+          onClose={handleClosePreview}
+          onDownload={handleDownloadImage}
+          onReport={handleReportImage}
+          onTryAgain={handleTryAgain}
+        />
+      )}
     </div>
   )
 }
