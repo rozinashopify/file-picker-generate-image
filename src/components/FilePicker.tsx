@@ -186,6 +186,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
   const [sectionHeight, setSectionHeight] = useState<number | null>(null)
   const [buttonPosition, setButtonPosition] = useState<{ top: number; left: number } | null>(null)
   const [isPreviewMode, setIsPreviewMode] = useState(false)
+  const [fromVariant, setFromVariant] = useState(false)
 
   // Measure section height when component mounts and when open changes
   useEffect(() => {
@@ -219,31 +220,13 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
   }
 
   const handleGenerateClick = () => {
-    if (magicButtonRef.current) {
-
-      // console.log('magicButtonRef.current', magicButtonRef.current)
-      const modalSection = document.querySelector('.Polaris-Modal-Section > section.Polaris-Box')
-      if (modalSection) {
-        const buttonRect = magicButtonRef.current.getBoundingClientRect()
-        const modalRect = modalSection.getBoundingClientRect()
-
-        //console.log('modalSection', modalSection)
-        
-        // Calculate position relative to the modal section
-        const relativeTop = buttonRect.top - modalRect.top
-        const relativeLeft = buttonRect.left - modalRect.left
-
-        //console.log(relativeLeft, relativeTop)
-        
-        setButtonPosition({ top: relativeTop, left: relativeLeft })
-        
-        magicButtonRef.current.classList.add('expand')
-        
-        setTimeout(() => {
-          setIsGenerateMode(true)
-        }, 300)
-      }
-    }
+    setFromVariant(false)
+    setIsGenerateMode(true)
+    setOriginalImage(null)
+    setPromptValue('')
+    setGeneratedImage(null)
+    setIsLoading(false)
+    setIsCollapsing(false)
   }
 
   const handleBackClick = () => {
@@ -399,30 +382,13 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
   }
 
   const handleGenerateVariation = (file: File) => {
-    if (magicButtonRef.current) {
-      const modalSection = document.querySelector('.Polaris-Modal-Section > section.Polaris-Box')
-      if (modalSection) {
-        const buttonRect = magicButtonRef.current.getBoundingClientRect()
-        const modalRect = modalSection.getBoundingClientRect()
-        
-        // Calculate position relative to the modal section
-        const relativeTop = buttonRect.top - modalRect.top
-        const relativeLeft = buttonRect.left - modalRect.left
-        
-        setButtonPosition({ top: relativeTop, left: relativeLeft })
-        
-        magicButtonRef.current.classList.add('expand')
-        
-        // Set original image and clear prompt value
-        setOriginalImage(file)
-        setPromptValue('')
-        
-        // Add a small delay to ensure the animation is visible
-        setTimeout(() => {
-          setIsGenerateMode(true)
-        }, 300)
-      }
-    }
+    setFromVariant(true)
+    setIsGenerateMode(true)
+    setOriginalImage(file)
+    setPromptValue('')
+    setGeneratedImage(null)
+    setIsLoading(false)
+    setIsCollapsing(false)
   }
 
   // Reset state when modal is closed
@@ -560,7 +526,11 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
             </div>
             
             {isGenerateMode && (
-              <div className={`generate-mode-container ${isGenerateMode && !isLoading && !generatedImage && !originalImage ? 'animate-padding' : 'no-padding'}`}>
+              <div className={`generate-mode-container ${
+                !isLoading && !generatedImage && !originalImage && !fromVariant
+                  ? 'animate-padding'
+                  : 'no-padding'
+              }`}>
                
                <Box>
                 <BlockStack gap="400">

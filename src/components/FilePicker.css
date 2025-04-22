@@ -119,6 +119,7 @@
     width: 640px;
     margin: 0 auto;
     padding-top: 0;
+    transition: padding-top 0.3s ease-in-out;
 }
 
 .generate-mode-container.animate-padding {
@@ -126,7 +127,11 @@
 }
 
 .generate-mode-container.no-padding {
-    animation: padding-collapse 0.3s ease-in-out forwards;
+    padding-top: 0;
+}
+
+.generate-mode-container.from-variant {
+    padding-top: 0;
 }
 
 .generate-mode-container .Polaris-Badge {
