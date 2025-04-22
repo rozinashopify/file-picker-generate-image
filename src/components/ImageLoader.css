@@ -14,149 +14,152 @@
   height: 100%;
   border-radius: 8px;
   box-sizing: border-box;
-  background-origin: border-box;
-  background-clip: content-box;
-  padding: 0;
+  background-color: transparent;
 }
 
-@keyframes gradientShift {
+@keyframes gradientMove {
   0% {
-    background-position: 0% 73%;
+    background-position: 50% 0%;
+  }
+  50% {
+    background-position: 50% 100%;
   }
   100% {
-    background-position: 0% 0%;
+    background-position: 50% 0%;
   }
 }
 
+/* Rectangle 1 - Largest border and blur */
 .rectangle-1 {
-  padding: 1px;
-  background: linear-gradient(to bottom,
-    #FFD8B7 0%,
-    #F4C2FF 9%,
-    #D1BDFF 18%,
-    #A0CBFF 27%,
-    #A0CBFF 36%,
-    #D1BDFF 45%,
-    #F4C2FF 55%,
-    #FFD8B7 64%,
-    #FFD8B7 73%,
-    #F4C2FF 82%,
-    #D1BDFF 91%,
-    #A0CBFF 100%
-  );
-  background-size: 100% 400%;
-  filter: blur(2px) opacity(32%);
-  animation: gradientShift 2s linear infinite;
+  border: 2px solid;
+  border-image: linear-gradient(to bottom, 
+    #FFD8B7 0%, 
+    #F4C2FF 9%, 
+    #D1BDFF 18%, 
+    #A0CBFF 27%, 
+    #A0CBFF 36%, 
+    #D1BDFF 45%, 
+    #F4C2FF 55%, 
+    #FFD8B7 64%, 
+    #FFD8B7 73%, 
+    #F4C2FF 82%, 
+    #D1BDFF 91%, 
+    #A0CBFF 100%) 1;
+  border-radius: 25px;
+  filter: blur(2px);
+  animation: gradientMove 4s linear infinite;
+  z-index: 1;
+  background-color: #FFF;
 }
 
+/* Rectangle 2 */
 .rectangle-2 {
-  padding: 2px;
-  background: linear-gradient(to bottom,
-    #FFD8B7 0%,
-    #F4C2FF 9%,
-    #D1BDFF 18%,
-    #A0CBFF 27%,
-    #A0CBFF 36%,
-    #D1BDFF 45%,
-    #F4C2FF 55%,
-    #FFD8B7 64%,
-    #FFD8B7 73%,
-    #F4C2FF 82%,
-    #D1BDFF 91%,
-    #A0CBFF 100%
-  );
-  background-size: 100% 400%;
-  filter: blur(4px) opacity(32%);
-  animation: gradientShift 2s linear infinite;
-  animation-delay: 0.1s;
+  border: 4px solid;
+  border-image: linear-gradient(to bottom, 
+    #FFD8B7 0%, 
+    #F4C2FF 9%, 
+    #D1BDFF 18%, 
+    #A0CBFF 27%, 
+    #A0CBFF 36%, 
+    #D1BDFF 45%, 
+    #F4C2FF 55%, 
+    #FFD8B7 64%, 
+    #FFD8B7 73%, 
+    #F4C2FF 82%, 
+    #D1BDFF 91%, 
+    #A0CBFF 100%) 1;
+  border-radius: 25px;
+  filter: blur(4px);
+  animation: gradientMove 4s linear infinite;
+  z-index: 2;
 }
 
+/* Rectangle 3 */
 .rectangle-3 {
-  padding: 4px;
-  background: linear-gradient(to bottom,
-    #FFD8B7 0%,
-    #F4C2FF 9%,
-    #D1BDFF 18%,
-    #A0CBFF 27%,
-    #A0CBFF 36%,
-    #D1BDFF 45%,
-    #F4C2FF 55%,
-    #FFD8B7 64%,
-    #FFD8B7 73%,
-    #F4C2FF 82%,
-    #D1BDFF 91%,
-    #A0CBFF 100%
-  );
-  background-size: 100% 400%;
-  filter: blur(8px) opacity(24%);
-  animation: gradientShift 2s linear infinite;
-  animation-delay: 0.2s;
+  border: 8px solid;
+  border-image: linear-gradient(to bottom, 
+    #FFD8B7 0%, 
+    #F4C2FF 9%, 
+    #D1BDFF 18%, 
+    #A0CBFF 27%, 
+    #A0CBFF 36%, 
+    #D1BDFF 45%, 
+    #F4C2FF 55%, 
+    #FFD8B7 64%, 
+    #FFD8B7 73%, 
+    #F4C2FF 82%, 
+    #D1BDFF 91%, 
+    #A0CBFF 100%) 1;
+  border-radius: 25px;
+  filter: blur(8px);
+  animation: gradientMove 4s linear infinite;
+  z-index: 3;
 }
 
+/* Rectangle 4 */
 .rectangle-4 {
-  padding: 8px;
-  background: linear-gradient(to bottom,
-    #FFD8B7 0%,
-    #F4C2FF 9%,
-    #D1BDFF 18%,
-    #A0CBFF 27%,
-    #A0CBFF 36%,
-    #D1BDFF 45%,
-    #F4C2FF 55%,
-    #FFD8B7 64%,
-    #FFD8B7 73%,
-    #F4C2FF 82%,
-    #D1BDFF 91%,
-    #A0CBFF 100%
-  );
-  background-size: 100% 400%;
-  filter: blur(16px) opacity(24%);
-  animation: gradientShift 2s linear infinite;
-  animation-delay: 0.3s;
+  border: 16px solid;
+  border-image: linear-gradient(to bottom, 
+    #FFD8B7 0%, 
+    #F4C2FF 9%, 
+    #D1BDFF 18%, 
+    #A0CBFF 27%, 
+    #A0CBFF 36%, 
+    #D1BDFF 45%, 
+    #F4C2FF 55%, 
+    #FFD8B7 64%, 
+    #FFD8B7 73%, 
+    #F4C2FF 82%, 
+    #D1BDFF 91%, 
+    #A0CBFF 100%) 1;
+  border-radius: 25px;
+  filter: blur(16px);
+  animation: gradientMove 4s linear infinite;
+  z-index: 4;
 }
 
+/* Rectangle 5 */
 .rectangle-5 {
-  padding: 16px;
-  background: linear-gradient(to bottom,
-    #FFD8B7 0%,
-    #F4C2FF 9%,
-    #D1BDFF 18%,
-    #A0CBFF 27%,
-    #A0CBFF 36%,
-    #D1BDFF 45%,
-    #F4C2FF 55%,
-    #FFD8B7 64%,
-    #FFD8B7 73%,
-    #F4C2FF 82%,
-    #D1BDFF 91%,
-    #A0CBFF 100%
-  );
-  background-size: 100% 400%;
-  filter: blur(32px) opacity(24%);
-  animation: gradientShift 2s linear infinite;
-  animation-delay: 0.4s;
+  border: 32px solid;
+  border-image: linear-gradient(to bottom, 
+    #FFD8B7 0%, 
+    #F4C2FF 9%, 
+    #D1BDFF 18%, 
+    #A0CBFF 27%, 
+    #A0CBFF 36%, 
+    #D1BDFF 45%, 
+    #F4C2FF 55%, 
+    #FFD8B7 64%, 
+    #FFD8B7 73%, 
+    #F4C2FF 82%, 
+    #D1BDFF 91%, 
+    #A0CBFF 100%) 1;
+  border-radius: 25px;
+  filter: blur(32px);
+  animation: gradientMove 4s linear infinite;
+  z-index: 5;
 }
 
+/* Rectangle 6 - Smallest border and blur */
 .rectangle-6 {
-  padding: 32px;
-  background: linear-gradient(to bottom,
-    #FFD8B7 0%,
-    #F4C2FF 9%,
-    #D1BDFF 18%,
-    #A0CBFF 27%,
-    #A0CBFF 36%,
-    #D1BDFF 45%,
-    #F4C2FF 55%,
-    #FFD8B7 64%,
-    #FFD8B7 73%,
-    #F4C2FF 82%,
-    #D1BDFF 91%,
-    #A0CBFF 100%
-  );
-  background-size: 100% 400%;
-  filter: blur(64px) opacity(32%);
-  animation: gradientShift 2s linear infinite;
-  animation-delay: 0.5s;
+  border: 64px solid;
+  border-image: linear-gradient(to bottom, 
+    #FFD8B7 0%, 
+    #F4C2FF 9%, 
+    #D1BDFF 18%, 
+    #A0CBFF 27%, 
+    #A0CBFF 36%, 
+    #D1BDFF 45%, 
+    #F4C2FF 55%, 
+    #FFD8B7 64%, 
+    #FFD8B7 73%, 
+    #F4C2FF 82%, 
+    #D1BDFF 91%, 
+    #A0CBFF 100%) 1;
+  border-radius: 25px;
+  filter: blur(64px);
+  animation: gradientMove 4s linear infinite;
+  z-index: 6;
 }
 
 .loader-content {
@@ -166,5 +169,5 @@
   color: #637381;
   font-size: 14px;
   font-weight: 500;
-  z-index: 1;
+  z-index: 7;
 } 
