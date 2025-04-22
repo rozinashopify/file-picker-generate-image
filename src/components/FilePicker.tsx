@@ -420,20 +420,22 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
               </div>
             )}
             
-            <div className={`upload-actions-container ${isGenerateMode ? 'fade-out' : ''}`}>
-              <Box paddingBlockEnd="400">
-                {!isGenerateMode && (
-                  <DropZone onDrop={() => {}}>
-                    {uploadActionsMarkup}
-                  </DropZone>
-                )}
-              </Box>
-            </div>
-            
-            <div className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''}`}>
-              <Box>
-                <FileGrid />
-              </Box>
+            <div className={`file-browser-container ${isGenerateMode ? 'fade-out' : ''}`}>
+              <div className={`upload-actions-container ${isGenerateMode ? 'fade-out' : ''}`}>
+                <Box paddingBlockEnd="400">
+                  {!isGenerateMode && (
+                    <DropZone onDrop={() => {}}>
+                      {uploadActionsMarkup}
+                    </DropZone>
+                  )}
+                </Box>
+              </div>
+              
+              <div className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''}`}>
+                <Box>
+                  <FileGrid />
+                </Box>
+              </div>
             </div>
           </div>
         </Modal.Section>
