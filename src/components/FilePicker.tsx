@@ -243,6 +243,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       setIsLoading(false)
       setIsCollapsing(false)
       setOriginalImage(null)
+      setFromVariant(false)
     }, 300)
   }
 
@@ -389,6 +390,11 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     setGeneratedImage(null)
     setIsLoading(false)
     setIsCollapsing(false)
+    
+    // Add a small delay to ensure the animation is visible
+    setTimeout(() => {
+      setIsGenerateMode(true)
+    }, 300)
   }
 
   // Reset state when modal is closed
@@ -530,8 +536,12 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                 !isLoading && !generatedImage && !originalImage && !fromVariant
                   ? 'animate-padding'
                   : isLoading || generatedImage || originalImage
-                    ? 'with-content'
-                    : 'no-padding'
+                    ? fromVariant
+                      ? 'with-content from-variant'
+                      : 'with-content'
+                    : fromVariant
+                      ? 'from-variant'
+                      : 'no-padding'
               }`}>
                 <Box>
                   <BlockStack gap="400">
