@@ -13,6 +13,7 @@ import {
   Text,
   Icon,
   Spinner,
+  Tooltip,
 } from '@shopify/polaris'
 import {
   ChevronDownIcon,
@@ -26,6 +27,8 @@ import {
   ArrowLeftIcon,
   ImageMagicIcon,
   UndoIcon,
+  FlagIcon,
+  ImportIcon,
 } from '@shopify/polaris-icons'
 import { useState, useEffect, useRef } from 'react'
 import { FileGrid } from './FileGrid'
@@ -135,7 +138,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       setIsLoading(false)
       setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
       setIsPostImageLoad(true)
-    }, 5000)
+    }, 500)
   }
 
   const handleStopGeneration = () => {
@@ -292,15 +295,50 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                   ) : generatedImage ? (
                     <div className={`image-container ${generatedImage ? 'animate' : ''} ${isCollapsing ? 'collapse' : ''}`}>
                       <Box>
-                        <img 
-                          src={generatedImage} 
-                          alt="Generated image" 
-                          style={{ 
-                            width: '100%', 
-                            borderRadius: '8px',
-                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
-                          }} 
-                        />
+                        <div style={{ position: 'relative' }}>
+                          <img 
+                            src={generatedImage} 
+                            alt="Generated image" 
+                            style={{ 
+                              width: '100%', 
+                              borderRadius: '8px',
+                              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                            }} 
+                          />
+                          <div style={{ position: 'absolute', bottom: '16px', left: '16px' }}>
+                            <Tooltip content="Report image">
+                              <div className="image-action-button">
+                                <Button
+                                  icon={FlagIcon}
+                                  variant="tertiary"
+                                  size="medium"
+                                />
+                              </div>
+                            </Tooltip>
+                          </div>
+                          <div style={{ position: 'absolute', top: '16px', right: '16px' }}>
+                            <InlineStack gap="300">
+                              <Tooltip content="Download">
+                                <div className="image-action-button">
+                                  <Button
+                                    icon={ImportIcon}
+                                    variant="tertiary"
+                                    size="medium"
+                                  />
+                                </div>
+                              </Tooltip>
+                              <Tooltip content="Preview generated image">
+                                <div className="image-action-button">
+                                  <Button
+                                    icon={ViewIcon}
+                                    variant="tertiary"
+                                    size="medium"
+                                  />
+                                </div>
+                              </Tooltip>
+                            </InlineStack>
+                          </div>
+                        </div>
                       </Box>
                     </div>
                   ) : null}

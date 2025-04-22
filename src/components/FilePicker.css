@@ -425,3 +425,19 @@
     animation: height-collapse 0.3s ease-in-out forwards;
 }
 
+
+  
+.image-action-button button {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    color: white !important;
+    transition: background-color 0.2s ease-in-out !important;
+}
+  
+.image-action-button:hover button {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+  
+
+.image-action-button .Polaris-Button.Polaris-Button svg {
+    fill: var(--p-color-icon-inverse) !important;
+}
