@@ -529,167 +529,168 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
               <div className={`generate-mode-container ${
                 !isLoading && !generatedImage && !originalImage && !fromVariant
                   ? 'animate-padding'
-                  : 'no-padding'
+                  : isLoading || generatedImage || originalImage
+                    ? 'with-content'
+                    : 'no-padding'
               }`}>
-               
-               <Box>
-                <BlockStack gap="400">
-                  {isLoading ? (
-                    <div className={`loading-container ${isLoading ? 'animate' : ''}`}>
-                      <Box>
-                        <BlockStack gap="400" align="center">
-                          <ImageLoader prompt={promptValue} />
-                        </BlockStack>
-                      </Box>
-                    </div>
-                  ) : generatedImage ? (
-                    <div className={`image-container ${generatedImage ? 'animate' : ''} ${isCollapsing ? 'collapse' : ''}`}>
-                      <Box>
-                        <div style={{ position: 'relative' }}>
-                          <img 
-                            src={generatedImage} 
-                            alt="Generated image" 
-                            style={{ 
-                              width: '100%', 
-                              borderRadius: '8px',
-                              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
-                            }} 
-                          />
-                          <div style={{ position: 'absolute', bottom: '16px', left: '16px' }}>
-                            <Tooltip content="Report image">
-                              <div className="image-action-button">
-                                <Button
-                                  icon={FlagIcon}
+                <Box>
+                  <BlockStack gap="400">
+                    {isLoading ? (
+                      <div className={`loading-container ${isLoading ? 'animate' : ''}`}>
+                        <Box>
+                          <BlockStack gap="400" align="center">
+                            <ImageLoader prompt={promptValue} />
+                          </BlockStack>
+                        </Box>
+                      </div>
+                    ) : generatedImage ? (
+                      <div className={`image-container ${generatedImage ? 'animate' : ''} ${isCollapsing ? 'collapse' : ''}`}>
+                        <Box>
+                          <div style={{ position: 'relative' }}>
+                            <img 
+                              src={generatedImage} 
+                              alt="Generated image" 
+                              style={{ 
+                                width: '100%', 
+                                borderRadius: '8px',
+                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                              }} 
+                            />
+                            <div style={{ position: 'absolute', bottom: '16px', left: '16px' }}>
+                              <Tooltip content="Report image">
+                                <div className="image-action-button">
+                                  <Button
+                                    icon={FlagIcon}
+                                    variant="tertiary"
+                                    size="medium"
+                                  />
+                                </div>
+                              </Tooltip>
+                            </div>
+                            <div style={{ position: 'absolute', top: '16px', right: '16px' }}>
+                              <InlineStack gap="300">
+                                <Tooltip content="Download">
+                                  <div className="image-action-button">
+                                    <Button
+                                      icon={ImportIcon}
+                                      variant="tertiary"
+                                      size="medium"
+                                    />
+                                  </div>
+                                </Tooltip>
+                                <Tooltip content="Preview generated image">
+                                  <div className="image-action-button">
+                                    <Button
+                                      icon={ViewIcon}
+                                      variant="tertiary"
+                                      size="medium"
+                                      onClick={handlePreviewClick}
+                                    />
+                                  </div>
+                                </Tooltip>
+                              </InlineStack>
+                            </div>
+                          </div>
+                        </Box>
+                      </div>
+                    ) : originalImage ? (
+                      <div className="original-image-container">
+                        <Box>
+                          <div style={{ position: 'relative' }}>
+                            <img 
+                              src={originalImage.highResUrl || originalImage.url} 
+                              alt={originalImage.name} 
+                              style={{ 
+                                width: '100%', 
+                                borderRadius: '8px',
+                                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                              }} 
+                            />
+                          </div>
+                        </Box>
+                      </div>
+                    ) : null}
+
+                    <div className="generate-mode-input">
+                      <div className="faux-input">
+                        <InlineStack wrap={false} blockAlign="center" align="space-between">
+                          <InlineStack gap="200" wrap={false} blockAlign="center">
+                            <Box>
+                              <Icon source={ImageMagicIcon} tone="magic" />
+                            </Box>
+                            
+                            <div onKeyDown={handleTabKeyPress} tabIndex={0} style={{ position: 'relative' }}>
+                              <TextField
+                                label="Prompt"
+                                labelHidden
+                                autoComplete="off"
+                                placeholder=""
+                                value={isLoading ? "" : promptValue}
+                                onChange={handlePromptChange}
+                                disabled={isLoading}
+                              />
+                              {!promptValue && !isLoading && (
+                                <div className="suggestion-indicator">
+                                  <div className="suggestion-text">
+                                    {originalImage 
+                                      ? FILE_IMPROVEMENTS[originalImage.id] || 'make it more vibrant and colorful'
+                                      : generatedImage 
+                                        ? 'add a magical glow to the leaves'
+                                        : 'lush green leaves'
+                                    }
+                                  </div>
+                                  <div className="tab-indicator">
+                                    <img src={tabIcon} alt="Press Tab" />
+                                  </div>
+                                </div>
+                              )}
+                              {isLoading && (
+                                <div className="generating-indicator">
+                                  <div className="generating-text">Generating image</div>
+                                </div>
+                              )}
+                            </div>
+                          </InlineStack>
+
+                          <Box>
+                            {isLoading ? (
+                              <div className="stop-button-container">
+                                <div 
+                                  className="custom-stop-button"
+                                  onClick={handleStopGeneration}
+                                  role="button"
+                                  tabIndex={0}
+                                  aria-label="Stop generation"
+                                >
+                                  <span className="custom-stop-icon"></span>
+                                </div>
+                              </div>
+                            ) : generatedImage ? (
+                              <div className="generate-button-container">
+                                <Button 
+                                  size="slim" 
+                                  onClick={handleTryAgain}
+                                  icon={ArrowUpIcon}
                                   variant="tertiary"
-                                  size="medium"
                                 />
                               </div>
-                            </Tooltip>
-                          </div>
-                          <div style={{ position: 'absolute', top: '16px', right: '16px' }}>
-                            <InlineStack gap="300">
-                              <Tooltip content="Download">
-                                <div className="image-action-button">
-                                  <Button
-                                    icon={ImportIcon}
-                                    variant="tertiary"
-                                    size="medium"
-                                  />
-                                </div>
-                              </Tooltip>
-                              <Tooltip content="Preview generated image">
-                                <div className="image-action-button">
-                                  <Button
-                                    icon={ViewIcon}
-                                    variant="tertiary"
-                                    size="medium"
-                                    onClick={handlePreviewClick}
-                                  />
-                                </div>
-                              </Tooltip>
-                            </InlineStack>
-                          </div>
-                        </div>
-                      </Box>
-                    </div>
-                  ) : originalImage ? (
-                    <div className="original-image-container">
-                      <Box>
-                        <div style={{ position: 'relative' }}>
-                          <img 
-                            src={originalImage.highResUrl || originalImage.url} 
-                            alt={originalImage.name} 
-                            style={{ 
-                              width: '100%', 
-                              borderRadius: '8px',
-                              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
-                            }} 
-                          />
-                        </div>
-                      </Box>
-                    </div>
-                  ) : null}
-
-                  <div className="generate-mode-input">
-                    <div className="faux-input">
-                      <InlineStack wrap={false} blockAlign="center" align="space-between">
-                        <InlineStack gap="200" wrap={false} blockAlign="center">
-                          <Box>
-                            <Icon source={ImageMagicIcon} tone="magic" />
+                            ) : (
+                              <div className="generate-button-container">
+                                <Button 
+                                  size="slim" 
+                                  onClick={handleGenerateButtonClick}
+                                  icon={ArrowUpIcon}
+                                  disabled={!promptValue.trim()}
+                                  variant="tertiary"
+                                />
+                              </div>
+                            )}
                           </Box>
-                          
-                          <div onKeyDown={handleTabKeyPress} tabIndex={0} style={{ position: 'relative' }}>
-                            <TextField
-                              label="Prompt"
-                              labelHidden
-                              autoComplete="off"
-                              placeholder=""
-                              value={isLoading ? "" : promptValue}
-                              onChange={handlePromptChange}
-                              disabled={isLoading}
-                            />
-                            {!promptValue && !isLoading && (
-                              <div className="suggestion-indicator">
-                                <div className="suggestion-text">
-                                  {originalImage 
-                                    ? FILE_IMPROVEMENTS[originalImage.id] || 'make it more vibrant and colorful'
-                                    : generatedImage 
-                                      ? 'add a magical glow to the leaves'
-                                      : 'lush green leaves'
-                                  }
-                                </div>
-                                <div className="tab-indicator">
-                                  <img src={tabIcon} alt="Press Tab" />
-                                </div>
-                              </div>
-                            )}
-                            {isLoading && (
-                              <div className="generating-indicator">
-                                <div className="generating-text">Generating image</div>
-                              </div>
-                            )}
-                          </div>
                         </InlineStack>
-
-                        <Box>
-                          {isLoading ? (
-                            <div className="stop-button-container">
-                              <div 
-                                className="custom-stop-button"
-                                onClick={handleStopGeneration}
-                                role="button"
-                                tabIndex={0}
-                                aria-label="Stop generation"
-                              >
-                                <span className="custom-stop-icon"></span>
-                              </div>
-                            </div>
-                          ) : generatedImage ? (
-                            <div className="generate-button-container">
-                              <Button 
-                                size="slim" 
-                                onClick={handleTryAgain}
-                                icon={ArrowUpIcon}
-                                variant="tertiary"
-                              />
-                            </div>
-                          ) : (
-                            <div className="generate-button-container">
-                              <Button 
-                                size="slim" 
-                                onClick={handleGenerateButtonClick}
-                                icon={ArrowUpIcon}
-                                disabled={!promptValue.trim()}
-                                variant="tertiary"
-                              />
-                            </div>
-                          )}
-                        </Box>
-                      </InlineStack>
+                      </div>
                     </div>
-                  </div>
-                </BlockStack>
-               </Box>
+                  </BlockStack>
+                </Box>
               </div>
             )}
             
