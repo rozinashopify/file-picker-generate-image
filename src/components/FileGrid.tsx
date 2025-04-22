@@ -47,6 +47,7 @@ export interface File {
   extension: string;
   url: string;
   highResUrl?: string; // Optional high-resolution URL
+  variantUrl?: string; // Optional variant URL for generated images
 }
 
 interface FileGridProps {
