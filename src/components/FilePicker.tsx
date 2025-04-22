@@ -202,6 +202,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     setGeneratedImage(null)
     setIsLoading(true)
     setIsPostImageLoad(false)
+    setPromptValue("")
     
     // Simulate loading for 5 seconds then show the image
     setTimeout(() => {
@@ -420,7 +421,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                             label="Prompt"
                             labelHidden
                             autoComplete="off"
-                            placeholder="Describe what you want to see"
+                            placeholder="Describe what you want to see in your generated image"
                             value={promptValue}
                             onChange={handlePromptChange}
                             disabled={isLoading}
@@ -429,9 +430,26 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
 
                         <Box>
                           {isLoading ? (
-                            <Button size="slim" onClick={handleStopGeneration}>Stop</Button>
+                            <div className="stop-button-container">
+                              <div 
+                                className="custom-stop-button"
+                                onClick={handleStopGeneration}
+                                role="button"
+                                tabIndex={0}
+                                aria-label="Stop generation"
+                              >
+                                <span className="custom-stop-icon"></span>
+                              </div>
+                            </div>
                           ) : generatedImage ? (
-                            <Button size="slim" icon={UndoIcon}>Try again</Button>
+                            <div className="generate-button-container">
+                              <Button 
+                                size="slim" 
+                                onClick={handleTryAgain}
+                                icon={ArrowUpIcon}
+                                variant="tertiary"
+                              />
+                            </div>
                           ) : (
                             <div className="generate-button-container">
                               <Button 

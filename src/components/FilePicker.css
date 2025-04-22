@@ -200,7 +200,7 @@
     background: var(--p-color-bg-surface);
     position: relative;
     z-index: 1;
-    padding: var(--p-space-150) var(--p-space-200) var(--p-space-150) var(--p-space-300);
+    padding: var(--p-space-200) var(--p-space-200) var(--p-space-200) var(--p-space-300);
     border-radius: var(--p-border-radius-200);
     box-shadow: 0px 100px 80px 0px rgba(0, 0, 0, 0.07), 0px 41.778px 33.422px 0px rgba(0, 0, 0, 0.05), 0px 22.336px 17.869px 0px rgba(0, 0, 0, 0.04), 0px 12.522px 10.017px 0px rgba(0, 0, 0, 0.04), 0px 6.65px 5.32px 0px rgba(0, 0, 0, 0.03), 0px 2.767px 2.214px 0px rgba(0, 0, 0, 0.02);
 }
@@ -462,7 +462,7 @@
 
 .generate-button-container .Polaris-Button {
   border-radius: 50%;
-  padding: 8px 6px;
+  padding: 6px 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -488,6 +488,36 @@
 
 .generate-button-container .Polaris-Button:not(.Polaris-Button--disabled) svg {
     fill: #FFF !important;
+}
+
+/* Stop button styles */
+.stop-button-container {
+  display: inline-block;
+  padding: 3px;
+}
+
+.custom-stop-button {
+  border-radius: 50%;
+  padding: 8px 6px;
+  min-width: 26px;
+  min-height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--p-color-bg-fill-transparent);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.custom-stop-button:hover {
+  background-color: var(--p-color-bg-fill-transparent-secondary-hover);
+}
+
+.custom-stop-icon {
+  width: 8px;
+  height: 9px;
+  background-color: var(--p-color-icon-secondary);
+  border-radius: 2px;
 }
 
 
