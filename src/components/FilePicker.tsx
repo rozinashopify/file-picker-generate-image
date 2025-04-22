@@ -38,6 +38,23 @@ import { ImagePreview } from './ImagePreview'
 import './FilePicker.css'
 import tabIcon from './tab.svg'
 
+// File-specific improvement messages
+const FILE_IMPROVEMENTS: Record<string, string> = {
+  '1': 'make the necklace more elegant with a golden finish',
+  '2': 'add a warm, cozy texture to the scarf',
+  '3': 'enhance the contrast of the stripes',
+  '4': 'add a vintage filter to the jewelry collection',
+  '5': 'make the watch face more luxurious with a metallic sheen',
+  '6': 'add a summer vibe to the sunglasses shot',
+  '7': 'give the backpack a premium leather look',
+  '8': 'add a lifestyle context to the shoes',
+  '9': 'create a luxurious atmosphere around the perfume bottle',
+  '10': 'enhance the makeup colors to be more vibrant',
+  '11': 'add a professional studio lighting effect',
+  '12': 'create a cozy coffee shop atmosphere',
+  '13': 'add a soft, natural glow to the plant arrangement'
+}
+
 // Sample files data
 const SAMPLE_FILES: File[] = [
   {
@@ -175,10 +192,12 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     setPromptValue(value)
   }
 
-  const handleTabKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Tab' && !promptValue) {
-      e.preventDefault()
-      if (generatedImage) {
+  const handleTabKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Tab' && !promptValue && !isLoading) {
+      event.preventDefault()
+      if (originalImage) {
+        setPromptValue(FILE_IMPROVEMENTS[originalImage.id] || 'make it more vibrant and colorful')
+      } else if (generatedImage) {
         setPromptValue('add a magical glow to the leaves')
       } else {
         setPromptValue('lush green leaves')
@@ -612,7 +631,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                               label="Prompt"
                               labelHidden
                               autoComplete="off"
-                              placeholder={originalImage ? `Create a variation of ${originalImage.name}` : ""}
+                              placeholder=""
                               value={isLoading ? "" : promptValue}
                               onChange={handlePromptChange}
                               disabled={isLoading}
@@ -628,6 +647,14 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                             {!promptValue && !isLoading && generatedImage && (
                               <div className="suggestion-indicator">
                                 <div className="suggestion-text">add a magical glow to the leaves</div>
+                                <div className="tab-indicator">
+                                  <img src={tabIcon} alt="Press Tab" />
+                                </div>
+                              </div>
+                            )}
+                            {!promptValue && !isLoading && originalImage && (
+                              <div className="suggestion-indicator">
+                                <div className="suggestion-text">{FILE_IMPROVEMENTS[originalImage.id] || 'make it more vibrant and colorful'}</div>
                                 <div className="tab-indicator">
                                   <img src={tabIcon} alt="Press Tab" />
                                 </div>
