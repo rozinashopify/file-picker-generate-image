@@ -29,6 +29,7 @@ import {
   UndoIcon,
   FlagIcon,
   ImportIcon,
+  ArrowUpIcon,
 } from '@shopify/polaris-icons'
 import { useState, useEffect, useRef } from 'react'
 import { FileGrid } from './FileGrid'
@@ -140,7 +141,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       setIsLoading(false)
       setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
       setIsPostImageLoad(true)
-    }, 700000)
+    }, 7000)
   }
 
   const handleStopGeneration = () => {
@@ -169,7 +170,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       setIsLoading(false)
       setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
       setIsPostImageLoad(true)
-    }, 700000)
+    }, 7000)
   }
 
   const handlePreviewClick = () => {
@@ -432,7 +433,15 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                           ) : generatedImage ? (
                             <Button size="slim" icon={UndoIcon}>Try again</Button>
                           ) : (
-                            <Button size="slim" onClick={handleGenerateButtonClick}>Generate</Button>
+                            <div className="generate-button-container">
+                              <Button 
+                                size="slim" 
+                                onClick={handleGenerateButtonClick}
+                                icon={ArrowUpIcon}
+                                disabled={!promptValue.trim()}
+                                variant="tertiary"
+                              />
+                            </div>
                           )}
                         </Box>
                       </InlineStack>
