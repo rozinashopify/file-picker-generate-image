@@ -4,9 +4,10 @@ import './ImageLoader.css';
 interface ImageLoaderProps {
   width?: number;
   height?: number;
+  prompt?: string;
 }
 
-export function ImageLoader({ width = 640, height = 427}: ImageLoaderProps) {
+export function ImageLoader({ width = 640, height = 427, prompt = "lush green leaves"}: ImageLoaderProps) {
   return (
     <div 
       className="image-loader-container"
@@ -19,7 +20,7 @@ export function ImageLoader({ width = 640, height = 427}: ImageLoaderProps) {
       <div className="loader-rectangle rectangle-5"></div>
       <div className="loader-rectangle rectangle-6"></div>
       <div className="loader-content">
-        Generating image...
+        {prompt}
       </div>
     </div>
   );

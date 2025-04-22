@@ -25,6 +25,7 @@ import {
   AppsIcon,
   ArrowLeftIcon,
   ImageMagicIcon,
+  UndoIcon,
 } from '@shopify/polaris-icons'
 import { useState, useEffect, useRef } from 'react'
 import { FileGrid } from './FileGrid'
@@ -135,6 +136,12 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
       setIsPostImageLoad(true)
     }, 5000)
+  }
+
+  const handleStopGeneration = () => {
+    setIsLoading(false)
+    setGeneratedImage(null)
+    setPromptValue("")
   }
 
   // Reset state when modal is closed
@@ -278,8 +285,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                     <div className={`loading-container ${isLoading ? 'animate' : ''}`}>
                       <Box>
                         <BlockStack gap="400" align="center">
-                          <ImageLoader />
-
+                          <ImageLoader prompt={promptValue} />
                         </BlockStack>
                       </Box>
                     </div>
@@ -314,11 +320,18 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                             placeholder="Describe what you want to see"
                             value={promptValue}
                             onChange={handlePromptChange}
+                            disabled={isLoading}
                           />
                         </InlineStack>
 
                         <Box>
-                          <Button size="slim">Generate</Button>
+                          {isLoading ? (
+                            <Button size="slim" onClick={handleStopGeneration}>Stop</Button>
+                          ) : generatedImage ? (
+                            <Button size="slim" icon={UndoIcon}>Try again</Button>
+                          ) : (
+                            <Button size="slim">Generate</Button>
+                          )}
                         </Box>
                       </InlineStack>
                     </div>
