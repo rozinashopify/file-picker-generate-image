@@ -1,0 +1,46 @@
+.custom-thumbnail-container .Polaris-Thumbnail {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.custom-thumbnail-container .Polaris-Thumbnail img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.file-hover-actions {
+  position: absolute;
+  top: 111px;
+  right: 26px;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.file-hover-actions .Polaris-Button {
+    background-color: rgba(0,0,0,0.4);
+}
+
+.file-hover-actions .Polaris-Button svg {
+    fill: #FFF !important;
+}
+
+.file-hover-actions .Polaris-Button:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.file-container:hover .file-hover-actions {
+  opacity: 1;
+}
+
+.file-container {
+  position: relative;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.file-container:hover {
+  background-color: var(--p-color-bg-surface-hover);
+} 

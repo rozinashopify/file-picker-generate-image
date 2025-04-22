@@ -340,6 +340,31 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     }
   }
 
+  const handleGenerateVariation = (file: File) => {
+    if (magicButtonRef.current) {
+      const modalSection = document.querySelector('.Polaris-Modal-Section > section.Polaris-Box')
+      if (modalSection) {
+        const buttonRect = magicButtonRef.current.getBoundingClientRect()
+        const modalRect = modalSection.getBoundingClientRect()
+        
+        // Calculate position relative to the modal section
+        const relativeTop = buttonRect.top - modalRect.top
+        const relativeLeft = buttonRect.left - modalRect.left
+        
+        setButtonPosition({ top: relativeTop, left: relativeLeft })
+        
+        magicButtonRef.current.classList.add('expand')
+        
+        // Set initial prompt based on the file name
+        setPromptValue(`Create a variation of ${file.name}`)
+        
+        setTimeout(() => {
+          setIsGenerateMode(true)
+        }, 300)
+      }
+    }
+  }
+
   // Reset state when modal is closed
   useEffect(() => {
     if (!open) {
@@ -639,6 +664,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                     files={files}
                     onFileSelect={handleFileSelect}
                     selectedFiles={selectedFiles}
+                    onGenerateVariation={handleGenerateVariation}
                   />
                 </Box>
               </div>
