@@ -140,13 +140,36 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       setIsLoading(false)
       setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
       setIsPostImageLoad(true)
-    }, 7000)
+    }, 700000)
   }
 
   const handleStopGeneration = () => {
     setIsLoading(false)
     setGeneratedImage(null)
     setPromptValue("")
+  }
+
+  const handleGenerateButtonClick = () => {
+    // If there's already an image, collapse it first
+    if (generatedImage) {
+      setIsCollapsing(true)
+      setTimeout(() => {
+        setGeneratedImage(null)
+        setIsCollapsing(false)
+        setIsLoading(true)
+        setIsPostImageLoad(false)
+      }, 300)
+    } else {
+      setIsLoading(true)
+      setIsPostImageLoad(false)
+    }
+    
+    // Simulate loading for 5 seconds then show the image
+    setTimeout(() => {
+      setIsLoading(false)
+      setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
+      setIsPostImageLoad(true)
+    }, 700000)
   }
 
   const handlePreviewClick = () => {
@@ -409,7 +432,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                           ) : generatedImage ? (
                             <Button size="slim" icon={UndoIcon}>Try again</Button>
                           ) : (
-                            <Button size="slim">Generate</Button>
+                            <Button size="slim" onClick={handleGenerateButtonClick}>Generate</Button>
                           )}
                         </Box>
                       </InlineStack>

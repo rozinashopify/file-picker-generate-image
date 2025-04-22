@@ -55,7 +55,7 @@
 }
 
 .magic-button .Polaris-Button.Polaris-Button {
-  color: var(--p-color-text-magic) !important;
+
   position: relative;
   z-index: 1;
   background: var(--p-color-bg-surface) !important;
@@ -69,16 +69,26 @@
   transition: all 0.3s ease-in-out;
 }
 
+.file-browser-container {
+    position: relative;
+    height: 570px;
+    overflow-y: scroll;
+}
+
+.file-browser-container.fade-out {
+    overflow: hidden;
+}
+
 .file-grid-container {
   transition: opacity 0.25s ease-out, top 0.25s ease-out;
   position: absolute;
-  top: 238px;
+  top: 122px;
 }
 
 .file-grid-container.fade-out {
   opacity: 0.2;
   position: absolute;
-  top: 591px;
+  top: 200px;
 }
 
 .action-bar-container {
@@ -132,6 +142,8 @@
 }
 .generate-mode-input {
     position: relative;
+    width: 480px;
+    margin: 0 auto;
 }
 
 
@@ -188,9 +200,9 @@
     background: var(--p-color-bg-surface);
     position: relative;
     z-index: 1;
-    padding: var(--p-space-100) var(--p-space-200);
+    padding: var(--p-space-150) var(--p-space-200);
     border-radius: var(--p-border-radius-200);
-    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.04), 0px 4px 6px -1px rgba(0, 0, 0, 0.04), 0px 1px 2px -0.5px rgba(0, 0, 0, 0.04), 0px 0.5px 0.5px 0px rgba(0, 0, 0, 0.06), 0px 0px 0px 1px rgba(0, 0, 0, 0.05);;
+    box-shadow: 0px 100px 80px 0px rgba(0, 0, 0, 0.07), 0px 41.778px 33.422px 0px rgba(0, 0, 0, 0.05), 0px 22.336px 17.869px 0px rgba(0, 0, 0, 0.04), 0px 12.522px 10.017px 0px rgba(0, 0, 0, 0.04), 0px 6.65px 5.32px 0px rgba(0, 0, 0, 0.03), 0px 2.767px 2.214px 0px rgba(0, 0, 0, 0.02);
 }
 
 .generate-mode-input .faux-input .Polaris-TextField__Backdrop {
@@ -368,7 +380,7 @@
         transform: translateY(-10px);
     }
     to {
-        padding-top: 200px;
+        padding-top: 240px;
         opacity: 1;
         transform: translateY(0);
     }
@@ -376,7 +388,7 @@
 
 @keyframes padding-collapse {
     from {
-        padding-top: 200px;
+        padding-top: 240px;
         opacity: 1;
         transform: translateY(0);
     }
@@ -440,9 +452,4 @@
 
 .image-action-button .Polaris-Button.Polaris-Button svg {
     fill: var(--p-color-icon-inverse) !important;
-}
-
-/* Set fill color for all icons in the toolbar */
-.image-preview-toolbar .Polaris-Icon {
-  fill: var(--p-color-icon-inverse) !important;
 }

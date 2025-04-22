@@ -1,7 +1,7 @@
 .image-loader-container {
   position: relative;
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
+  background-color: #FFF;
+  border-radius: 24px;
   overflow: hidden;
 }
 
@@ -12,9 +12,108 @@
   transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
-  border-radius: 8px;
+  border-radius: 24px;
   box-sizing: border-box;
   background-color: transparent;
+}
+
+.loader-rectangle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to bottom, 
+    #FFD8B7 0%, 
+    #F4C2FF 9%, 
+    #D1BDFF 18%, 
+    #A0CBFF 27%, 
+    #A0CBFF 36%, 
+    #D1BDFF 45%, 
+    #F4C2FF 55%, 
+    #FFD8B7 64%, 
+    #FFD8B7 73%, 
+    #F4C2FF 82%, 
+    #D1BDFF 91%, 
+    #A0CBFF 100%);
+  border-radius: 24px;
+  z-index: -1;
+  animation: gradientMove 4s linear infinite;
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Rectangle 1 - Largest border and blur */
+
+.rectangle-1 {
+    opacity: 0.3;
+  }
+
+.rectangle-1::before {
+  padding: 2px;
+  z-index: 1;
+  background-color: #FFF;
+}
+
+/* Rectangle 2 */
+.rectangle-2 {
+    filter: blur(4px);
+    opacity: 0.5;
+}
+
+.rectangle-2::before {
+  padding: 4px;
+  z-index: 2;
+}
+
+/* Rectangle 3 */
+.rectangle-3 {
+    filter: blur(8px);
+    opacity: 0.3;
+}
+.rectangle-3::before {
+  padding: 8px;
+  z-index: 3;
+}
+
+/* Rectangle 4 */
+.rectangle-4{
+    filter: blur(16px);
+    opacity: 0.3;
+}
+
+.rectangle-4::before {
+  padding: 16px;
+  filter: blur(16px);
+  z-index: 4;
+}
+
+/* Rectangle 5 */
+.rectangle-5 {
+    filter: blur(32px);
+    opacity: 0.25;
+}
+
+.rectangle-5::before {
+  padding: 32px;
+  filter: blur(32px);
+  z-index: 5;
+}
+
+/* Rectangle 6 - Smallest border and blur */
+.rectangle-6{
+    filter: blur(64px);
+    opacity: 0.3;
+}
+
+.rectangle-6::before {
+  padding: 64px;
+  filter: blur(64px);
+  z-index: 6;
 }
 
 @keyframes gradientMove {
@@ -27,139 +126,6 @@
   100% {
     background-position: 50% 0%;
   }
-}
-
-/* Rectangle 1 - Largest border and blur */
-.rectangle-1 {
-  border: 2px solid;
-  border-image: linear-gradient(to bottom, 
-    #FFD8B7 0%, 
-    #F4C2FF 9%, 
-    #D1BDFF 18%, 
-    #A0CBFF 27%, 
-    #A0CBFF 36%, 
-    #D1BDFF 45%, 
-    #F4C2FF 55%, 
-    #FFD8B7 64%, 
-    #FFD8B7 73%, 
-    #F4C2FF 82%, 
-    #D1BDFF 91%, 
-    #A0CBFF 100%) 1;
-  border-radius: 25px;
-  filter: blur(2px);
-  animation: gradientMove 4s linear infinite;
-  z-index: 1;
-  background-color: #FFF;
-}
-
-/* Rectangle 2 */
-.rectangle-2 {
-  border: 4px solid;
-  border-image: linear-gradient(to bottom, 
-    #FFD8B7 0%, 
-    #F4C2FF 9%, 
-    #D1BDFF 18%, 
-    #A0CBFF 27%, 
-    #A0CBFF 36%, 
-    #D1BDFF 45%, 
-    #F4C2FF 55%, 
-    #FFD8B7 64%, 
-    #FFD8B7 73%, 
-    #F4C2FF 82%, 
-    #D1BDFF 91%, 
-    #A0CBFF 100%) 1;
-  border-radius: 25px;
-  filter: blur(4px);
-  animation: gradientMove 4s linear infinite;
-  z-index: 2;
-}
-
-/* Rectangle 3 */
-.rectangle-3 {
-  border: 8px solid;
-  border-image: linear-gradient(to bottom, 
-    #FFD8B7 0%, 
-    #F4C2FF 9%, 
-    #D1BDFF 18%, 
-    #A0CBFF 27%, 
-    #A0CBFF 36%, 
-    #D1BDFF 45%, 
-    #F4C2FF 55%, 
-    #FFD8B7 64%, 
-    #FFD8B7 73%, 
-    #F4C2FF 82%, 
-    #D1BDFF 91%, 
-    #A0CBFF 100%) 1;
-  border-radius: 25px;
-  filter: blur(8px);
-  animation: gradientMove 4s linear infinite;
-  z-index: 3;
-}
-
-/* Rectangle 4 */
-.rectangle-4 {
-  border: 16px solid;
-  border-image: linear-gradient(to bottom, 
-    #FFD8B7 0%, 
-    #F4C2FF 9%, 
-    #D1BDFF 18%, 
-    #A0CBFF 27%, 
-    #A0CBFF 36%, 
-    #D1BDFF 45%, 
-    #F4C2FF 55%, 
-    #FFD8B7 64%, 
-    #FFD8B7 73%, 
-    #F4C2FF 82%, 
-    #D1BDFF 91%, 
-    #A0CBFF 100%) 1;
-  border-radius: 25px;
-  filter: blur(16px);
-  animation: gradientMove 4s linear infinite;
-  z-index: 4;
-}
-
-/* Rectangle 5 */
-.rectangle-5 {
-  border: 32px solid;
-  border-image: linear-gradient(to bottom, 
-    #FFD8B7 0%, 
-    #F4C2FF 9%, 
-    #D1BDFF 18%, 
-    #A0CBFF 27%, 
-    #A0CBFF 36%, 
-    #D1BDFF 45%, 
-    #F4C2FF 55%, 
-    #FFD8B7 64%, 
-    #FFD8B7 73%, 
-    #F4C2FF 82%, 
-    #D1BDFF 91%, 
-    #A0CBFF 100%) 1;
-  border-radius: 25px;
-  filter: blur(32px);
-  animation: gradientMove 4s linear infinite;
-  z-index: 5;
-}
-
-/* Rectangle 6 - Smallest border and blur */
-.rectangle-6 {
-  border: 64px solid;
-  border-image: linear-gradient(to bottom, 
-    #FFD8B7 0%, 
-    #F4C2FF 9%, 
-    #D1BDFF 18%, 
-    #A0CBFF 27%, 
-    #A0CBFF 36%, 
-    #D1BDFF 45%, 
-    #F4C2FF 55%, 
-    #FFD8B7 64%, 
-    #FFD8B7 73%, 
-    #F4C2FF 82%, 
-    #D1BDFF 91%, 
-    #A0CBFF 100%) 1;
-  border-radius: 25px;
-  filter: blur(64px);
-  animation: gradientMove 4s linear infinite;
-  z-index: 6;
 }
 
 .loader-content {
