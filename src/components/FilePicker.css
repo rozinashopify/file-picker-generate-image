@@ -679,3 +679,13 @@
 }
 
 
+
+.generate-image-button .Polaris-Button svg {
+  fill: var(--p-color-icon-magic) !important;
+}
+
+.generate-image-button .Polaris-Button .Polaris-Button__Text {
+  color: var(--p-color-text-magic) !important;
+}
+
+

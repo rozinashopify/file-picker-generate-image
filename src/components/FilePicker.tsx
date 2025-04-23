@@ -461,10 +461,8 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
               <Button>Upload files</Button>
               <Button icon={ChevronDownIcon} accessibilityLabel="Create folder" />
             </ButtonGroup>
-            <div onClick={(e) => e.stopPropagation()}>
-              <div className={`magic-button ${isGenerateMode ? 'expand' : ''}`} ref={magicButtonRef}>
-                <Button onClick={handleGenerateClick} icon={ImageMagicIcon}>Generate image</Button>
-              </div>
+            <div className="generate-image-button" onClick={(e) => e.stopPropagation()}>
+              <Button onClick={handleGenerateClick} icon={ImageMagicIcon}>Generate image</Button>
             </div>
           </InlineStack>
           <Text as="p" variant="bodyMd" tone="subdued" alignment="center">
