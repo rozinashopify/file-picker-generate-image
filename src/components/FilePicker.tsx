@@ -186,6 +186,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const [selectedFiles, setSelectedFiles] = useState<string[]>([])
   const [originalImage, setOriginalImage] = useState<File | null>(null)
   const [newFilesToHighlight, setNewFilesToHighlight] = useState<string[]>([])
+  const [highlightedFiles, setHighlightedFiles] = useState<Set<string>>(new Set())
   const magicButtonRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const [sectionHeight, setSectionHeight] = useState<number | null>(null)
@@ -586,6 +587,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
       setIsCollapsing(false)
       setIsPostImageLoad(false)
       setOriginalImage(null)
+      setNewFilesToHighlight([])
     }
   }, [open])
 
