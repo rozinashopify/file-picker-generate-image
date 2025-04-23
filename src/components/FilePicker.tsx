@@ -169,9 +169,10 @@ const SAMPLE_FILES: File[] = [
 interface FilePickerProps {
   open: boolean
   onClose: () => void
+  onFileSelect: (file: File) => void
 }
 
-export function FilePicker({ open, onClose }: FilePickerProps) {
+export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const [searchValue, setSearchValue] = useState('')
   const [actionsPopoverActive, setActionsPopoverActive] = useState(false)
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
@@ -367,7 +368,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     setSelectedFiles((prev) =>
       prev.includes(fileId)
         ? prev.filter((id) => id !== fileId)
-        : [...prev, fileId]
+        : [fileId] // Only allow one file to be selected at a time
     )
   }
 
@@ -409,6 +410,16 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     setTimeout(() => {
       setIsGenerateMode(true)
     }, 300)
+  }
+
+  const handleDone = () => {
+    if (selectedFiles.length > 0) {
+      const selectedFile = files.find(file => file.id === selectedFiles[0])
+      if (selectedFile) {
+        onFileSelect(selectedFile)
+      }
+    }
+    onClose()
   }
 
   // Reset state when modal is closed
@@ -513,7 +524,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
         size="large"
         primaryAction={{
           content: isGenerateMode ? 'Save to files' : 'Done',
-          onAction: isGenerateMode ? handleSaveToFiles : onClose,
+          onAction: isGenerateMode ? handleSaveToFiles : handleDone,
           disabled: isGenerateMode && (isLoading || !generatedImage),
         }}
         secondaryActions={[

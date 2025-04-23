@@ -9,11 +9,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .file-picker-placeholder:hover {
   background-color: var(--p-color-bg-surface-secondary-hover);
   border-color: var(--p-color-border-hover);
+}
+
+/* Style when placeholder contains an image */
+.file-picker-placeholder img {
+  width: 100px;
+  height: 100px;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  border-radius: var(--p-border-radius-200);
+  transition: all 0.2s ease;
+  object-fit: cover;
+}
+
+.file-picker-placeholder:hover img {
+  opacity: 0.8;
 } 
