@@ -54,32 +54,19 @@ export function ImagePreview({
               <Text as="span" variant="headingMd">Preview generated image</Text>
             </InlineStack>
             <InlineStack gap="300">
-
-                <Button
-                  size="large"
-                  icon={ImportIcon}
-                  onClick={onDownload}
-                  variant="tertiary"
-                  accessibilityLabel="Download image"
-                />
-
-              
-
-                <Button
-                    size="large"
-                  icon={FlagIcon}
-                  onClick={onReport}
-                  variant="tertiary"
-                  accessibilityLabel="Report image"
-                />
-
+              <Button
+                size="large"
+                icon={ImportIcon}
+                onClick={onDownload}
+                variant="tertiary"
+                accessibilityLabel="Download image"
+              />
               <div className="save-to-files">
                 <Button 
-                    variant="secondary"
-                    size="large"
-                    onClick={() => onSaveToFiles(true)}>Save to Files</Button>
+                  variant="secondary"
+                  size="large"
+                  onClick={() => onSaveToFiles(true)}>Save to Files</Button>
               </div>
-              
             </InlineStack>
           </InlineStack>
         </div>

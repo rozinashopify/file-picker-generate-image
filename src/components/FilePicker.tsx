@@ -564,7 +564,9 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
                               }} 
                             />
-                            <div style={{ position: 'absolute', bottom: '16px', left: '16px' }}>
+
+                            <div style={{ position: 'absolute', top: '16px', right: '16px' }}>
+                              <InlineStack gap="300">
                               <Tooltip content="Report image">
                                 <div className="image-action-button">
                                   <Button
@@ -574,9 +576,6 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                                   />
                                 </div>
                               </Tooltip>
-                            </div>
-                            <div style={{ position: 'absolute', top: '16px', right: '16px' }}>
-                              <InlineStack gap="300">
                                 <Tooltip content="Download">
                                   <div className="image-action-button">
                                     <Button
@@ -586,6 +585,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                                     />
                                   </div>
                                 </Tooltip>
+                                {/* commenting out preview instead of deleting for now
                                 <Tooltip content="Preview generated image">
                                   <div className="image-action-button">
                                     <Button
@@ -596,6 +596,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                                     />
                                   </div>
                                 </Tooltip>
+                                */}
                               </InlineStack>
                             </div>
                           </div>
