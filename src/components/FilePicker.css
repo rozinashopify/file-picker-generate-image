@@ -1,11 +1,21 @@
 .Polaris-Modal-Dialog {
   --pc-modal-dialog-vertical-spacing: 12rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100vh !important;
 }
 
 .Polaris-Modal-Dialog__Modal {
   --pc-modal-dialog-vertical-spacing: 20rem !important;
-  max-height: calc(100vh - var(--pc-modal-dialog-vertical-spacing)) !important;
+    max-height: unset !important;
   background: var(--p-color-bg-surface) !important;
+  width: 950px !important;
+  max-width: 90vw !important;
+  margin: 0 auto !important;
+  position: relative !important;
+  top: 0 !important;
+  transform: none !important;
 }
 
 @property --angle {
@@ -193,7 +203,7 @@
   }
   100% {
     opacity: 1;
-    transform: translateY(470px);
+    transform: translateY(450px);
   }
 }
 
@@ -463,11 +473,11 @@
 @keyframes container-enter {
     0% {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-40px);
     }
     100% {
         opacity: 1;
-        transform: translateY(20px);
+        transform: translateY(0px);
     }
 }
 
@@ -682,7 +692,7 @@
 @keyframes input-slide-in {
     0% {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(130px);
     }
     100% {
         opacity: 1;
@@ -698,6 +708,58 @@
 
 .generate-image-button .Polaris-Button .Polaris-Button__Text {
   color: var(--p-color-text-magic) !important;
+}
+
+/* Ensure modal is centered on all screen sizes */
+.Polaris-Modal {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh !important;
+}
+
+.Polaris-Modal__Wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh !important;
+  padding: 0 !important;
+}
+
+/* Ensure consistent modal content */
+.modal-content {
+  transition: height 0.3s ease-in-out;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: var(--p-color-bg-fill-secondary);
+  border-radius: 3px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: var(--p-color-border-subdued);
+  border-radius: 3px;
+}
+
+/* Custom modal styling to ensure consistent height and centering */
+.custom-modal {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.custom-modal .Polaris-Modal {
+  height: 600px !important;
+  max-height: 80vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 

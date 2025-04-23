@@ -517,6 +517,8 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
             className={`modal-content ${isGenerateMode ? 'generate-mode-content' : ''}`}
             style={{
               height: '600px',
+              maxHeight: '70vh',
+              overflow: 'auto',
               ...(isGenerateMode && {
                 overflow: 'hidden',
                 padding: '20px'

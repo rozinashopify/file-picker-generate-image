@@ -6,7 +6,13 @@ export default function App() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div style={{ margin: '20px' }}>
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      height: '100vh',
+      width: '100%'
+    }}>
       <Button onClick={() => setIsOpen(true)}>Open File Picker</Button>
       <FilePicker open={isOpen} onClose={() => setIsOpen(false)} />
     </div>
