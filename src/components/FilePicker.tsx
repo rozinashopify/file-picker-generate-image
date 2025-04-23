@@ -185,6 +185,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const [files, setFiles] = useState<File[]>(SAMPLE_FILES)
   const [selectedFiles, setSelectedFiles] = useState<string[]>([])
   const [originalImage, setOriginalImage] = useState<File | null>(null)
+  const [newFilesToHighlight, setNewFilesToHighlight] = useState<string[]>([])
   const magicButtonRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const [sectionHeight, setSectionHeight] = useState<number | null>(null)
@@ -294,8 +295,11 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   }
 
   const handleGenerateButtonClick = () => {
+    console.log('handleGenerateButtonClick called with originalImage:', originalImage);
+    
     // If there's already an image, collapse it first
     if (generatedImage) {
+      console.log('Collapsing existing image');
       setIsCollapsing(true)
       setTimeout(() => {
         setGeneratedImage(null)
@@ -312,12 +316,14 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     setTimeout(() => {
       setIsLoading(false)
       if (originalImage?.variantUrl) {
+        console.log('Using variantUrl from originalImage:', originalImage.variantUrl);
         setGeneratedImage(originalImage.variantUrl)
       } else {
+        console.log('Using default image URL');
         setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
       }
       setIsPostImageLoad(true)
-      setPromptValue("")
+      // Removed setPromptValue("") to preserve the prompt for naming
     }, 7000)
   }
 
@@ -374,20 +380,78 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
 
   const handleSaveToFiles = (fromPreview = false) => {
     if (generatedImage) {
+      console.log('Starting handleSaveToFiles with prompt:', promptValue);
+      console.log('Original image:', originalImage);
+      
+      // Generate a custom name based on the prompt
+      const generateCustomName = (prompt: string) => {
+        console.log('generateCustomName called with prompt:', prompt);
+        
+        if (!prompt) {
+          console.log('No prompt provided, returning default name');
+          return 'generated-image';
+        }
+        
+        // Clean up the prompt and create a meaningful name
+        const cleanPrompt = prompt
+          .toLowerCase()
+          // Remove common words and articles
+          .replace(/\b(make|add|create|enhance|give|the|a|an|and|or|but|in|on|at|to|for|with|by|it|more|very|much|so|such|as|like|than|that|this|these|those)\b/g, '')
+          // Remove special characters
+          .replace(/[^a-z0-9\s-]/g, '')
+          .trim();
+          
+        console.log('After initial cleaning:', cleanPrompt);
+        
+        // Split into words and process
+        const words = cleanPrompt.split(/\s+/)
+          .filter(word => word.length > 2)
+          .slice(0, 4);
+          
+        console.log('Processed words:', words);
+        
+        const finalName = words.join('-') || `generated-${Date.now()}`;
+        console.log('Final generated name:', finalName);
+        
+        return finalName;
+      };
+
+      // Store the current prompt value before resetting states
+      const currentPrompt = promptValue;
+      
+      // If we have an original image, use its predefined prompt
+      let namePrompt = currentPrompt;
+      if (originalImage && FILE_IMPROVEMENTS[originalImage.id]) {
+        namePrompt = FILE_IMPROVEMENTS[originalImage.id];
+        console.log('Using predefined prompt from FILE_IMPROVEMENTS:', namePrompt);
+      } else {
+        console.log('No predefined prompt found for originalImage:', originalImage);
+      }
+
       // Create a new file object for the generated image
       const newFile: File = {
         id: Date.now().toString(), // Use timestamp as a unique ID
-        name: promptValue || 'Generated image',
+        name: generateCustomName(namePrompt),
         extension: 'JPG',
         url: generatedImage,
         highResUrl: generatedImage, // Use the same URL for high-res since it's already high quality
         variantUrl: generatedImage // Add variantUrl
       }
       
-      // Add the new file to the beginning of the list
-      setFiles((prevFiles) => [newFile, ...prevFiles])
+      console.log('Created new file object:', newFile);
       
-      // Reset all states
+      // Add the new file to the beginning of the list
+      setFiles((prevFiles) => {
+        console.log('Previous files:', prevFiles);
+        const newFiles = [newFile, ...prevFiles];
+        console.log('Updated files list:', newFiles);
+        return newFiles;
+      });
+      
+      // Set the new file to be highlighted
+      setNewFilesToHighlight([newFile.id])
+      
+      // Reset all states after creating the file
       setIsGenerateMode(false)
       setGeneratedImage(null)
       setPromptValue("")
@@ -398,9 +462,11 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   }
 
   const handleGenerateVariation = (file: File) => {
+    console.log('handleGenerateVariation called with file:', file);
     setFromVariant(true)
     setIsGenerateMode(true)
     setOriginalImage(file)
+    console.log('Set originalImage to:', file);
     setPromptValue('')
     setGeneratedImage(null)
     setIsLoading(false)
@@ -417,15 +483,63 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
       isGenerateMode,
       generatedImage,
       selectedFiles,
-      files
+      files,
+      originalImage,
+      promptValue
     });
 
     if (isGenerateMode && generatedImage) {
       console.log('Handling generated image case');
+      
+      // Generate a custom name based on the prompt
+      const generateCustomName = (prompt: string) => {
+        console.log('generateCustomName called with prompt:', prompt);
+        
+        if (!prompt) {
+          console.log('No prompt provided, returning default name');
+          return 'generated-image';
+        }
+        
+        // Clean up the prompt and create a meaningful name
+        const cleanPrompt = prompt
+          .toLowerCase()
+          // Remove common words and articles
+          .replace(/\b(make|add|create|enhance|give|the|a|an|and|or|but|in|on|at|to|for|with|by|it|more|very|much|so|such|as|like|than|that|this|these|those)\b/g, '')
+          // Remove special characters
+          .replace(/[^a-z0-9\s-]/g, '')
+          .trim();
+          
+        console.log('After initial cleaning:', cleanPrompt);
+        
+        // Split into words and process
+        const words = cleanPrompt.split(/\s+/)
+          .filter(word => word.length > 2)
+          .slice(0, 4);
+          
+        console.log('Processed words:', words);
+        
+        const finalName = words.join('-') || `generated-${Date.now()}`;
+        console.log('Final generated name:', finalName);
+        
+        return finalName;
+      };
+      
+      // Store the current prompt value before resetting states
+      const currentPrompt = promptValue;
+      
+      // If we have an original image, use its predefined prompt
+      let namePrompt = currentPrompt;
+      if (originalImage && FILE_IMPROVEMENTS[originalImage.id]) {
+        namePrompt = FILE_IMPROVEMENTS[originalImage.id];
+        console.log('Using predefined prompt from FILE_IMPROVEMENTS:', namePrompt);
+      } else {
+        console.log('No predefined prompt found for originalImage:', originalImage);
+      }
+      
       // Create a new file object for the generated image
       const newFile: File = {
         id: Date.now().toString(), // Use timestamp as a unique ID
-        name: promptValue || 'Generated image',
+        name: generateCustomName(namePrompt),
         extension: 'JPG',
         url: generatedImage,
         highResUrl: generatedImage, // Use the same URL for high-res since it's already high quality
@@ -794,6 +908,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                     onFileSelect={handleFileSelect}
                     selectedFiles={selectedFiles}
                     onGenerateVariation={handleGenerateVariation}
+                    newFilesToHighlight={newFilesToHighlight}
                   />
                 </Box>
               </div>
