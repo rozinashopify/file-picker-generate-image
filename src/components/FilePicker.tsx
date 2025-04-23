@@ -413,13 +413,53 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   }
 
   const handleDone = () => {
-    if (selectedFiles.length > 0) {
-      const selectedFile = files.find(file => file.id === selectedFiles[0])
-      if (selectedFile) {
-        onFileSelect(selectedFile)
+    console.log('handleDone called', {
+      isGenerateMode,
+      generatedImage,
+      selectedFiles,
+      files
+    });
+
+    if (isGenerateMode && generatedImage) {
+      console.log('Handling generated image case');
+      // Create a new file object for the generated image
+      const newFile: File = {
+        id: Date.now().toString(), // Use timestamp as a unique ID
+        name: promptValue || 'Generated image',
+        extension: 'JPG',
+        url: generatedImage,
+        highResUrl: generatedImage, // Use the same URL for high-res since it's already high quality
+        variantUrl: generatedImage // Add variantUrl
       }
+      
+      console.log('Created new file:', newFile);
+      
+      // Add the new file to the beginning of the list
+      setFiles((prevFiles) => {
+        console.log('Updating files list, previous files:', prevFiles);
+        return [newFile, ...prevFiles];
+      });
+
+      // Update selected files to include the new file
+      setSelectedFiles([newFile.id]);
+      
+      // Select the newly created file
+      console.log('Calling onFileSelect with new file');
+      onFileSelect(newFile);
+    } else if (selectedFiles.length > 0) {
+      console.log('Handling selected files case');
+      const selectedFile = files.find(file => file.id === selectedFiles[0]);
+      console.log('Found selected file:', selectedFile);
+      if (selectedFile) {
+        console.log('Calling onFileSelect with selected file');
+        onFileSelect(selectedFile);
+      }
+    } else {
+      console.log('No action taken - no generated image or selected files');
     }
-    onClose()
+    
+    console.log('Calling onClose');
+    onClose();
   }
 
   // Reset state when modal is closed
@@ -523,8 +563,8 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
         }
         size="large"
         primaryAction={{
-          content: isGenerateMode ? 'Save to files' : 'Done',
-          onAction: isGenerateMode ? handleSaveToFiles : handleDone,
+          content: isGenerateMode ? 'Done' : 'Done',
+          onAction: handleDone,
           disabled: isGenerateMode && (isLoading || !generatedImage),
         }}
         secondaryActions={[
@@ -594,15 +634,15 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
 
                             <div style={{ position: 'absolute', top: '16px', right: '16px' }}>
                               <InlineStack gap="300">
-                              <Tooltip content="Report image">
-                                <div className="image-action-button">
-                                  <Button
-                                    icon={FlagIcon}
-                                    variant="tertiary"
-                                    size="medium"
-                                  />
-                                </div>
-                              </Tooltip>
+                                <Tooltip content="Report image">
+                                  <div className="image-action-button">
+                                    <Button
+                                      icon={FlagIcon}
+                                      variant="tertiary"
+                                      size="medium"
+                                    />
+                                  </div>
+                                </Tooltip>
                                 <Tooltip content="Download">
                                   <div className="image-action-button">
                                     <Button
@@ -612,19 +652,21 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                     />
                                   </div>
                                 </Tooltip>
-                                {/* commenting out preview instead of deleting for now
-                                <Tooltip content="Preview generated image">
-                                  <div className="image-action-button">
-                                    <Button
-                                      icon={ViewIcon}
-                                      variant="tertiary"
-                                      size="medium"
-                                      onClick={handlePreviewClick}
-                                    />
-                                  </div>
-                                </Tooltip>
-                                */}
                               </InlineStack>
+                            </div>
+
+                            <div style={{ position: 'absolute', bottom: '16px', right: '16px' }}>
+                              <Tooltip content="Save to files">
+                                <div className="image-action-button">
+                                  <Button
+                                    onClick={handleSaveToFiles}
+                                    variant="primary"
+                                    size="medium"
+                                  >
+                                    Save to files
+                                  </Button>
+                                </div>
+                              </Tooltip>
                             </div>
                           </div>
                         </Box>
