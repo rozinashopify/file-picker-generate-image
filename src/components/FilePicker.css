@@ -118,23 +118,42 @@
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   background-color: white;
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--p-shadow-200);
   z-index: 10;
   opacity: 0;
-  transition: opacity 0.25s ease-out;
+  transition: opacity 0.25s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out;
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 /* Show the arrow button when hovering over the file grid */
 .file-browser-container.fade-out:hover .file-grid-arrow-button {
   opacity: 1;
+}
+
+.file-grid-arrow-button:hover {
+    background-color: var(--p-color-bg-surface-hover);
+}
+
+.file-grid-arrow-button svg {
+    transition: transform 0.2s ease-out;
+    fill: var(--p-color-icon-secondary) !important;
+}
+
+.file-grid-arrow-button:hover svg {
+    transform: translateY(-2px);
+    fill: var(--p-color-icon-hover) !important;
+}
+
+/* Add a class for when the arrow button is being hovered */
+.file-browser-container.fade-out.arrow-hovered .file-grid-container.fade-out {
+  opacity: 0.5;
 }
 
 /* Disable hover interactions on file cards when grid is faded out */

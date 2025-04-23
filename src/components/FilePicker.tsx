@@ -187,6 +187,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const [originalImage, setOriginalImage] = useState<File | null>(null)
   const [newFilesToHighlight, setNewFilesToHighlight] = useState<string[]>([])
   const [highlightedFiles, setHighlightedFiles] = useState<Set<string>>(new Set())
+  const [isArrowHovered, setIsArrowHovered] = useState(false)
   const magicButtonRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const [sectionHeight, setSectionHeight] = useState<number | null>(null)
@@ -611,6 +612,15 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     }
   }, [isGenerateMode])
 
+  // Handle arrow button hover
+  const handleArrowMouseEnter = () => {
+    setIsArrowHovered(true)
+  }
+
+  const handleArrowMouseLeave = () => {
+    setIsArrowHovered(false)
+  }
+
   const actionBarMarkup = (
     <Box background="bg-surface">
       <InlineStack align="space-between" blockAlign="center">
@@ -892,7 +902,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
               </div>
             )}
             
-            <div className={`file-browser-container ${isGenerateMode ? 'fade-out' : ''}`}>
+            <div className={`file-browser-container ${isGenerateMode ? 'fade-out' : ''} ${isArrowHovered ? 'arrow-hovered' : ''}`}>
               <div className={`upload-actions-container ${isGenerateMode ? 'fade-out' : ''}`}>
                 <Box paddingBlockEnd="400">
                   {!isGenerateMode && (
@@ -916,7 +926,11 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
               </div>
               
               {isGenerateMode && (
-                <div className="file-grid-arrow-button">
+                <div 
+                  className="file-grid-arrow-button"
+                  onMouseEnter={handleArrowMouseEnter}
+                  onMouseLeave={handleArrowMouseLeave}
+                >
                   <Icon source={ArrowUpIcon} />
                 </div>
               )}
