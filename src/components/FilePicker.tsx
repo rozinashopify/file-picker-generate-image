@@ -656,17 +656,17 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                             </div>
 
                             <div style={{ position: 'absolute', bottom: '16px', right: '16px' }}>
-                              <Tooltip content="Save to files">
-                                <div className="image-action-button">
+
+                                <div className="image-save-button">
                                   <Button
                                     onClick={handleSaveToFiles}
-                                    variant="primary"
-                                    size="medium"
+                                    variant="secondary"
+                                    size="micro"
                                   >
                                     Save to files
                                   </Button>
                                 </div>
-                              </Tooltip>
+
                             </div>
                           </div>
                         </Box>

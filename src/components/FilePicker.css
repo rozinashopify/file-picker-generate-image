@@ -777,3 +777,18 @@
 }
 
 
+
+.image-action-button .Polaris-Button svg {
+  fill: #FFF !important;
+}
+
+/* Special styling for the save to files button */
+.image-action-button .Polaris-Button--primary {
+  background-color: var(--p-color-bg-primary) !important;
+  color: var(--p-color-text-primary) !important;
+  padding: var(--p-space-200) var(--p-space-400);
+}
+
+.image-action-button .Polaris-Button--primary:hover {
+  background-color: var(--p-color-bg-primary-hover) !important;
+}
