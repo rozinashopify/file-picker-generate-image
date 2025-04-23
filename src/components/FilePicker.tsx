@@ -914,6 +914,12 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                   />
                 </Box>
               </div>
+              
+              {isGenerateMode && (
+                <div className="file-grid-arrow-button">
+                  <Icon source={ArrowUpIcon} />
+                </div>
+              )}
             </div>
           </div>
         </Modal.Section>
