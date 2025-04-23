@@ -14,6 +14,7 @@ import {
   ViewIcon,
   UndoIcon,
   InfoIcon,
+  SaveIcon,
 } from '@shopify/polaris-icons';
 import './ImagePreview.css';
 
@@ -23,6 +24,7 @@ interface ImagePreviewProps {
   onDownload: () => void;
   onReport: () => void;
   onTryAgain: () => void;
+  onSaveToFiles: (fromPreview?: boolean) => void;
 }
 
 export function ImagePreview({
@@ -31,6 +33,7 @@ export function ImagePreview({
   onDownload,
   onReport,
   onTryAgain,
+  onSaveToFiles,
 }: ImagePreviewProps) {
   return (
     <div className="image-preview-overlay">
@@ -39,39 +42,44 @@ export function ImagePreview({
         <div className="image-preview-toolbar">
           <InlineStack align="space-between" blockAlign="center">
             <InlineStack gap="200" blockAlign="center">
-              <Button
-                icon={ExitIcon}
-                onClick={onClose}
-                variant="tertiary"
-                accessibilityLabel="Close preview"
-              />
+              <div className="tooltip-wrapper">
+                <Button
+                  icon={ExitIcon}
+                  onClick={onClose}
+                  variant="tertiary"
+                  accessibilityLabel="Close preview"
+                />
+                <div className="tooltip-label">Close preview</div>
+              </div>
               <Text as="span" variant="headingMd">Preview generated image</Text>
             </InlineStack>
             <InlineStack gap="300">
-              <Tooltip content="Download">
+
                 <Button
+                  size="large"
                   icon={ImportIcon}
                   onClick={onDownload}
                   variant="tertiary"
                   accessibilityLabel="Download image"
                 />
-              </Tooltip>
-              <Tooltip content="Report image">
+
+              
+
                 <Button
+                    size="large"
                   icon={FlagIcon}
                   onClick={onReport}
                   variant="tertiary"
                   accessibilityLabel="Report image"
                 />
-              </Tooltip>
-              <Tooltip content="Try again">
-                <Button
-                  icon={UndoIcon}
-                  onClick={onTryAgain}
-                  variant="tertiary"
-                  accessibilityLabel="Try again"
-                />
-              </Tooltip>
+
+              <div className="save-to-files">
+                <Button 
+                    variant="secondary"
+                    size="large"
+                    onClick={() => onSaveToFiles(true)}>Save to Files</Button>
+              </div>
+              
             </InlineStack>
           </InlineStack>
         </div>

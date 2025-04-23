@@ -575,6 +575,8 @@
     transition: transform 0.15s ease-in-out !important;
 }
 
+
+
 .generate-button-container .Polaris-Button:hover svg {
     transform: translateY(-2px);
 }
@@ -592,6 +594,10 @@
 .generate-button-container .Polaris-Button:not(.Polaris-Button--disabled) {
   background-color: var(--p-color-text-magic-secondary);
 }
+
+.generate-button-container .Polaris-Button:not(.Polaris-Button--disabled):hover {
+    background-color: var(--p-color-text-magic);
+  }
 
 .generate-button-container .Polaris-Button:not(.Polaris-Button--disabled) svg {
     fill: #FFF !important;
@@ -611,19 +617,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--p-color-bg-fill-transparent-secondary);
+  background-color: var(--p-color-icon-secondary);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .custom-stop-button:hover {
-  background-color: var(--p-color-bg-fill-transparent-secondary-hover);
+  background-color: var(--p-color-icon-secondary-hover);
 }
 
 .custom-stop-icon {
   width: 8px;
   height: 9px;
-  background-color: var(--p-color-icon-secondary);
+  background-color: var(--p-color-bg-surface);
   border-radius: 2px;
 }
 

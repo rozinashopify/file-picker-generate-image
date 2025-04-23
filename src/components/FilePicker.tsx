@@ -357,7 +357,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
     )
   }
 
-  const handleSaveToFiles = () => {
+  const handleSaveToFiles = (fromPreview = false) => {
     if (generatedImage) {
       // Create a new file object for the generated image
       const newFile: File = {
@@ -372,13 +372,17 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       // Add the new file to the beginning of the list
       setFiles((prevFiles) => [newFile, ...prevFiles])
       
-      // Reset generate mode and return to file list
-      setIsGenerateMode(false)
-      setGeneratedImage(null)
-      setPromptValue("")
-      setIsLoading(false)
-      setIsCollapsing(false)
-      setIsPostImageLoad(false)
+      // Only reset generate mode if not called from preview
+      if (!fromPreview) {
+        setIsGenerateMode(false)
+        setGeneratedImage(null)
+        setPromptValue("")
+        setIsLoading(false)
+        setIsCollapsing(false)
+      } else {
+        // If called from preview, just close the preview
+        setIsPreviewMode(false)
+      }
     }
   }
 
@@ -735,6 +739,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
           onDownload={handleDownloadImage}
           onReport={handleReportImage}
           onTryAgain={handleTryAgain}
+          onSaveToFiles={handleSaveToFiles}
         />
       )}
     </div>
