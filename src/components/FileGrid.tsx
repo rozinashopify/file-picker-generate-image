@@ -1,6 +1,6 @@
 import { LegacyCard, Grid, Text, Thumbnail, Checkbox, Button, Box, BlockStack, InlineStack, Tooltip } from '@shopify/polaris'
 import { ImageMagicIcon } from '@shopify/polaris-icons'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './FileGrid.css'
 
 // Add custom styles for the thumbnail
@@ -55,9 +55,29 @@ interface FileGridProps {
   onFileSelect?: (fileId: string) => void;
   selectedFiles?: string[];
   onGenerateVariation?: (file: File) => void;
+  newFilesToHighlight?: string[]; // New prop for files that should be highlighted
 }
 
-export function FileGrid({ files, onFileSelect, selectedFiles = [], onGenerateVariation }: FileGridProps) {
+export function FileGrid({ 
+  files, 
+  onFileSelect, 
+  selectedFiles = [], 
+  onGenerateVariation,
+  newFilesToHighlight = [] 
+}: FileGridProps) {
+  const [newFiles, setNewFiles] = useState<Set<string>>(new Set())
+
+  useEffect(() => {
+    if (newFilesToHighlight.length > 0) {
+      setNewFiles(new Set(newFilesToHighlight))
+      // Remove highlight after animation completes
+      const timer = setTimeout(() => {
+        setNewFiles(new Set())
+      }, 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [newFilesToHighlight])
+
   const handleFileSelect = (fileId: string) => {
     onFileSelect?.(fileId);
   }
@@ -67,7 +87,7 @@ export function FileGrid({ files, onFileSelect, selectedFiles = [], onGenerateVa
       {files.map((file) => (
         <Grid.Cell key={file.id}>
           <Box>
-            <div className="file-container">
+            <div className={`file-container ${newFiles.has(file.id) ? 'highlight-new' : ''}`}>
               <div className="file-hover-actions">
                 <Tooltip content="Generate variation">
                   <Button

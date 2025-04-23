@@ -670,7 +670,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                 />
               )}
               <Text as="span" variant="headingMd">
-                {isGenerateMode ? "Generate image" : "Select files"}
+                {isGenerateMode ? (fromVariant ? "Generate variant" : "Generate image") : "Select files"}
               </Text>
             </InlineStack>
           </div>
@@ -769,7 +769,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                               </InlineStack>
                             </div>
 
-                            <div style={{ position: 'absolute', bottom: '16px', right: '16px' }}>
+                            <div style={{ position: 'absolute', bottom: '16px', right: '12px' }}>
 
                                 <div className="image-save-button">
                                   <Button

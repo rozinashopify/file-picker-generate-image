@@ -43,4 +43,17 @@
 
 .file-container:hover {
   background-color: var(--p-color-bg-surface-hover);
+}
+
+@keyframes highlightNewFile {
+  0% {
+    background-color: var(--p-color-bg-surface-caution);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.file-container.highlight-new {
+  animation: highlightNewFile 2s ease-out forwards;
 } 
