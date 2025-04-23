@@ -39,6 +39,7 @@ import './FilePicker.css'
 import tabIcon from './tab.svg'
 import sidekickAvatarBlink from './sidekickAvatarBlink.svg'
 import sidekickAvatarThink from './sidekickAvatarThink.svg'
+import sidekickAvatar from './sidekickAvatar.svg'
 
 // File-specific improvement messages
 const FILE_IMPROVEMENTS: Record<string, string> = {
@@ -189,6 +190,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
   const [buttonPosition, setButtonPosition] = useState<{ top: number; left: number } | null>(null)
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const [fromVariant, setFromVariant] = useState(false)
+  const [showBlinkAvatar, setShowBlinkAvatar] = useState(true)
 
   // Measure section height when component mounts and when open changes
   useEffect(() => {
@@ -197,6 +199,17 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       setSectionHeight(height)
     }
   }, [open, isGenerateMode])
+
+  // Add useEffect for avatar blinking
+  useEffect(() => {
+    if (!isLoading) {
+      const interval = setInterval(() => {
+        setShowBlinkAvatar(prev => !prev)
+      }, 1000)
+      
+      return () => clearInterval(interval)
+    }
+  }, [isLoading])
 
   const toggleActionsPopover = () => setActionsPopoverActive(!actionsPopoverActive)
 
@@ -632,7 +645,7 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                               {isLoading ? (
                                 <img src={sidekickAvatarThink} alt="Sidekick thinking" style={{ width: '24px', height: '24px' }} />
                               ) : (
-                                <img src={sidekickAvatarBlink} alt="Sidekick" style={{ width: '24px', height: '24px' }} />
+                                <img src={showBlinkAvatar ? sidekickAvatarBlink : sidekickAvatar} alt="Sidekick" style={{ width: '24px', height: '24px' }} />
                               )}
 
                             
