@@ -372,17 +372,13 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
       // Add the new file to the beginning of the list
       setFiles((prevFiles) => [newFile, ...prevFiles])
       
-      // Only reset generate mode if not called from preview
-      if (!fromPreview) {
-        setIsGenerateMode(false)
-        setGeneratedImage(null)
-        setPromptValue("")
-        setIsLoading(false)
-        setIsCollapsing(false)
-      } else {
-        // If called from preview, just close the preview
-        setIsPreviewMode(false)
-      }
+      // Reset all states
+      setIsGenerateMode(false)
+      setGeneratedImage(null)
+      setPromptValue("")
+      setIsLoading(false)
+      setIsCollapsing(false)
+      setIsPreviewMode(false)
     }
   }
 
