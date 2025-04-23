@@ -37,6 +37,8 @@ import { ImageLoader } from './ImageLoader'
 import { ImagePreview } from './ImagePreview'
 import './FilePicker.css'
 import tabIcon from './tab.svg'
+import sidekickAvatarBlink from './sidekickAvatarBlink.svg'
+import sidekickAvatarThink from './sidekickAvatarThink.svg'
 
 // File-specific improvement messages
 const FILE_IMPROVEMENTS: Record<string, string> = {
@@ -624,9 +626,13 @@ export function FilePicker({ open, onClose }: FilePickerProps) {
                       <div className="faux-input">
                         <InlineStack wrap={false} blockAlign="center" align="space-between">
                           <InlineStack gap="200" wrap={false} blockAlign="center">
-                            <Box>
-                              <Icon source={ImageMagicIcon} tone="magic" />
-                            </Box>
+
+                              {isLoading ? (
+                                <img src={sidekickAvatarThink} alt="Sidekick thinking" style={{ width: '24px', height: '24px' }} />
+                              ) : (
+                                <img src={sidekickAvatarBlink} alt="Sidekick" style={{ width: '24px', height: '24px' }} />
+                              )}
+
                             
                             <div onKeyDown={handleTabKeyPress} tabIndex={0} style={{ position: 'relative' }}>
                               <TextField
