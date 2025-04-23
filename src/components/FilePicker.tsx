@@ -821,11 +821,11 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                 labelHidden
                                 autoComplete="off"
                                 placeholder=""
-                                value={isLoading ? "" : promptValue}
+                                value={isLoading ? "" : (generatedImage ? "" : promptValue)}
                                 onChange={handlePromptChange}
                                 disabled={isLoading}
                               />
-                              {!promptValue && !isLoading && (
+                              {(!promptValue || generatedImage) && !isLoading && (
                                 <div className="suggestion-indicator">
                                   <div className="suggestion-text">
                                     {originalImage 
