@@ -136,6 +136,7 @@
 /* Add new class for when loading or displaying an image */
 .generate-mode-container.with-content {
     height: 600px;
+    transform: translateY(30px);
 }
 
 .generate-mode-container .Polaris-Badge {
@@ -571,6 +572,11 @@
 
 .generate-button-container .Polaris-Button svg {
     fill: #FFF !important;
+    transition: transform 0.15s ease-in-out !important;
+}
+
+.generate-button-container .Polaris-Button:hover svg {
+    transform: translateY(-2px);
 }
 
 .generate-button-container .Polaris-Button:disabled,
@@ -605,7 +611,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--p-color-bg-fill-transparent);
+  background-color: var(--p-color-bg-fill-transparent-secondary);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -674,7 +680,7 @@
     }
     100% {
         opacity: 1;
-        transform: translateY(200px);
+        transform: translateY(220px);
     }
 }
 
