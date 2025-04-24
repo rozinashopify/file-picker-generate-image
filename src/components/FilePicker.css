@@ -533,9 +533,7 @@
   height: calc(600px + 61px) !important;
 }
 
-.modal-content.generate-mode-content.footer-visible {
-  height: 600px !important;
-}
+
 
 /* Target the section element with class Polaris-Box directly with higher specificity */
 .generate-mode .Polaris-Modal-Section > section.Polaris-Box[style*="--pc-box-padding"] {
