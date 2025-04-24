@@ -285,12 +285,15 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
       setIsPostImageLoad(false)
     }
     
-    // Simulate loading for 5 seconds then show the image
+    // Add delay before showing the loading animation
     setTimeout(() => {
-      setIsLoading(false)
-      setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
-      setIsPostImageLoad(true)
-    }, 7000)
+      // Simulate loading for 5 seconds then show the image
+      setTimeout(() => {
+        setIsLoading(false)
+        setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
+        setIsPostImageLoad(true)
+      }, 7000)
+    }, 2000)
   }
 
   const handleStopGeneration = () => {
@@ -317,19 +320,22 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
       setIsPostImageLoad(false)
     }
     
-    // Simulate loading for 5 seconds then show the image
+    // Add delay before showing the loading animation
     setTimeout(() => {
-      setIsLoading(false)
-      if (originalImage?.variantUrl) {
-        console.log('Using variantUrl from originalImage:', originalImage.variantUrl);
-        setGeneratedImage(originalImage.variantUrl)
-      } else {
-        console.log('Using default image URL');
-        setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
-      }
-      setIsPostImageLoad(true)
-      // Removed setPromptValue("") to preserve the prompt for naming
-    }, 7000)
+      // Simulate loading for 5 seconds then show the image
+      setTimeout(() => {
+        setIsLoading(false)
+        if (originalImage?.variantUrl) {
+          console.log('Using variantUrl from originalImage:', originalImage.variantUrl);
+          setGeneratedImage(originalImage.variantUrl)
+        } else {
+          console.log('Using default image URL');
+          setGeneratedImage('https://burst.shopifycdn.com/photos/closeup-of-clover-leaves.jpg?width=1850&format=pjpg&exif=0&iptc=0')
+        }
+        setIsPostImageLoad(true)
+        // Removed setPromptValue("") to preserve the prompt for naming
+      }, 7000)
+    }, 2000)
   }
 
   const handlePreviewClick = () => {
@@ -922,7 +928,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
               </div>
             )}
             
-            <div className={`file-browser-container ${isGenerateMode ? 'fade-out' : ''} ${isArrowHovered ? 'arrow-hovered' : ''}`}>
+            <div className={`file-browser-container ${isGenerateMode ? 'fade-out' : ''}`}>
               <div className={`upload-actions-container ${isGenerateMode ? 'fade-out' : ''}`}>
                 <Box paddingBlockEnd="400">
                     <DropZone onDrop={() => {}}>
@@ -931,7 +937,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                 </Box>
               </div>
               
-              <div className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''}`}>
+              <div className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''} ${isArrowHovered ? 'arrow-hovered' : ''}`}>
                 <Box>
                   <FileGrid 
                     files={files}
@@ -941,18 +947,18 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                     newFilesToHighlight={newFilesToHighlight}
                   />
                 </Box>
+                
+                {isGenerateMode && (
+                  <div 
+                    className="file-grid-arrow-button"
+                    onMouseEnter={handleArrowMouseEnter}
+                    onMouseLeave={handleArrowMouseLeave}
+                    onClick={handleArrowClick}
+                  >
+                    <Icon source={ArrowUpIcon} />
+                  </div>
+                )}
               </div>
-              
-              {isGenerateMode && (
-                <div 
-                  className="file-grid-arrow-button"
-                  onMouseEnter={handleArrowMouseEnter}
-                  onMouseLeave={handleArrowMouseLeave}
-                  onClick={handleArrowClick}
-                >
-                  <Icon source={ArrowUpIcon} />
-                </div>
-              )}
             </div>
           </div>
         </Modal.Section>

@@ -98,11 +98,12 @@
 
 .file-grid-container.fade-out {
   opacity: 0.2;
-    transform: translateY(330px);
-    transition-delay: 0.1s;
-    opacity: 0.2;
+  transform: translateY(330px);
+  transition-delay: 0.1s;
+  opacity: 0.2;
 }
 
+/* Remove the hover effect from the container itself */
 .file-grid-container.fade-out:hover {
   opacity: 0.5;
 }
@@ -117,7 +118,7 @@
 /* Create a new class for the arrow button container */
 .file-grid-arrow-button {
   position: absolute;
-  bottom: 50px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
   width: 32px;
@@ -128,7 +129,7 @@
   box-shadow: var(--p-shadow-100);
   z-index: 10;
   opacity: 0;
-  transition: opacity 0.25s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -137,7 +138,7 @@
 }
 
 /* Show the arrow button when hovering over the file grid */
-.file-browser-container.fade-out:hover .file-grid-arrow-button {
+.file-grid-container.fade-out:hover .file-grid-arrow-button {
   opacity: 1;
 }
 
@@ -145,21 +146,25 @@
   box-shadow: var(--p-shadow-200);
 }
 
-
 .file-grid-arrow-button svg {
-    transition: transform 0.2s ease-out;
-    fill: var(--p-color-icon-secondary) !important;
+  transition: transform 0.2s ease-out;
+  fill: var(--p-color-icon-secondary) !important;
 }
 
 .file-grid-arrow-button:hover svg {
-   
-    fill: var(--p-color-icon-hover) !important;
+  fill: var(--p-color-icon-hover) !important;
 }
 
 /* Add a class for when the arrow button is being hovered */
-.file-browser-container.fade-out.arrow-hovered .file-grid-container.fade-out {
-  opacity: 0.8;
+.file-grid-container.fade-out.arrow-hovered {
   transform: translateY(320px);
+  opacity: 0.8;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.file-grid-container.fade-out.arrow-hovered .file-grid-arrow-button {
+  transform: translateY(10px) translateX(-50%);
+
 }
 
 /* Disable hover interactions on file cards when grid is faded out */
@@ -274,7 +279,7 @@
   width: 480px;
   margin: 0 auto;
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(160px);
   transition: 
       transform 0.6s cubic-bezier(0.33, 1, 0.68, 1),
       opacity 0.3s ease-out;
@@ -283,8 +288,8 @@
 
 /* Initial animation (first stage) */
 .generate-mode-container.animate-padding:not(.with-content) .generate-mode-input {
-  animation: input-appear 300ms cubic-bezier(0.64, 0, 0.92, 0.56) forwards;
-  animation-delay: 0.25s;
+  animation: input-appear 300ms ease-in forwards;
+  animation-delay: 0.15s;
 }
 
 /* Final content state (second stage) */
@@ -292,7 +297,7 @@
   transform: translateY(434px);
   opacity: 1;
   /* Cancel any ongoing animation */
-  animation: input-to-content  300ms cubic-bezier(0.64, 0, 0.92, 0.56) forwards;
+  animation: input-to-content 300ms cubic-bezier(0.64, 0, 0.92, 0.56) forwards;
 }
 
 @keyframes input-appear {
@@ -570,11 +575,11 @@
 @keyframes container-enter {
     0% {
         opacity: 0;
-        transform: translateY(-40px);
+        transform: translateX(-50%) translateY(-40px);
     }
     100% {
         opacity: 1;
-        transform: translateY(0px);
+        transform: translateX(-50%) translateY(0px);
     }
 }
 
@@ -760,10 +765,12 @@
 }
 
 .original-image-container {
-    position: absolute;
+  position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    width: 620px;
     border-radius: var(--p-border-radius-200);
     overflow: hidden;
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.04), 0px 4px 6px -1px rgba(0, 0, 0, 0.04), 0px 1px 2px -0.5px rgba(0, 0, 0, 0.04), 0px 0.5px 0.5px 0px rgba(0, 0, 0, 0.06), 0px 0px 0px 1px rgba(0, 0, 0, 0.05);
