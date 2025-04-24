@@ -195,6 +195,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const [isPreviewMode, setIsPreviewMode] = useState(false)
   const [fromVariant, setFromVariant] = useState(false)
   const [currentAvatar, setCurrentAvatar] = useState(sidekickAvatarBlink)
+  const [isFooterVisible, setIsFooterVisible] = useState(true)
 
   // Measure section height when component mounts and when open changes
   useEffect(() => {
@@ -245,6 +246,16 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     setGeneratedImage(null)
     setIsLoading(false)
     setIsCollapsing(false)
+    setIsFooterVisible(false)
+    
+    // Find the modal footer and add a class to it
+    setTimeout(() => {
+      const footer = document.querySelector('.Polaris-Modal-Dialog__Modal>.Polaris-InlineStack');
+      if (footer) {
+        footer.classList.remove('modal-footer-fade-in');
+        footer.classList.add('modal-footer-fade-out');
+      }
+    }, 50);
   }
 
   const handleBackClick = () => {
@@ -254,6 +265,14 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     
     // Set isCollapsing to true to trigger the collapsing animation
     setIsCollapsing(true)
+    setIsFooterVisible(true)
+    
+    // Find the modal footer and add the fade-in class
+    const footer = document.querySelector('.Polaris-Modal-Dialog__Modal>.Polaris-InlineStack');
+    if (footer) {
+      footer.classList.remove('modal-footer-fade-out');
+      footer.classList.add('modal-footer-fade-in');
+    }
     
     // Add a small delay to ensure the animation is visible
     setTimeout(() => {
@@ -265,7 +284,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
       setIsCollapsing(false)
       setOriginalImage(null)
       setFromVariant(false)
-    }, 300)
+    }, 30)
   }
 
   const handleBadgeClick = (badgeText: string) => {
@@ -484,6 +503,15 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     setIsLoading(false)
     setIsCollapsing(false)
     
+    // Find the modal footer and add a class to it
+    setTimeout(() => {
+      const footer = document.querySelector('.Polaris-Modal-Dialog__Modal>.Polaris-InlineStack');
+      if (footer) {
+        footer.classList.remove('modal-footer-fade-in');
+        footer.classList.add('modal-footer-fade-out');
+      }
+    }, 50);
+    
     // Add a small delay to ensure the animation is visible
     setTimeout(() => {
       setIsGenerateMode(true)
@@ -584,6 +612,10 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
       console.log('No action taken - no generated image or selected files');
     }
     
+    // Reset footer visibility and generate mode before closing
+    setIsFooterVisible(true);
+    setIsGenerateMode(false);
+    
     console.log('Calling onClose');
     onClose();
   }
@@ -602,25 +634,29 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     }
   }, [open])
 
-  // Add a useEffect to handle the padding removal when in generate mode
+  // Add a useEffect to handle the padding removal
   useEffect(() => {
-    if (isGenerateMode) {
+    // Add a small delay to ensure DOM elements are available
+    const timer = setTimeout(() => {
       const modalSection = document.querySelector('.Polaris-Modal-Section > section.Polaris-Box')
       if (modalSection) {
         const originalStyle = modalSection.getAttribute('style')
-        modalSection.setAttribute('style', '--pc-box-padding-block-start-xs: 0 !important; --pc-box-padding-block-end-xs: 0 !important; --pc-box-padding-inline-start-xs: 0 !important; --pc-box-padding-inline-end-xs: 0 !important; position: relative !important;')
+        
+        // Force all padding values to 0 with !important to override any other values
+        modalSection.setAttribute('style', `
+          --pc-box-padding-block-start-xs: 0 !important; 
+          --pc-box-padding-block-end-xs: 0 !important; 
+          --pc-box-padding-inline-start-xs: 0 !important; 
+          --pc-box-padding-inline-end-xs: 0 !important; 
+          position: relative !important;
+        `)
+        
         modalSection.setAttribute('data-original-style', originalStyle || '')
       }
-    } else {
-      const modalSection = document.querySelector('.Polaris-Modal-Section > section.Polaris-Box')
-      if (modalSection) {
-        const originalStyle = modalSection.getAttribute('data-original-style')
-        if (originalStyle) {
-          modalSection.setAttribute('style', originalStyle)
-        }
-      }
-    }
-  }, [isGenerateMode])
+    }, 50)
+
+    return () => clearTimeout(timer)
+  }, [isGenerateMode, open]) // Run when isGenerateMode or open changes
 
   // Handle arrow button hover
   const handleArrowMouseEnter = () => {
@@ -709,6 +745,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
         open={open}
         onClose={onClose}
         noScroll
+        className={`custom-modal ${isGenerateMode ? 'generate-mode' : ''}`}
         title={
           <div className={`modal-title ${isGenerateMode ? 'with-back-button' : ''}`}>
             <InlineStack align="center" gap="200">
@@ -742,15 +779,12 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
         <Modal.Section>
           <div 
             ref={sectionRef}
-            className={`modal-content ${isGenerateMode ? 'generate-mode-content' : ''}`}
+            className={`modal-content ${isGenerateMode ? 'generate-mode-content' : ''} ${isGenerateMode ? (isFooterVisible ? 'footer-hidden' : 'footer-visible') : ''}`}
             style={{
-              height: '600px',
+              height: '661px',
               maxHeight: '70vh',
-              overflow: 'auto',
-              ...(isGenerateMode && {
-                overflow: 'hidden',
-                padding: '20px'
-              })
+              overflow: 'hidden',
+              padding: '20px'
             }}
           >
             <div className={`action-bar-container ${isGenerateMode ? 'fade-out' : ''}`}>
