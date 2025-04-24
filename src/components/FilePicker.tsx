@@ -459,8 +459,9 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
         return newFiles;
       });
       
-      // Set the new file to be highlighted
+      // Set the new file to be highlighted and selected
       setNewFilesToHighlight([newFile.id])
+      setSelectedFiles([newFile.id])
       
       // Reset all states after creating the file
       setIsGenerateMode(false)
