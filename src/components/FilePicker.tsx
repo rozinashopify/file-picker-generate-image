@@ -252,6 +252,9 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
       magicButtonRef.current.classList.remove('expand')
     }
     
+    // Set isCollapsing to true to trigger the collapsing animation
+    setIsCollapsing(true)
+    
     // Add a small delay to ensure the animation is visible
     setTimeout(() => {
       setIsGenerateMode(false)
@@ -621,6 +624,10 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     setIsArrowHovered(false)
   }
 
+  const handleArrowClick = () => {
+    handleBackClick()
+  }
+
   const actionBarMarkup = (
     <Box background="bg-surface">
       <InlineStack align="space-between" blockAlign="center">
@@ -663,6 +670,31 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
       </Box>
     </Box>
   )
+
+  // Helper function to determine the generate mode container class
+  const getGenerateModeContainerClass = () => {
+    if (isCollapsing) {
+      return 'collapsing';
+    }
+    
+    // Initial state with no content
+    if (!isLoading && !generatedImage && !originalImage && !fromVariant) {
+      return 'animate-padding';
+    }
+    
+    // State with content
+    if (isLoading || generatedImage || originalImage) {
+      return fromVariant ? 'with-content from-variant' : 'with-content';
+    }
+    
+    // State without content but with variant
+    if (fromVariant) {
+      return 'from-variant';
+    }
+    
+    // Default state
+    return 'no-padding';
+  };
 
   return (
     <div className={`custom-modal ${isGenerateMode ? 'generate-mode' : ''}`}>
@@ -715,25 +747,13 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
             }}
           >
             <div className={`action-bar-container ${isGenerateMode ? 'fade-out' : ''}`}>
-              {!isGenerateMode && (
                 <Box paddingBlockEnd="400">
                   {actionBarMarkup}
                 </Box>
-              )}
             </div>
             
             {isGenerateMode && (
-              <div className={`generate-mode-container ${
-                !isLoading && !generatedImage && !originalImage && !fromVariant
-                  ? 'animate-padding'
-                  : isLoading || generatedImage || originalImage
-                    ? fromVariant
-                      ? 'with-content from-variant'
-                      : 'with-content'
-                    : fromVariant
-                      ? 'from-variant'
-                      : 'no-padding'
-              }`}>
+              <div className={`generate-mode-container ${getGenerateModeContainerClass()}`}>
                 <Box>
                   <BlockStack gap="400">
                     {isLoading ? (
@@ -905,11 +925,9 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
             <div className={`file-browser-container ${isGenerateMode ? 'fade-out' : ''} ${isArrowHovered ? 'arrow-hovered' : ''}`}>
               <div className={`upload-actions-container ${isGenerateMode ? 'fade-out' : ''}`}>
                 <Box paddingBlockEnd="400">
-                  {!isGenerateMode && (
                     <DropZone onDrop={() => {}}>
                       {uploadActionsMarkup}
                     </DropZone>
-                  )}
                 </Box>
               </div>
               
@@ -930,6 +948,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                   className="file-grid-arrow-button"
                   onMouseEnter={handleArrowMouseEnter}
                   onMouseLeave={handleArrowMouseLeave}
+                  onClick={handleArrowClick}
                 >
                   <Icon source={ArrowUpIcon} />
                 </div>

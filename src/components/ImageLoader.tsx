@@ -7,7 +7,7 @@ interface ImageLoaderProps {
   prompt?: string;
 }
 
-export function ImageLoader({ width = 640, height = 427, prompt = "lush green leaves"}: ImageLoaderProps) {
+export function ImageLoader({ width = 620, height = 413, prompt = "lush green leaves"}: ImageLoaderProps) {
   return (
     <div 
       className="image-loader-container"
