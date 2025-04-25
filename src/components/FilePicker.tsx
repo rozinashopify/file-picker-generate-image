@@ -499,6 +499,16 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
       setIsLoading(false)
       setIsCollapsing(false)
       setIsPreviewMode(false)
+      setIsFooterVisible(true)
+      
+      // Find the modal footer and add the fade-in class
+      setTimeout(() => {
+        const footer = document.querySelector('.Polaris-Modal-Dialog__Modal>.Polaris-InlineStack');
+        if (footer) {
+          footer.classList.remove('modal-footer-fade-out');
+          footer.classList.add('modal-footer-fade-in');
+        }
+      }, 50);
     }
   }
 
@@ -865,14 +875,6 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
         title={
           <div className={`modal-title ${isGenerateMode ? 'with-back-button' : ''}`}>
             <InlineStack align="center" gap="200">
-              {isGenerateMode && (
-                <Button
-                  icon={ArrowLeftIcon}
-                  onClick={handleBackClick}
-                  variant="tertiary"
-                  accessibilityLabel="Back"
-                />
-              )}
               <Text as="span" variant="headingMd">
                 {isGenerateMode ? (fromVariant ? "Generate variant" : "Generate image") : "Select files"}
               </Text>

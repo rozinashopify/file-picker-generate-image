@@ -180,7 +180,8 @@
   transform: translateX(-250px);
   background-image: linear-gradient(
     270deg,
-    var(--p-color-icon-secondary) 0%,
+    var(--p-color-border-tertiary) 0%,
+    var(--p-color-border-tertiary) 60%,
     transparent 100%
   );
   background-position: right;
@@ -191,7 +192,8 @@
   transform: translateX(250px);
   background-image: linear-gradient(
     90deg,
-    var(--p-color-icon-secondary) 0%,
+    var(--p-color-border-tertiary) 0%,
+    var(--p-color-border-tertiary) 60%,
     transparent 100%
   );
   background-position: left;
