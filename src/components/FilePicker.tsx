@@ -699,9 +699,24 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
         e.preventDefault()
         const deltaY = e.clientY - dragStartY
         const newTranslateY = Math.max(0, Math.min(370, currentTranslateY + deltaY))
+        
+        // Update file grid position
         fileGridRef.current.style.transform = `translateY(${newTranslateY}px)`
         setCurrentTranslateY(newTranslateY)
         setDragStartY(e.clientY)
+        
+        // Update generate mode container elements
+        const generateModeContainer = document.querySelector('.generate-mode-container') as HTMLElement
+        if (generateModeContainer) {
+          const progress = newTranslateY / 370 // Calculate progress (0 to 1)
+          const moveUp = 40 * progress // Move up by 40px at most
+          const fadeOut = 1 - progress // Fade out as we drag
+          
+          generateModeContainer.classList.add('dragging')
+          // Set CSS variable for drag distance
+          generateModeContainer.style.setProperty('--drag-distance', `${moveUp}px`)
+          generateModeContainer.style.opacity = fadeOut.toString()
+        }
       }
     }
 
@@ -710,15 +725,39 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
         e.preventDefault()
         const deltaY = e.touches[0].clientY - dragStartY
         const newTranslateY = Math.max(0, Math.min(370, currentTranslateY + deltaY))
+        
+        // Update file grid position
         fileGridRef.current.style.transform = `translateY(${newTranslateY}px)`
         setCurrentTranslateY(newTranslateY)
         setDragStartY(e.touches[0].clientY)
+        
+        // Update generate mode container elements
+        const generateModeContainer = document.querySelector('.generate-mode-container') as HTMLElement
+        if (generateModeContainer) {
+          const progress = newTranslateY / 370 // Calculate progress (0 to 1)
+          const moveUp = 40 * progress // Move up by 40px at most
+          const fadeOut = 1 - progress // Fade out as we drag
+          
+          generateModeContainer.classList.add('dragging')
+          // Set CSS variable for drag distance
+          generateModeContainer.style.setProperty('--drag-distance', `${moveUp}px`)
+          generateModeContainer.style.opacity = fadeOut.toString()
+        }
       }
     }
 
     const handleGlobalMouseUp = () => {
       if (isDragging) {
         setIsDragging(false)
+        
+        // Reset generate mode container styles
+        const generateModeContainer = document.querySelector('.generate-mode-container') as HTMLElement
+        if (generateModeContainer) {
+          generateModeContainer.classList.remove('dragging')
+          generateModeContainer.style.removeProperty('--drag-distance')
+          generateModeContainer.style.opacity = ''
+        }
+        
         if (currentTranslateY > 320) { // Halfway point
           setIsFadeOut(true)
           setCurrentTranslateY(370)
