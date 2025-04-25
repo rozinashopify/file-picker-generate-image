@@ -30,6 +30,7 @@ import {
   FlagIcon,
   ImportIcon,
   ArrowUpIcon,
+  DragHandleIcon,
 } from '@shopify/polaris-icons'
 import { useState, useEffect, useRef } from 'react'
 import { FileGrid, File } from './FileGrid'
@@ -196,6 +197,14 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const [fromVariant, setFromVariant] = useState(false)
   const [currentAvatar, setCurrentAvatar] = useState(sidekickAvatarBlink)
   const [isFooterVisible, setIsFooterVisible] = useState(true)
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragStartY, setDragStartY] = useState(0)
+  const [currentTranslateY, setCurrentTranslateY] = useState(0)
+  const [isFadeOut, setIsFadeOut] = useState(false)
+  const dragHandleRef = useRef<HTMLDivElement>(null)
+  const dragThreshold = 100 // pixels to drag before triggering the close action
+  const [hasDragged, setHasDragged] = useState(false)
+  const fileGridRef = useRef<HTMLDivElement>(null)
 
   // Measure section height when component mounts and when open changes
   useEffect(() => {
@@ -659,17 +668,84 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   }, [isGenerateMode, open]) // Run when isGenerateMode or open changes
 
   // Handle arrow button hover
-  const handleArrowMouseEnter = () => {
-    setIsArrowHovered(true)
+  const handleArrowHover = (isHovered: boolean) => {
+    setIsArrowHovered(isHovered)
+    if (!isDragging) {
+      setIsFadeOut(isHovered)
+    }
   }
 
-  const handleArrowMouseLeave = () => {
-    setIsArrowHovered(false)
+  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault()
+    setIsDragging(true)
+    setHasDragged(true)
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY
+    setDragStartY(clientY)
+    setCurrentTranslateY(isGenerateMode ? 370 : 0)
   }
 
-  const handleArrowClick = () => {
-    handleBackClick()
+  const handleArrowClick = (e: React.MouseEvent) => {
+    // Only trigger click if we haven't dragged
+    if (!hasDragged) {
+      handleBackClick()
+    }
   }
+
+  // Add event listeners for mouse/touch events
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (isDragging && fileGridRef.current) {
+        e.preventDefault()
+        const deltaY = e.clientY - dragStartY
+        const newTranslateY = Math.max(0, Math.min(370, currentTranslateY + deltaY))
+        fileGridRef.current.style.transform = `translateY(${newTranslateY}px)`
+        setCurrentTranslateY(newTranslateY)
+        setDragStartY(e.clientY)
+      }
+    }
+
+    const handleGlobalTouchMove = (e: TouchEvent) => {
+      if (isDragging && fileGridRef.current) {
+        e.preventDefault()
+        const deltaY = e.touches[0].clientY - dragStartY
+        const newTranslateY = Math.max(0, Math.min(370, currentTranslateY + deltaY))
+        fileGridRef.current.style.transform = `translateY(${newTranslateY}px)`
+        setCurrentTranslateY(newTranslateY)
+        setDragStartY(e.touches[0].clientY)
+      }
+    }
+
+    const handleGlobalMouseUp = () => {
+      if (isDragging) {
+        setIsDragging(false)
+        if (currentTranslateY > 185) { // Halfway point
+          setIsFadeOut(true)
+          setCurrentTranslateY(370)
+        } else {
+          setIsFadeOut(false)
+          setCurrentTranslateY(0)
+          // If we're in generate mode and dragged up, go back to default mode
+          if (isGenerateMode) {
+            handleBackClick()
+          }
+        }
+      }
+    }
+
+    if (isDragging) {
+      window.addEventListener('mousemove', handleGlobalMouseMove)
+      window.addEventListener('mouseup', handleGlobalMouseUp)
+      window.addEventListener('touchmove', handleGlobalTouchMove)
+      window.addEventListener('touchend', handleGlobalMouseUp)
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleGlobalMouseMove)
+      window.removeEventListener('mouseup', handleGlobalMouseUp)
+      window.removeEventListener('touchmove', handleGlobalTouchMove)
+      window.removeEventListener('touchend', handleGlobalMouseUp)
+    }
+  }, [isDragging, currentTranslateY, dragStartY])
 
   const actionBarMarkup = (
     <Box background="bg-surface">
@@ -782,7 +858,6 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
             className={`modal-content ${isGenerateMode ? 'generate-mode-content' : ''} ${isGenerateMode ? (isFooterVisible ? 'footer-hidden' : 'footer-visible') : ''}`}
             style={{
               height: '661px',
-              maxHeight: '70vh',
               overflow: 'hidden',
               padding: '20px'
             }}
@@ -972,7 +1047,20 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                 </Box>
               </div>
               
-              <div className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''} ${isArrowHovered ? 'arrow-hovered' : ''}`}>
+              <div 
+                ref={fileGridRef}
+                className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''} ${isDragging ? 'dragging' : ''} ${isArrowHovered ? 'arrow-hovered' : ''}`}
+                style={{ 
+                  transform: isDragging 
+                    ? `translateY(${currentTranslateY}px)` 
+                    : isGenerateMode 
+                      ? 'translateY(370px)' 
+                      : 'translateY(0px)', 
+                  opacity: isDragging ? 0.8 : isGenerateMode ? 0.8 : 1,
+                  transition: isDragging ? 'none' : 'transform 0.3s ease-out'
+                }}
+                onMouseDown={handleDragStart}
+                onTouchStart={handleDragStart}>
                 <Box>
                   <FileGrid 
                     files={files}
@@ -985,12 +1073,13 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                 
                 {isGenerateMode && (
                   <div 
-                    className="file-grid-arrow-button"
-                    onMouseEnter={handleArrowMouseEnter}
-                    onMouseLeave={handleArrowMouseLeave}
+                    ref={dragHandleRef}
+                    className={`file-grid-arrow-button ${isDragging ? 'dragging' : ''}`}
+                    onMouseEnter={() => handleArrowHover(true)}
+                    onMouseLeave={() => handleArrowHover(false)}
                     onClick={handleArrowClick}
                   >
-                    <Icon source={ArrowUpIcon} />
+                    <Icon source={DragHandleIcon} />
                   </div>
                 )}
               </div>

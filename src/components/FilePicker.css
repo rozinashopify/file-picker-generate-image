@@ -101,63 +101,45 @@
   position: absolute;
   opacity: 1;
   transform: translateY(0);
+  will-change: transform;
 }
 
 .file-grid-container.fade-out {
-  opacity: 0.2;
-  transform: translateY(330px);
-  opacity: 0.2;
+  /* Remove the animation and just use transform */
+  transform: translateY(370px);
+  opacity: 0.8;
 }
 
-/* Add animation for when the grid comes back up */
-.file-grid-container:not(.fade-out) {
-  animation: grid-slide-up 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  padding-bottom: 107px;
+/* Add styles for when dragging */
+.file-grid-container.dragging {
+  transition: none; /* Remove transition during dragging for immediate response */
+  opacity: 0.8;
 }
 
-@keyframes grid-slide-up {
-  from {
-    opacity: 0.2;
-    transform: translateY(330px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Remove the hover effect from the container itself */
-.file-grid-container.fade-out:hover {
-  opacity: 0.5;
-}
-
-/* Remove the pseudo-elements approach */
-/* Arrow icon that appears on hover */
-.file-grid-container.fade-out::before,
-.file-grid-container.fade-out::after {
-  display: none;
-}
-
-/* Create a new class for the arrow button container */
 .file-grid-arrow-button {
   position: absolute;
-  top: 10px;
+  top: -10px;
   left: 50%;
   transform: translateX(-50%);
   width: 32px;
   height: 32px;
-  background-color: white;
-  border: 1px solid var(--p-color-border-disabled);
-  border-radius: 50%;
-  box-shadow: var(--p-shadow-100);
   z-index: 10;
   opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: auto;
   overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  will-change: transform;
+}
+
+.file-grid-arrow-button.dragging {
+  cursor: grabbing;
+  opacity: 1;
+  transition: transform 0.1s linear;
 }
 
 /* Show the arrow button when hovering over the file grid */
@@ -165,11 +147,8 @@
   opacity: 1;
 }
 
-.file-grid-arrow-button:hover {
-  box-shadow: var(--p-shadow-200);
-}
-
 .file-grid-arrow-button svg {
+  transform: rotate(90deg);
   transition: transform 0.2s ease-out;
   fill: var(--p-color-icon-secondary) !important;
 }
@@ -185,9 +164,15 @@
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.file-grid-container.fade-out.arrow-hovered .file-grid-arrow-button {
-  transform: translateY(10px) translateX(-50%);
-
+@keyframes grid-slide-down {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(370px);
+    opacity: 0.8;
+  }
 }
 
 /* Disable hover interactions on file cards when grid is faded out */
@@ -902,7 +887,6 @@
 
 .custom-modal .Polaris-Modal {
   height: 600px !important;
-  max-height: 80vh !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
