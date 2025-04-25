@@ -201,6 +201,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const [dragStartY, setDragStartY] = useState(0)
   const [currentTranslateY, setCurrentTranslateY] = useState(0)
   const [isFadeOut, setIsFadeOut] = useState(false)
+  const [isGridHovered, setIsGridHovered] = useState(false)
   const dragHandleRef = useRef<HTMLDivElement>(null)
   const dragThreshold = 100 // pixels to drag before triggering the close action
   const [hasDragged, setHasDragged] = useState(false)
@@ -718,7 +719,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     const handleGlobalMouseUp = () => {
       if (isDragging) {
         setIsDragging(false)
-        if (currentTranslateY > 185) { // Halfway point
+        if (currentTranslateY > 320) { // Halfway point
           setIsFadeOut(true)
           setCurrentTranslateY(370)
         } else {
@@ -1054,13 +1055,24 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                   transform: isDragging 
                     ? `translateY(${currentTranslateY}px)` 
                     : isGenerateMode 
-                      ? 'translateY(370px)' 
+                      ? 'translateY(390px)' 
                       : 'translateY(0px)', 
-                  opacity: isDragging ? 0.8 : isGenerateMode ? 0.8 : 1,
-                  transition: isDragging ? 'none' : 'transform 0.3s ease-out'
+                  opacity: isDragging 
+                    ? 0.8 
+                    : isGenerateMode 
+                      ? (isArrowHovered 
+                          ? 0.7 
+                          : isGridHovered 
+                            ? 0.4 
+                            : 0.2)
+                      : 1,
+                  transition: isDragging ? 'none' : 'transform 0.3s ease-out, opacity 0.3s ease-out'
                 }}
                 onMouseDown={handleDragStart}
-                onTouchStart={handleDragStart}>
+                onTouchStart={handleDragStart}
+                onMouseEnter={() => setIsGridHovered(true)}
+                onMouseLeave={() => setIsGridHovered(false)}
+              >
                 <Box>
                   <FileGrid 
                     files={files}

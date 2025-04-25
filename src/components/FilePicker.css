@@ -107,7 +107,12 @@
 .file-grid-container.fade-out {
   /* Remove the animation and just use transform */
   transform: translateY(370px);
-  opacity: 0.8;
+  opacity: 0.2;
+  transition: opacity 0.3s ease-out;
+}
+
+.file-grid-container.fade-out:hover {
+  opacity: 0.4;
 }
 
 /* Add styles for when dragging */
