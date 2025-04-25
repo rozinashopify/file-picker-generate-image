@@ -123,7 +123,7 @@
 
 .file-grid-arrow-button {
   position: absolute;
-  top: -10px;
+  top: -16px;
   left: 50%;
   transform: translateX(-50%);
   width: 32px;
@@ -135,11 +135,79 @@
   align-items: center;
   justify-content: center;
   pointer-events: auto;
-  overflow: hidden;
+  overflow: visible;
   cursor: grab;
   touch-action: none;
   will-change: transform;
 }
+@keyframes spread-gradient-left {
+  from {
+    background-size: 0% 100%;
+    background-position: right;
+  }
+  to {
+    background-size: 100% 100%;
+    background-position: right;
+  }
+}
+
+@keyframes spread-gradient-right {
+  from {
+    background-size: 0% 100%;
+    background-position: left;
+  }
+  to {
+    background-size: 100% 100%;
+    background-position: left;
+  }
+}
+
+.file-grid-arrow-button::before,
+.file-grid-arrow-button::after {
+  content: '';
+  position: absolute;
+  height: 1px;
+  width: 450px;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+  z-index: 11;
+  background-repeat: no-repeat;
+  
+}
+
+.file-grid-arrow-button::before {
+
+  transform: translateX(-250px);
+  background-image: linear-gradient(
+    270deg,
+    var(--p-color-icon-secondary) 0%,
+    transparent 100%
+  );
+  background-position: right;
+}
+
+.file-grid-arrow-button::after {
+
+  transform: translateX(250px);
+  background-image: linear-gradient(
+    90deg,
+    var(--p-color-icon-secondary) 0%,
+    transparent 100%
+  );
+  background-position: left;
+}
+
+.file-grid-arrow-button:hover::before {
+  opacity: 1;
+  animation: spread-gradient-left 0.5s ease-out forwards;
+}
+
+.file-grid-arrow-button:hover::after {
+  opacity: 1;
+  animation: spread-gradient-right 0.5s ease-out forwards;
+}
+
+
 
 .file-grid-arrow-button.dragging {
   cursor: grabbing;
