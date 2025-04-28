@@ -250,13 +250,16 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   }
 
   const handleTabKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === 'Tab' && !promptValue && !isLoading) {
+    console.log('handleTabKeyPress called')
+    if (event.key === 'Tab' && !isLoading) {
       event.preventDefault()
-      if (originalImage) {
-        setPromptValue(FILE_IMPROVEMENTS[originalImage.id] || 'make it more vibrant and colorful')
+      if (fromVariant && originalImage) {
+        // For variant generation, use the predefined improvement
+        setPromptValue(FILE_IMPROVEMENTS[originalImage.id] || '')
       } else if (generatedImage) {
         setPromptValue('add a magical glow to the leaves')
       } else {
+        // For new image generation, use the default suggestion
         setPromptValue('lush green leaves')
       }
     }
@@ -532,7 +535,8 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     setIsGenerateMode(true)
     setOriginalImage(file)
     console.log('Set originalImage to:', file);
-    setPromptValue('')
+    // Prefill with the improvement suggestion for this file
+    setPromptValue(FILE_IMPROVEMENTS[file.id] || '')
     setGeneratedImage(null)
     setIsLoading(false)
     setIsCollapsing(false)
@@ -885,7 +889,6 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
         open={open}
         onClose={onClose}
         noScroll
-        className={`custom-modal ${isGenerateMode ? 'generate-mode' : ''}`}
         title={
           <div className={`modal-title ${isGenerateMode ? 'with-back-button' : ''}`}>
             <InlineStack align="center" gap="200">
@@ -1018,16 +1021,34 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                 label="Prompt"
                                 labelHidden
                                 autoComplete="off"
-                                placeholder=""
-                                value={isLoading ? "" : (generatedImage ? "" : promptValue)}
+                                placeholder={isGenerateMode ? (isLoading || generatedImage || fromVariant ? "" : "Describe your image") : "Describe your image"}
+                                value={isLoading ? "" : (generatedImage ? "" : (fromVariant ? "" : promptValue))}
                                 onChange={handlePromptChange}
                                 disabled={isLoading}
+                                onFocus={() => {
+                                  if (isGenerateMode && !fromVariant && !promptValue) {
+                                    setPromptValue("lush green leaves");
+                                  }
+                                }}
                               />
-                              {(!promptValue || generatedImage) && !isLoading && (
+
+
+                              
+                              {generatedImage && !isLoading && (
                                 <div className="suggestion-indicator">
                                   <div className="suggestion-text">
                                     Ask a follow up
                                   </div>
+                                </div>
+                              )}
+                              {!generatedImage && !isLoading && fromVariant && (
+                                <div className="suggestion-indicator">
+                                  <div className="suggestion-text">
+                                    {FILE_IMPROVEMENTS[originalImage?.id || ''] || 'Press Tab for suggestion'}
+                                  </div>
+                                  <div className="tab-indicator">
+                                   <img src={tabIcon} alt="Press Tab" />
+                                </div>
                                 </div>
                               )}
                               {isLoading && (
