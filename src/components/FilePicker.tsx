@@ -1053,7 +1053,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                               </div>
                             ) : generatedImage ? (
                               <div className="generate-button-container">
-                                <InlineStack gap="200">
+                                <InlineStack gap="150">
                                   
                                   <div className="discard-button-wrapper">
                                     <Button 
@@ -1072,6 +1072,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                       size="slim" 
                                        onClick={handleSaveToFiles}
                                       variant="primary"
+                                      icon={UndoIcon}
                                     >
                                       Keep
                                     </Button>

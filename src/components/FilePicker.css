@@ -777,20 +777,30 @@
 .generate-button-container .discard-button-wrapper .Polaris-Button,
 .generate-button-container .keep-button-wrapper .Polaris-Button {
   border-radius: var(--p-border-radius-200);
+}
+
+/* Add styles for the Keep and Discard buttons */
+.generate-button-container .discard-button-wrapper .Polaris-Button {
   padding: 6px 12px;
 }
 
-.generate-button-container .keep-button-wrapper .Polaris-Button--primary {
-  background-color: var(--p-color-bg-surface);
-  color: var(--p-color-text);
-  border: 1px solid var(--p-color-border);
-  
+.generate-button-container .keep-button-wrapper .Polaris-Button--variantPrimary { 
+  display: flex !important;
+  flex-direction: row-reverse !important;
+  justify-content: center;
+  padding: 6px 6px 6px 12px;
 }
 
-.generate-button-container .keep-button-wrapper .Polaris-Button--primary:hover {
-  background-color: var(--p-color-bg-surface-hover);
-  border-color: var(--p-color-border-hover);
+.generate-button-container .keep-button-wrapper .Polaris-Button--variantPrimary .Polaris-Button__Icon {
+  margin-right: 0 !important;
 }
+
+.generate-button-container .keep-button-wrapper .Polaris-Button--variantPrimary .Polaris-Button__Icon svg {
+  fill: var(--p-color-text-inverse-secondary) !important;
+  transform: scale(0.7) scaleY(-1);  
+}
+  
+
 
 .generate-button-container .discard-button-wrapper .Polaris-Button--secondary {
   background-color: var(--p-color-bg-surface);
