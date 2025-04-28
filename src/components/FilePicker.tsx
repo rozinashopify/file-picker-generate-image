@@ -255,7 +255,9 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
       event.preventDefault()
       if (fromVariant && originalImage) {
         // For variant generation, use the predefined improvement
-        setPromptValue(FILE_IMPROVEMENTS[originalImage.id] || '')
+        const improvement = FILE_IMPROVEMENTS[originalImage.id] || ''
+        console.log('Setting prompt value to improvement:', improvement)
+        setPromptValue(improvement)
       } else if (generatedImage) {
         setPromptValue('add a magical glow to the leaves')
       } else {
@@ -535,8 +537,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     setIsGenerateMode(true)
     setOriginalImage(file)
     console.log('Set originalImage to:', file);
-    // Prefill with the improvement suggestion for this file
-    setPromptValue(FILE_IMPROVEMENTS[file.id] || '')
+    setPromptValue('') // Clear the prompt value
     setGeneratedImage(null)
     setIsLoading(false)
     setIsCollapsing(false)
@@ -1022,12 +1023,12 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                 labelHidden
                                 autoComplete="off"
                                 placeholder={isGenerateMode ? (isLoading || generatedImage || fromVariant ? "" : "Describe your image") : "Describe your image"}
-                                value={isLoading ? "" : (generatedImage ? "" : (fromVariant ? "" : promptValue))}
+                                value={isLoading ? "" : (generatedImage ? "" : (fromVariant ? promptValue : promptValue))}
                                 onChange={handlePromptChange}
                                 disabled={isLoading}
                                 onFocus={() => {
                                   if (isGenerateMode && !fromVariant && !promptValue) {
-                                    setPromptValue("lush green leaves");
+                                    setPromptValue("");
                                   }
                                 }}
                               />
@@ -1041,7 +1042,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                   </div>
                                 </div>
                               )}
-                              {!generatedImage && !isLoading && fromVariant && (
+                              {!generatedImage && !isLoading && fromVariant && !promptValue && (
                                 <div className="suggestion-indicator">
                                   <div className="suggestion-text">
                                     {FILE_IMPROVEMENTS[originalImage?.id || ''] || 'Press Tab for suggestion'}
@@ -1059,8 +1060,9 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                             </div>
                           </InlineStack>
 
-                          <InlineStack>
+                          
                             {isLoading ? (
+                              <InlineStack>
                               <div className="stop-button-container">
                                 <div 
                                   className="custom-stop-button"
@@ -1072,16 +1074,30 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                   <span className="custom-stop-icon"></span>
                                 </div>
                               </div>
+                              </InlineStack>
                             ) : generatedImage ? (
-                              <div className="generate-button-container">
-                                <InlineStack gap="150">
+                              <div className="generate-button-container overflow">
+
                                   
                                   <div className="discard-button-wrapper">
                                     <Button 
                                       size="slim" 
-                                      onClick={fromVariant ? handleBackClick : () => {
+                                      onClick={() => {
+                                        setIsGenerateMode(false);
                                         setGeneratedImage(null);
                                         setPromptValue("");
+                                        setIsLoading(false);
+                                        setIsCollapsing(false);
+                                        setOriginalImage(null);
+                                        setFromVariant(false);
+                                        setIsFooterVisible(true);
+                                        
+                                        // Find the modal footer and add the fade-in class
+                                        const footer = document.querySelector('.Polaris-Modal-Dialog__Modal>.Polaris-InlineStack');
+                                        if (footer) {
+                                          footer.classList.remove('modal-footer-fade-out');
+                                          footer.classList.add('modal-footer-fade-in');
+                                        }
                                       }}
                                       variant="secondary"
                                     >
@@ -1098,7 +1114,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                       Keep
                                     </Button>
                                   </div>
-                                </InlineStack>
+
                               </div>
                             ) : (
                               <div className="generate-button-container">
@@ -1114,7 +1130,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                               </div>
                             )}
                           </InlineStack>
-                        </InlineStack>
+                        
                       </div>
                     </div>
                   </BlockStack>

@@ -463,6 +463,7 @@
 .generate-mode-input .faux-input .Polaris-TextField__Input {
     padding: var(--p-space-150) 0;
     font-size: var(--p-font-size-350) !important;
+    width: 384px;
 }
 
 /* Suggestion indicator styles */
@@ -757,8 +758,16 @@
 }
 
 /* Generate button styles */
-.generate-button-container {
-
+.generate-button-container.overflow {
+  margin: 10px 0 0 0;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    width: 154px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 26;
 }
 
 .generate-button-container .Polaris-Button {
