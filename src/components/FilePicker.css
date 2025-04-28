@@ -463,7 +463,6 @@
 .generate-mode-input .faux-input .Polaris-TextField__Input {
     padding: var(--p-space-150) 0;
     font-size: var(--p-font-size-350) !important;
-    width: 390px;
 }
 
 /* Suggestion indicator styles */
@@ -759,8 +758,7 @@
 
 /* Generate button styles */
 .generate-button-container {
-  display: inline-block;
-  padding: 6px;
+
 }
 
 .generate-button-container .Polaris-Button {
@@ -771,44 +769,80 @@
   justify-content: center;
 }
 
-.generate-button-container .Polaris-Button svg {
-    fill: #FFF !important;
+.generate-button-container .keep-button-wrapper  {
+ padding-right: 2px;
+}
+
+/* Add styles for the Keep and Discard buttons */
+.generate-button-container .discard-button-wrapper .Polaris-Button,
+.generate-button-container .keep-button-wrapper .Polaris-Button {
+  border-radius: var(--p-border-radius-200);
+  padding: 6px 12px;
+}
+
+.generate-button-container .keep-button-wrapper .Polaris-Button--primary {
+  background-color: var(--p-color-bg-surface);
+  color: var(--p-color-text);
+  border: 1px solid var(--p-color-border);
+  
+}
+
+.generate-button-container .keep-button-wrapper .Polaris-Button--primary:hover {
+  background-color: var(--p-color-bg-surface-hover);
+  border-color: var(--p-color-border-hover);
+}
+
+.generate-button-container .discard-button-wrapper .Polaris-Button--secondary {
+  background-color: var(--p-color-bg-surface);
+  color: var(--p-color-text);
+  border: 1px solid var(--p-color-border);
+}
+
+.generate-button-container .discard-button-wrapper .Polaris-Button--secondary:hover {
+  background-color: var(--p-color-bg-surface-hover);
+  border-color: var(--p-color-border-hover);
+}
+
+.generate-button-container .arrow-up-button-wrapper {
+  padding: 6px;
+}
+
+.stop-button-container {
+  padding: 3px 3px;
+}
+
+
+.generate-button-container .arrow-up-button-wrapper .Polaris-Button svg {
+    fill: currentColor !important;
     transition: transform 0.15s ease-in-out !important;
 }
 
-
-
-.generate-button-container .Polaris-Button:hover svg {
+.generate-button-container .arrow-up-button-wrapper .Polaris-Button:hover svg {
     transform: translateY(-2px);
 }
 
-.generate-button-container .Polaris-Button:disabled,
-.generate-button-container .Polaris-Button.Polaris-Button--disabled {
+.generate-button-container .arrow-up-button-wrapper .Polaris-Button:disabled,
+.generate-button-container .arrow-up-button-wrapper .Polaris-Button.Polaris-Button--disabled {
   background-color: var(--p-color-bg-fill-transparent-secondary);
 }
 
-.generate-button-container .Polaris-Button:disabled svg,
-.generate-button-container .Polaris-Button.Polaris-Button--disabled svg {
+.generate-button-container .arrow-up-button-wrapper .Polaris-Button:disabled svg,
+.generate-button-container .arrow-up-button-wrapper .Polaris-Button.Polaris-Button--disabled svg {
     fill: #FFF !important;
 }
 
-.generate-button-container .Polaris-Button:not(.Polaris-Button--disabled) {
+.generate-button-container .arrow-up-button-wrapper .Polaris-Button:not(.Polaris-Button--disabled) {
   background-color: var(--p-color-text-magic-secondary);
 }
 
-.generate-button-container .Polaris-Button:not(.Polaris-Button--disabled):hover {
+.generate-button-container .arrow-up-button-wrapper .Polaris-Button:not(.Polaris-Button--disabled):hover {
     background-color: var(--p-color-text-magic);
   }
 
-.generate-button-container .Polaris-Button:not(.Polaris-Button--disabled) svg {
+.generate-button-container .arrow-up-button-wrapper .Polaris-Button:not(.Polaris-Button--disabled) svg {
     fill: #FFF !important;
 }
 
-/* Stop button styles */
-.stop-button-container {
-  display: inline-block;
-  padding: 3px;
-}
 
 .custom-stop-button {
   border-radius: 50%;

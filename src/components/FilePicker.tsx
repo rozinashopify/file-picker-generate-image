@@ -41,6 +41,7 @@ import tabIcon from './tab.svg'
 import sidekickAvatarBlink from './sidekickAvatarBlink.svg'
 import sidekickAvatarThink from './sidekickAvatarThink.svg'
 import sidekickAvatar from './sidekickAvatar.svg'
+import { IconSource } from '@shopify/polaris'
 
 // File-specific improvement messages
 const FILE_IMPROVEMENTS: Record<string, string> = {
@@ -172,6 +173,19 @@ interface FilePickerProps {
   onClose: () => void
   onFileSelect: (file: File) => void
 }
+
+interface RightIconButtonProps extends Omit<React.ComponentProps<typeof Button>, 'icon'> {
+  icon: IconSource;
+}
+
+const RightIconButton = ({ children, icon, ...props }: RightIconButtonProps) => (
+  <div style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
+    <Button {...props}>{children}</Button>
+    <div style={{ marginRight: '8px' }}>
+      <Icon source={icon} />
+    </div>
+  </div>
+);
 
 export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const [searchValue, setSearchValue] = useState('')
@@ -966,20 +980,6 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                 </Tooltip>
                               </InlineStack>
                             </div>
-
-                            <div style={{ position: 'absolute', bottom: '16px', right: '12px' }}>
-
-                                <div className="image-save-button">
-                                  <Button
-                                    onClick={handleSaveToFiles}
-                                    variant="secondary"
-                                    size="micro"
-                                  >
-                                    Save to files
-                                  </Button>
-                                </div>
-
-                            </div>
                           </div>
                         </Box>
                       </div>
@@ -1026,15 +1026,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                               {(!promptValue || generatedImage) && !isLoading && (
                                 <div className="suggestion-indicator">
                                   <div className="suggestion-text">
-                                    {originalImage 
-                                      ? FILE_IMPROVEMENTS[originalImage.id] || 'make it more vibrant and colorful'
-                                      : generatedImage 
-                                        ? 'add a magical glow to the leaves'
-                                        : 'lush green leaves'
-                                    }
-                                  </div>
-                                  <div className="tab-indicator">
-                                    <img src={tabIcon} alt="Press Tab" />
+                                    Ask a follow up
                                   </div>
                                 </div>
                               )}
@@ -1046,7 +1038,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                             </div>
                           </InlineStack>
 
-                          <Box>
+                          <InlineStack>
                             {isLoading ? (
                               <div className="stop-button-container">
                                 <div 
@@ -1061,15 +1053,34 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                               </div>
                             ) : generatedImage ? (
                               <div className="generate-button-container">
-                                <Button 
-                                  size="slim" 
-                                  onClick={handleTryAgain}
-                                  icon={ArrowUpIcon}
-                                  variant="tertiary"
-                                />
+                                <InlineStack gap="200">
+                                  
+                                  <div className="discard-button-wrapper">
+                                    <Button 
+                                      size="slim" 
+                                      onClick={fromVariant ? handleBackClick : () => {
+                                        setGeneratedImage(null);
+                                        setPromptValue("");
+                                      }}
+                                      variant="secondary"
+                                    >
+                                      Discard
+                                    </Button>
+                                  </div>
+                                  <div className="keep-button-wrapper">
+                                  <Button 
+                                      size="slim" 
+                                       onClick={handleSaveToFiles}
+                                      variant="primary"
+                                    >
+                                      Keep
+                                    </Button>
+                                  </div>
+                                </InlineStack>
                               </div>
                             ) : (
                               <div className="generate-button-container">
+                                <div className="arrow-up-button-wrapper">
                                 <Button 
                                   size="slim" 
                                   onClick={handleGenerateButtonClick}
@@ -1077,9 +1088,10 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                   disabled={!promptValue.trim()}
                                   variant="tertiary"
                                 />
+                                </div>
                               </div>
                             )}
-                          </Box>
+                          </InlineStack>
                         </InlineStack>
                       </div>
                     </div>
