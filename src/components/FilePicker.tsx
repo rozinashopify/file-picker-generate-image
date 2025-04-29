@@ -1083,20 +1083,22 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                     <Button 
                                       size="slim" 
                                       onClick={() => {
-                                        setIsGenerateMode(false);
-                                        setGeneratedImage(null);
-                                        setPromptValue("");
-                                        setIsLoading(false);
-                                        setIsCollapsing(false);
-                                        setOriginalImage(null);
-                                        setFromVariant(false);
-                                        setIsFooterVisible(true);
-                                        
-                                        // Find the modal footer and add the fade-in class
-                                        const footer = document.querySelector('.Polaris-Modal-Dialog__Modal>.Polaris-InlineStack');
-                                        if (footer) {
-                                          footer.classList.remove('modal-footer-fade-out');
-                                          footer.classList.add('modal-footer-fade-in');
+                                        if (fromVariant) {
+                                          // For variant generation, keep the original image and generate mode
+                                          setGeneratedImage(null);
+                                          setPromptValue("");
+                                          setIsLoading(false);
+                                          setIsCollapsing(false);
+                                          setIsFooterVisible(false);
+                                        } else {
+                                          // For new image generation, return to empty generate screen
+                                          setGeneratedImage(null);
+                                          setPromptValue("");
+                                          setIsLoading(false);
+                                          setIsCollapsing(false);
+                                          setOriginalImage(null);
+                                          setFromVariant(false);
+                                          setIsFooterVisible(false);
                                         }
                                       }}
                                       variant="secondary"
