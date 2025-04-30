@@ -126,21 +126,23 @@
   }
 }
 
+
 .loader-content {
-  background: rgba(0,0,0,0.4);
-  padding: 4px 8px;
-  border-radius: var(--p-border-radius-200);
+  background: rgba(255, 255, 255, 0.7);
   position: absolute;
-  bottom: 8px;
-  left: 8px;
-  color: #FFF;
+  bottom: 14px;
+  left: 20px;
+  z-index: 10;
   font-size: var(--p-font-size-325);
-  font-weight: var(--p-font-weight-medium);
-  z-index: 7;
   line-height: var(--p-font-line-height-400);
-  display: none;
-} 
+  font-weight: var(--p-font-weight-medium);
+  /* The key difference - applying blend mode to the entire element */
+  color: rgba(0, 0, 0, 0.95);
+  mix-blend-mode: color-burn;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
 
 .image-loader-container:hover .loader-content {
-  display: block;
-} 
+  opacity: 1;
+}
