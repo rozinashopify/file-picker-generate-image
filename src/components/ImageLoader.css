@@ -127,11 +127,15 @@
 }
 
 .loader-content {
+  background: rgba(0,0,0,0.4);
+  padding: 4px 8px;
+  border-radius: var(--p-border-radius-200);
   position: absolute;
-  bottom: 16px;
-  left: 24px;
-  color: var(--p-color-text-magic-secondary);
-  font-size: 13px;
-  font-weight: 500;
+  bottom: 8px;
+  left: 8px;
+  color: #FFF;
+  font-size: var(--p-font-size-325);
+  font-weight: var(--p-font-weight-medium);
   z-index: 7;
+  line-height: var(--p-font-line-height-400);
 } 
