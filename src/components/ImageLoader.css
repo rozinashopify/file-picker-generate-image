@@ -138,4 +138,9 @@
   font-weight: var(--p-font-weight-medium);
   z-index: 7;
   line-height: var(--p-font-line-height-400);
+  display: none;
+} 
+
+.image-loader-container:hover .loader-content {
+  display: block;
 } 
