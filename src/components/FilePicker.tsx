@@ -1007,7 +1007,8 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
 
                     <div className="generate-mode-input">
                       <div className="faux-input">
-                        <InlineStack wrap={false} blockAlign="center" align="space-between">
+
+                         
                           <InlineStack gap="200" wrap={false} blockAlign="center">
 
                               {isLoading ? (
@@ -1131,7 +1132,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                 </div>
                               </div>
                             )}
-                          </InlineStack>
+
                         
                       </div>
                     </div>

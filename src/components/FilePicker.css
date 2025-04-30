@@ -757,17 +757,22 @@
     fill: var(--p-color-icon-inverse) !important;
 }
 
-/* Generate button styles */
-.generate-button-container.overflow {
-  margin: 10px 0 0 0;
+.generate-button-container, .stop-button-container {
+  margin: 8px 0 0 0;
     display: flex;
     flex-wrap: nowrap;
     gap: 6px;
-    width: 154px;
+    width: 40px;
     position: absolute;
     top: 0;
     right: 0;
     z-index: 26;
+}
+
+/* Generate button styles */
+.generate-button-container.overflow {
+  margin: 10px 0 0 0;
+    width: 154px;
 }
 
 .generate-button-container .Polaris-Button {
