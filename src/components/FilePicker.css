@@ -80,6 +80,21 @@
   0rem 0.03125rem 0rem 0.09375rem rgba(255, 255, 255, 0.05) inset !important
 }
 
+
+/* Drop zone pulse effect using only transition */
+.Polaris-DropZone {
+  transition: box-shadow 0.4s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 0 0px #b3e5fc;
+}
+
+.Polaris-DropZone.dropzone-animate {
+  box-shadow: 0 0 0 12px #4fc3f7;
+}
+
+.Polaris-DropZone.dropzone-animate-fadeout {
+  box-shadow: 0 0 0 0px #b3e5fc;
+}
+
 /* Mode transition animations */
 .mode-transition {
   transition: all 0.3s ease-in-out;

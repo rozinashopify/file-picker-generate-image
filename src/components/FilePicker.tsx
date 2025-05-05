@@ -220,6 +220,19 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const dragThreshold = 100 // pixels to drag before triggering the close action
   const [hasDragged, setHasDragged] = useState(false)
   const fileGridRef = useRef<HTMLDivElement>(null)
+  const [buttonVariant, setButtonVariant] = useState<'default' | 'animated'>('default')
+
+  // On mount, read the query parameter
+  useEffect(() => {
+    // Use window.location.search directly (if not using react-router)
+    const params = new URLSearchParams(window.location.search)
+    const variant = params.get('button')
+    if (variant === 'animated' || variant === 'default') {
+      setButtonVariant(variant)
+    } else {
+      setButtonVariant('default')
+    }
+  }, [])
 
   // Measure section height when component mounts and when open changes
   useEffect(() => {
@@ -838,6 +851,80 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     </Box>
   )
 
+  // Two button variants
+  const GenerateImageButtonDefault = ({ onClick }: { onClick: () => void }) => (
+    <div className="generate-image-button magic-button">
+      <Button onClick={onClick} icon={ImageMagicIcon}>Generate image</Button>
+    </div>
+  )
+
+  const GenerateImageButtonAnimated = ({ onClick }: { onClick: () => void }) => (
+    <div
+      className="generate-image-button"
+      onMouseEnter={e => {
+        // Find the closest DropZone ancestor
+        const dropZone = (e.currentTarget as HTMLElement).closest('.Polaris-DropZone');
+        if (dropZone) dropZone.classList.add('dropzone-animate');
+        // Modal content overflow
+        const modalContent = document.querySelector('.modal-content') as HTMLElement;
+        if (modalContent) {
+          modalContent.setAttribute('data-original-overflow', modalContent.style.overflow || '');
+          modalContent.style.overflow = 'visible';
+        }
+        // File browser container overflow
+        const fileBrowser = document.querySelector('.file-browser-container') as HTMLElement;
+        if (fileBrowser) {
+          fileBrowser.setAttribute('data-original-overflow', fileBrowser.style.overflow || '');
+          fileBrowser.setAttribute('data-original-overflow-y', fileBrowser.style.overflowY || '');
+          fileBrowser.style.overflow = 'visible';
+          fileBrowser.style.overflowY = 'visible';
+        }
+      }}
+      onMouseLeave={e => {
+        const dropZone = (e.currentTarget as HTMLElement).closest('.Polaris-DropZone');
+        const modalContent = document.querySelector('.modal-content') as HTMLElement;
+        const fileBrowser = document.querySelector('.file-browser-container') as HTMLElement;
+
+        if (dropZone) {
+          dropZone.classList.add('dropzone-animate-fadeout');
+          dropZone.classList.remove('dropzone-animate');
+          // Remove fadeout class and restore overflow after transition
+          const handleTransitionEnd = () => {
+            dropZone.classList.remove('dropzone-animate-fadeout');
+            dropZone.removeEventListener('transitionend', handleTransitionEnd);
+
+            // Restore overflow properties here
+            if (modalContent) {
+              const original = modalContent.getAttribute('data-original-overflow');
+              modalContent.style.overflow = original || 'hidden';
+            }
+            if (fileBrowser) {
+              const original = fileBrowser.getAttribute('data-original-overflow');
+              const originalY = fileBrowser.getAttribute('data-original-overflow-y');
+              fileBrowser.style.overflow = original || '';
+              fileBrowser.style.overflowY = originalY || '';
+            }
+          };
+          dropZone.addEventListener('transitionend', handleTransitionEnd);
+        } else {
+          // Fallback: restore overflow immediately if dropZone not found
+          if (modalContent) {
+            const original = modalContent.getAttribute('data-original-overflow');
+            modalContent.style.overflow = original || 'hidden';
+          }
+          if (fileBrowser) {
+            const original = fileBrowser.getAttribute('data-original-overflow');
+            const originalY = fileBrowser.getAttribute('data-original-overflow-y');
+            fileBrowser.style.overflow = original || '';
+            fileBrowser.style.overflowY = originalY || '';
+          }
+        }
+      }}
+    >
+      <Button onClick={onClick} icon={ImageMagicIcon}>Generate image</Button>
+    </div>
+  )
+
   const uploadActionsMarkup = (
     <Box paddingBlock="800">
       <Box>
@@ -847,9 +934,13 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
               <Button>Upload files</Button>
               <Button icon={ChevronDownIcon} accessibilityLabel="Create folder" />
             </ButtonGroup>
-            <div className="generate-image-button magic-button" onClick={(e) => e.stopPropagation()}>
-              <Button onClick={handleGenerateClick} icon={ImageMagicIcon}>Generate image</Button>
-            </div>
+            {buttonVariant === 'animated' ? (
+              <GenerateImageButtonAnimated onClick={handleGenerateClick} />
+            ) : (
+              <div className="generate-image-button magic-button" onClick={e => e.stopPropagation()}>
+                <GenerateImageButtonDefault onClick={handleGenerateClick} />
+              </div>
+            )}
           </InlineStack>
           <Text as="p" variant="bodyMd" tone="subdued" alignment="center">
             Drag and drop images, videos, 3D models, and files
