@@ -80,20 +80,47 @@
   0rem 0.03125rem 0rem 0.09375rem rgba(255, 255, 255, 0.05) inset !important
 }
 
+.Polaris-DropZone .Polaris-ButtonGroup.Polaris-ButtonGroup--variantSegmented,
+.Polaris-DropZone .Polaris-Text--root.Polaris-Text--subdued {
+  transition: opacity 0.15s ease-in-out;
+}
 
 /* Drop zone pulse effect using only transition */
-.Polaris-DropZone {
-  transition: box-shadow 0.4s cubic-bezier(0.4,0,0.2,1);
-  box-shadow: 0 0 0 0px #b3e5fc;
+.Polaris-DropZone.dropzone-animate .Polaris-DropZone__Container {
+  background-color: var(--p-color-bg-surface-hover);
+  border-radius: 8px;
 }
 
-.Polaris-DropZone.dropzone-animate {
-  box-shadow: 0 0 0 12px #4fc3f7;
+.Polaris-DropZone.dropzone-animate:before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  bottom: -2px ;
+  left: -2px;
+  border-radius: 9px;
+  filter: blur(4px);
+  background: conic-gradient(
+    from var(--angle) at 50% 50%,
+    #a0cbff 0deg,
+    #d1bdff 90deg,
+    #f4c2ff 126deg,
+    #ffb9a2 180deg,
+    #f4c2ff 234deg,
+    #d1bdff 270deg,
+    #a0cbff 306deg
+  );
+  opacity: 0.7;
+  animation: rotate-gradient var(--p-motion-duration-5000) linear infinite;
+  z-index: 0;
+  transition: all 0.15s ease-in-out;
 }
 
-.Polaris-DropZone.dropzone-animate-fadeout {
-  box-shadow: 0 0 0 0px #b3e5fc;
+.Polaris-DropZone.dropzone-animate .Polaris-ButtonGroup.Polaris-ButtonGroup--variantSegmented,
+.Polaris-DropZone.dropzone-animate .Polaris-Text--root.Polaris-Text--subdued {
+  opacity: 0.2;
 }
+
 
 /* Mode transition animations */
 .mode-transition {
