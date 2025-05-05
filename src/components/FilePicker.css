@@ -40,12 +40,12 @@
 .magic-button:before {
   content: '';
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border-radius: var(--p-border-radius-200);
-  filter: blur(2px);
+  top: -1px;
+  right: -1px;
+  bottom: 0 ;
+  left: -1px;
+  border-radius: 9px;
+  filter: blur(1px);
   background: conic-gradient(
     from var(--angle) at 50% 50%,
     #a0cbff 0deg,
@@ -56,8 +56,15 @@
     #d1bdff 270deg,
     #a0cbff 306deg
   );
+  opacity: 0.4;
   animation: rotate-gradient var(--p-motion-duration-5000) linear infinite;
   z-index: 0;
+  transition: all 0.15s ease-in-out;
+}
+
+.magic-button:hover:before {
+  filter: blur(3px);
+  opacity: 0.7;
 }
 
 .magic-button .Polaris-Button.Polaris-Button svg {
@@ -65,7 +72,6 @@
 }
 
 .magic-button .Polaris-Button.Polaris-Button {
-
   position: relative;
   z-index: 1;
   background: var(--p-color-bg-surface) !important;
@@ -967,9 +973,6 @@
   fill: var(--p-color-icon-magic) !important;
 }
 
-.generate-image-button.magic-button .Polaris-Button .Polaris-Text--root {
-  color: var(--p-color-text-magic) !important;
-}
 
 /* Ensure modal is centered on all screen sizes */
 .Polaris-Modal {
