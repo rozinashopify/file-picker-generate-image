@@ -967,7 +967,7 @@
   fill: var(--p-color-icon-magic) !important;
 }
 
-.generate-image-button .Polaris-Button .Polaris-Button__Text {
+.generate-image-button.magic-button .Polaris-Button .Polaris-Text--root {
   color: var(--p-color-text-magic) !important;
 }
 
