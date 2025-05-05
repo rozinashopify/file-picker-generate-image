@@ -68,7 +68,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'JPG',
     url: 'https://burst.shopifycdn.com/photos/black-leather-choker-necklace_373x@2x.jpg',
     highResUrl: 'https://burst.shopifycdn.com/photos/black-leather-choker-necklace.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_make_the_necklace_more_elegant_with_a_golden_finish_011a9391-a92b-461c-9268-c19e33d135ea.webp?v=1745348766'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-17464552386984a97347-elegant-gold-choker-necklace.png?v=1746455284'
   },
   {
     id: '2',
@@ -76,7 +76,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'PNG',
     url: 'https://burst.shopifycdn.com/photos/tucan-scarf_373x@2x.jpg',
     highResUrl: 'https://burst.shopifycdn.com/photos/tucan-scarf.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_add_a_warm_cozy_texture_to_the_scarf_1389f101-11f0-4973-9f20-c640803f6dfc.webp?v=1745349049'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-17464553289133a6b05c-tropical-bird-patterned-fabric.png?v=1746455431'
   },
   {
     id: '3',
@@ -84,7 +84,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'JPG',
     url: 'https://burst.shopifycdn.com/photos/black-orange-stripes_373x@2x.jpg',
     highResUrl: 'https://burst.shopifycdn.com/photos/black-orange-stripes.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_enhance_the_contrast_of_the_stripes_ac52b25c-af3b-4616-80eb-36419b36cef0.webp?v=1745349328'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-17464554234904b1e589-vivid-striped-patterns-enhanced-contrast-for-dynamic-visual-impact.png?v=1746455607'
   },
   {
     id: '4',
@@ -92,7 +92,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'JPG',
     url: 'https://burst.shopifycdn.com/photos/anchor-bracelet-leather.jpg?width=150&format=pjpg&exif=0&iptc=0+1x%2C+https%3A%2F%2Fburst.shopifycdn.com%2Fphotos%2Fanchor-bracelet-leather.jpg%3Fwidth%3D1850&format=pjpg&exif=0&iptc=0+2x',
     highResUrl: 'https://burst.shopifycdn.com/photos/anchor-bracelet-leather.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_add_a_vintage_filter_to_the_jewelry_collection_6d1c24b9-27c7-4bbe-8eb4-d94a10c88259.webp?v=1745349407'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-17464554940161d76904-elegant-leather-and-gold-bracelet.png?v=1746455607'
   },
   {
     id: '5',
@@ -100,7 +100,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'JPG',
     url: 'https://burst.shopifycdn.com/photos/a-close-up-of-luxury-watch.jpg?width=300&format=pjpg&exif=0&iptc=0+1x%2C+https%3A%2F%2Fburst.shopifycdn.com%2Fphotos%2Fa-close-up-of-luxury-watch.jpg%3Fwidth%3D1850&format=pjpg&exif=0&iptc=0+2x',
     highResUrl: 'https://burst.shopifycdn.com/photos/a-close-up-of-luxury-watch.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_make_the_watch_face_more_luxurious_with_a_metallic_sh_78bc7283-249a-4749-bf63-2c8614b38a74.webp?v=1745349519'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-174645562505438608bc-elegant-blue-dial-watch-on-a-wrist.png?v=1746455687'
   },
   {
     id: '6',
@@ -108,7 +108,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'JPG',
     url: 'https://burst.shopifycdn.com/photos/lined-black-sunglasses-on-a-pink-surface.jpg?width=300&format=pjpg&exif=0&iptc=0+1x%2C+https%3A%2F%2Fburst.shopifycdn.com%2Fphotos%2Flined-black-sunglasses-on-a-pink-surface.jpg%3Fwidth%3D1850&format=pjpg&exif=0&iptc=0+2x&crop=center',
     highResUrl: 'https://burst.shopifycdn.com/photos/lined-black-sunglasses-on-a-pink-surface.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_add_a_summer_vibe_to_the_sunglasses_shot_3f793e8d-deb5-4e63-811a-3ee4a180f1d1.webp?v=1745349622'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-17464557163794b0454d-vibrant-summer-vibes-sunglasses-on-a-beach-with-sunlight-and-tropical-background.png?v=1746455788'
   },
   {
     id: '7',
@@ -116,7 +116,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'JPG',
     url: 'https://burst.shopifycdn.com/photos/gold-zipper-on-black-fashion-backpack.jpg?width=300&format=pjpg&exif=0&iptc=0+1x%2C+https%3A%2F%2Fburst.shopifycdn.com%2Fphotos%2Fgold-zipper-on-black-fashion-backpack.jpg%3Fwidth%3D1850&format=pjpg&exif=0&iptc=0+2x&crop=center&height=300',
     highResUrl: 'https://burst.shopifycdn.com/photos/gold-zipper-on-black-fashion-backpack.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_give_the_backpack_a_premium_leather_look_14e0d400-b093-4666-b055-a8e2ba9fe435.webp?v=1745349716'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-17464557804264a9a221-sleek-black-leather-backpack-with-gold-accents.png?v=1746455906'
   },
   {
     id: '8',
@@ -124,7 +124,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'JPG',
     url: 'https://burst.shopifycdn.com/photos/footwear-close-up-man-tying-shoelace.jpg?width=300&format=pjpg&exif=0&iptc=0+1x%2C+https%3A%2F%2Fburst.shopifycdn.com%2Fphotos%2Ffootwear-close-up-man-tying-shoelace.jpg%3Fwidth%3D1850&format=pjpg&exif=0&iptc=0+2x&height=300&crop=center',
     highResUrl: 'https://burst.shopifycdn.com/photos/footwear-close-up-man-tying-shoelace.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_add_a_lifestyle_context_to_the_shoes_4ff5b2e2-df59-4969-8776-c2905b20ba7f.webp?v=1745349871'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-17464558981649607a7-man-tying-brown-leather-shoes-on-wooden-path.png?v=1746456005'
   },
   {
     id: '9',
@@ -132,7 +132,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'JPG',
     url: 'https://burst.shopifycdn.com/photos/black-glass-perfume-bottle-and-spritzer.jpg?width=300&format=pjpg&exif=0&iptc=0+1x%2C+https%3A%2F%2Fburst.shopifycdn.com%2Fphotos%2Fblack-glass-perfume-bottle-and-spritzer.jpg%3Fwidth%3D1850&format=pjpg&exif=0&iptc=0+2x&height=300&crop=center',
     highResUrl: 'https://burst.shopifycdn.com/photos/black-glass-perfume-bottle-and-spritzer.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_create_a_luxurious_atmosphere_around_the_perfume_bott_e812cbfb-7d96-442f-b3e7-67a86ed352f6.webp?v=1745349988'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-174645599815147a836e-elegant-perfume-bottle-with-gold-and-black-theme.png?v=1746456090'
   },
   {
     id: '10',
@@ -140,7 +140,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'JPG',
     url: 'https://burst.shopifycdn.com/photos/bright-eyeshadow-makeup.jpg?width=300&format=pjpg&exif=0&iptc=0+1x%2C+https%3A%2F%2Fburst.shopifycdn.com%2Fphotos%2Fbright-eyeshadow-makeup.jpg%3Fwidth%3D1850&format=pjpg&exif=0&iptc=0+2x&height=300&crop=center',
     highResUrl: 'https://burst.shopifycdn.com/photos/bright-eyeshadow-makeup.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_enhance_the_makeup_colors_to_be_more_vibrant_7932e5e8-ac09-4f41-9f8c-cd34787585b9.webp?v=1745350084'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-17464560838584b19eaf-vibrant-makeup-palette-with-neon-colors.png?v=1746456142'
   },
   {
     id: '11',
@@ -148,7 +148,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'JPG',
     url: 'https://burst.shopifycdn.com/photos/camera-floating-on-grey-background.jpg?width=300&format=pjpg&exif=0&iptc=0+1x%2C+https%3A%2F%2Fburst.shopifycdn.com%2Fphotos%2Fcamera-floating-on-grey-background.jpg%3Fwidth%3D1850&format=pjpg&exif=0&iptc=0+2x&height=300&crop=center',
     highResUrl: 'https://burst.shopifycdn.com/photos/camera-floating-on-grey-background.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_add_a_professional_studio_lighting_effect_3a0e4b30-7a15-451b-a4bb-bbfa2d5a90d6.webp?v=1745350202'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-174645613570088501a-suspended-camera-in-dramatic-lighting.png?v=1746456210'
   },
   {
     id: '12',
@@ -156,7 +156,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'JPG',
     url: 'https://burst.shopifycdn.com/photos/coffee-shop-stalker.jpg?width=300&format=pjpg&exif=0&iptc=0+1x%2C+https%3A%2F%2Fburst.shopifycdn.com%2Fphotos%2Fcoffee-shop-stalker.jpg%3Fwidth%3D1850&format=pjpg&exif=0&iptc=0+2x&height=300&crop=center',
     highResUrl: 'https://burst.shopifycdn.com/photos/coffee-shop-stalker.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_create_a_cozy_coffee_shop_atmosphere_49b4c725-9f68-4b3c-bee9-5191b4485642.webp?v=1745350375'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-17464562045383a75c2c-cozy-bakery-interior-at-night.png?v=1746456332'
   },
   {
     id: '13',
@@ -164,7 +164,7 @@ const SAMPLE_FILES: File[] = [
     extension: 'JPG',
     url: 'https://burst.shopifycdn.com/photos/portrait-of-floral-arrangement-in-natural-light.jpg?width=300&format=pjpg&exif=0&iptc=0+1x%2C+https%3A%2F%2Fburst.shopifycdn.com%2Fphotos%2Fportrait-of-floral-arrangement-in-natural-light.jpg%3Fwidth%3D1850&format=pjpg&exif=0&iptc=0+2x&height=300&crop=center',
     highResUrl: 'https://burst.shopifycdn.com/photos/portrait-of-floral-arrangement-in-natural-light.jpg?width=1850&format=pjpg&exif=0&iptc=0',
-    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/zincsilla_add_a_soft_natural_glow_to_the_plant_arrangement_83222f6a-b104-41e0-abed-b1ba3f749423.webp?v=1745350470'
+    variantUrl: 'https://cdn.shopify.com/s/files/1/0661/1491/2508/files/shopp-e-1746456311735508f0f4-radiant-plant-arrangement-with-a-soft-natural-glow.png?v=1746456352'
   }
 ]
 
@@ -847,7 +847,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
               <Button>Upload files</Button>
               <Button icon={ChevronDownIcon} accessibilityLabel="Create folder" />
             </ButtonGroup>
-            <div className="generate-image-button" onClick={(e) => e.stopPropagation()}>
+            <div className="generate-image-button magic-button" onClick={(e) => e.stopPropagation()}>
               <Button onClick={handleGenerateClick} icon={ImageMagicIcon}>Generate image</Button>
             </div>
           </InlineStack>

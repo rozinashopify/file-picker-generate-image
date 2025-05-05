@@ -1,0 +1,18 @@
+name: file-picker-generate-image
+type: node
+up:
+  - prodkit_tools
+  - node:
+      version: 18.17.1
+      yarn: 1.22.19
+commands:
+  build:
+    run: yarn run build
+  server:
+    run: yarn run start
+  dev:
+    run: yarn run dev
+  start:
+    run: yarn run start
+  typecheck:
+    run: yarn run typecheck 
