@@ -861,6 +861,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const GenerateImageButtonAnimated = ({ onClick }: { onClick: () => void }) => (
     <div
       className="generate-image-button"
+      onClick={e => e.stopPropagation()}
       onMouseEnter={e => {
         // Find the closest DropZone ancestor
         const dropZone = (e.currentTarget as HTMLElement).closest('.Polaris-DropZone');
