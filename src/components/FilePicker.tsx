@@ -985,14 +985,6 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
         title={
           <div className={`modal-title ${isGenerateMode ? 'with-back-button' : ''}`}>
             <InlineStack align="center" gap="200">
-             {isGenerateMode && (
-                 <Button
-                   icon={ArrowLeftIcon}
-                   onClick={handleBackClick}
-                   variant="tertiary"
-                   accessibilityLabel="Back"
-                 />
-               )}
               <Text as="span" variant="headingMd">
                 {isGenerateMode ? (fromVariant ? "Generate variant" : "Generate image") : "Select files"}
               </Text>
