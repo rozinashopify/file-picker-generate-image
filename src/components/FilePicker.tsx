@@ -4,33 +4,24 @@ import {
   ButtonGroup,
   Button,
   BlockStack,
-  ActionList,
-  Popover,
   Box,
-  Badge,
   DropZone,
   InlineStack,
   Text,
   Icon,
-  Spinner,
   Tooltip,
 } from '@shopify/polaris'
 import {
   ChevronDownIcon,
   SortIcon,
-  ViewIcon,
   FilterIcon,
   SearchIcon,
-  FolderIcon,
-  ImageIcon,
-  AppsIcon,
-  ArrowLeftIcon,
   ImageMagicIcon,
   UndoIcon,
   FlagIcon,
   ImportIcon,
   ArrowUpIcon,
-  DragHandleIcon,
+  ChevronUpIcon,
 } from '@shopify/polaris-icons'
 import { useState, useEffect, useRef } from 'react'
 import { FileGrid, File } from './FileGrid'
@@ -1102,38 +1093,37 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
               
               <div 
                 ref={fileGridRef}
-                className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''} ${isGridHovered ? 'arrow-hovered' : ''}`}
+                className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''} ${isArrowHovered ? 'arrow-hovered' : ''}`}
                 style={{ 
                   transform: isGenerateMode 
                     ? 'translateY(390px)' 
                     : 'translateY(0px)', 
-                  opacity: isGenerateMode 
-                    ? (isGridHovered 
-                        ? 0.4 
-                        : 0.2)
-                    : 1,
                   transition: 'transform 0.3s ease-out, opacity 0.3s ease-out'
                 }}
-                onMouseEnter={() => setIsGridHovered(true)}
-                onMouseLeave={() => setIsGridHovered(false)}
               >
-                <Box>
-                  <FileGrid 
-                    files={files}
-                    onFileSelect={handleFileSelect}
-                    selectedFiles={selectedFiles}
-                    onGenerateVariation={handleGenerateVariation}
-                    newFilesToHighlight={newFilesToHighlight}
-                  />
-                </Box>
+                <div
+                  className={`file-grid-fade${isGenerateMode ? (isGridHovered ? ' grid-hovered' : ' grid-faded') : ''}`}
+                >
+                  <Box>
+                    <FileGrid 
+                      files={files}
+                      onFileSelect={handleFileSelect}
+                      selectedFiles={selectedFiles}
+                      onGenerateVariation={handleGenerateVariation}
+                      newFilesToHighlight={newFilesToHighlight}
+                    />
+                  </Box>
+                </div>
                 
                 {isGenerateMode && (
                   <div 
                     ref={dragHandleRef}
                     className={`file-grid-arrow-button`}
                     onClick={handleBackClick}
+                    onMouseEnter={() => setIsArrowHovered(true)}
+                    onMouseLeave={() => setIsArrowHovered(false)}
                   >
-                    <Icon source={DragHandleIcon} />
+                    <Icon source={ChevronUpIcon} />
                   </div>
                 )}
               </div>

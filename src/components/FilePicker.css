@@ -63,7 +63,7 @@
 }
 
 .magic-button:hover:before {
-  filter: blur(3px);
+  filter: blur(2px);
   opacity: 0.7;
 }
 
@@ -155,13 +155,9 @@
 .file-grid-container.fade-out {
   /* Remove the animation and just use transform */
   transform: translateY(370px);
-  opacity: 0.2;
   transition: opacity 0.3s ease-out;
 }
 
-.file-grid-container.fade-out:hover {
-  opacity: 0.4;
-}
 
 /* Add styles for when dragging */
 .file-grid-container.dragging {
@@ -171,132 +167,52 @@
 
 .file-grid-arrow-button {
   position: absolute;
-  top: -16px;
+  top: 0px;
   left: 50%;
   transform: translateX(-50%);
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--p-border-radius-full);
+    background-color: var(--p-color-bg-surface);
+    box-shadow: 0 .25rem .375rem -.0625rem #0000000a, 0 .0625rem .125rem -.03125rem #0000000a, 0 .03125rem .03125rem #0000000f, 0 0 0 .0625rem #00000013;
   z-index: 10;
-  opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  transition: opacity 0.25s ease-out;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: auto;
-  overflow: visible;
-  cursor: grab;
-  touch-action: none;
-  will-change: transform;
-}
-@keyframes spread-gradient-left {
-  from {
-    background-size: 0% 100%;
-    background-position: right;
-  }
-  to {
-    background-size: 100% 100%;
-    background-position: right;
-  }
-}
-
-@keyframes spread-gradient-right {
-  from {
-    background-size: 0% 100%;
-    background-position: left;
-  }
-  to {
-    background-size: 100% 100%;
-    background-position: left;
-  }
-}
-
-.file-grid-arrow-button::before,
-.file-grid-arrow-button::after {
-  content: '';
-  position: absolute;
-  height: 1px;
-  width: 450px;
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
-  z-index: 11;
-  background-repeat: no-repeat;
-  
-}
-
-.file-grid-arrow-button::before {
-
-  transform: translateX(-250px);
-  background-image: linear-gradient(
-    270deg,
-    var(--p-color-border-tertiary) 0%,
-    var(--p-color-border-tertiary) 60%,
-    transparent 100%
-  );
-  background-position: right;
-}
-
-.file-grid-arrow-button::after {
-
-  transform: translateX(250px);
-  background-image: linear-gradient(
-    90deg,
-    var(--p-color-border-tertiary) 0%,
-    var(--p-color-border-tertiary) 60%,
-    transparent 100%
-  );
-  background-position: left;
-}
-
-.file-grid-arrow-button:hover::before {
-  opacity: 1;
-  animation: spread-gradient-left 0.5s ease-out forwards;
-}
-
-.file-grid-arrow-button:hover::after {
-  opacity: 1;
-  animation: spread-gradient-right 0.5s ease-out forwards;
+  cursor: pointer;
 }
 
 
 
-.file-grid-arrow-button.dragging {
-  cursor: grabbing;
-  opacity: 1;
-  transition: transform 0.1s linear;
-}
-
-/* Show the arrow button when hovering over the file grid */
-.file-grid-container.fade-out:hover .file-grid-arrow-button {
-  opacity: 1;
-}
 
 .file-grid-arrow-button svg {
-  transform: rotate(90deg);
   transition: transform 0.2s ease-out;
   fill: var(--p-color-icon-secondary) !important;
 }
 
 .file-grid-arrow-button:hover svg {
   fill: var(--p-color-icon-hover) !important;
+  transform: translateY(-2px);
 }
 
-/* Add a class for when the arrow button is being hovered */
-.file-grid-container.fade-out.arrow-hovered {
-  transform: translateY(320px);
-  opacity: 0.8;
+
+
+.file-grid-fade {
+  opacity: 1;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-@keyframes grid-slide-down {
-  from {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(370px);
-    opacity: 0.8;
-  }
+.file-grid-fade.grid-faded {
+  opacity: 0.2;
 }
+.file-grid-container.fade-out.arrow-hovered .file-grid-fade,
+.file-grid-fade.grid-hovered {
+  opacity: 0.6;
+  transform: translateY(-20px);
+}
+
 
 /* Disable hover interactions on file cards when grid is faded out */
 .file-grid-container.fade-out .file-container {
