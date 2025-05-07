@@ -64,7 +64,7 @@
 
 .magic-button:hover:before {
   filter: blur(3px);
-  opacity: 0.5;
+  opacity: 0.9;
 }
 
 .magic-button .Polaris-Button.Polaris-Button svg {
@@ -75,7 +75,7 @@
   position: relative;
   z-index: 1;
   background: var(--p-color-bg-surface) !important;
-  box-shadow: 0rem -0.0625rem 0rem 0rem rgba(181, 181, 181, 0.9) inset,
+  box-shadow: 0rem -0.0625rem 0rem 0rem rgba(0, 0, 0, 0.2) inset,
   0rem 0rem 0rem 0.0625rem rgba(0, 0, 0, 0.15) inset,
   0rem 0.03125rem 0rem 0.09375rem rgba(255, 255, 255, 0.05) inset !important
 }
@@ -185,8 +185,9 @@
 }
 
 .file-grid-arrow-button>span {
-  display: inline-block;
-  padding: 6px;
+  display: flex;
+  padding: 4px 12px 4px 6px;
+  gap: 2px;
 }
 
 
@@ -197,7 +198,7 @@
 
 .file-grid-arrow-button:hover svg {
   fill: var(--p-color-icon-hover) !important;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 
@@ -518,6 +519,10 @@
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+}
+
+.magic-button button {
+  box-shadow: 0 .25rem .375rem -.0625rem #0000000a, 0 .0625rem .125rem -.03125rem #0000000a, 0 .03125rem .03125rem #0000000f, 0 0 0 .0625rem #00000013;
 }
 
 /* Custom styles for the generate input field */

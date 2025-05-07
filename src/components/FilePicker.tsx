@@ -178,6 +178,14 @@ const RightIconButton = ({ children, icon, ...props }: RightIconButtonProps) => 
   </div>
 );
 
+// Move this OUTSIDE of FilePicker
+const GenerateImageButtonDefault = ({ onClick }: { onClick: () => void }) => (
+  <div className="generate-image-button magic-button" onClick={e => e.stopPropagation()}>
+    <Button onClick={onClick} icon={ImageMagicIcon}>Generate image</Button>
+  </div>
+);
+
+
 export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const [searchValue, setSearchValue] = useState('')
   const [actionsPopoverActive, setActionsPopoverActive] = useState(false)
@@ -713,12 +721,6 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   )
 
   // Two button variants
-  const GenerateImageButtonDefault = ({ onClick }: { onClick: () => void }) => (
-    <div className="generate-image-button magic-button">
-      <Button onClick={onClick} icon={ImageMagicIcon}>Generate image</Button>
-    </div>
-  )
-
   const GenerateImageButtonAnimated = ({ onClick }: { onClick: () => void }) => (
     <div
       className="generate-image-button"
@@ -783,7 +785,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
         }
       }}
     >
-      <Button onClick={onClick} icon={ImageMagicIcon}>Generate image</Button>
+      <Button onClick={onClick} icon={<span>🌟</span>}>Generate image</Button>
     </div>
   )
 
@@ -796,9 +798,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
               <Button>Upload files</Button>
               <Button icon={ChevronDownIcon} accessibilityLabel="Create folder" />
             </ButtonGroup>
-            <div className="generate-image-button magic-button" onClick={e => e.stopPropagation()}>
-              <GenerateImageButtonDefault onClick={handleGenerateClick} />
-            </div>
+            <GenerateImageButtonDefault onClick={handleGenerateClick} />
           </InlineStack>
           <Text as="p" variant="bodyMd" tone="subdued" alignment="center">
             Drag and drop images, videos, 3D models, and files
@@ -832,6 +832,10 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     // Default state
     return 'no-padding';
   };
+
+  useEffect(() => {
+    console.log('isGenerateMode', isGenerateMode);
+  }, [isGenerateMode]);
 
   return (
     <div className={`custom-modal ${isGenerateMode ? 'generate-mode' : ''}`}>
@@ -1124,7 +1128,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                     onMouseLeave={() => setIsArrowHovered(false)}
                   >
                     <Tooltip content="Return to files">
-                      <Icon source={ChevronUpIcon} />
+                      <Icon source={ChevronUpIcon} /> Back to files
                     </Tooltip>
                   </div>
                 )}
