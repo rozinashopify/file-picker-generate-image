@@ -182,9 +182,6 @@
   justify-content: center;
   pointer-events: auto;
   cursor: pointer;
-}
-
-.file-grid-arrow-button>span {
   display: flex;
   padding: 4px 12px 4px 6px;
   gap: 2px;
