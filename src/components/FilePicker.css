@@ -71,13 +71,12 @@
   fill: var(--p-color-icon-magic) !important;
 }
 
-.magic-button .Polaris-Button.Polaris-Button {
+.magic-button .Polaris-Button.Polaris-Button,
+.magic-button .Polaris-Button.Polaris-Button:hover {
   position: relative;
   z-index: 1;
   background: var(--p-color-bg-surface) !important;
-  box-shadow: 0rem -0.0625rem 0rem 0rem rgba(0, 0, 0, 0.2) inset,
-  0rem 0rem 0rem 0.0625rem rgba(0, 0, 0, 0.15) inset,
-  0rem 0.03125rem 0rem 0.09375rem rgba(255, 255, 255, 0.05) inset !important
+
 }
 
 .Polaris-DropZone .Polaris-ButtonGroup.Polaris-ButtonGroup--variantSegmented,
@@ -518,7 +517,8 @@
   margin: 0 auto;
 }
 
-.magic-button button {
+.magic-button button,
+.magic-button button:hover {
   box-shadow: 0 .25rem .375rem -.0625rem #0000000a, 0 .0625rem .125rem -.03125rem #0000000a, 0 .03125rem .03125rem #0000000f, 0 0 0 .0625rem #00000013;
 }
 
@@ -699,6 +699,12 @@
     z-index: 1;
     width: 620px;
 }
+
+/* Add styles for the loading and image containers */
+.image-container {
+  overflow: hidden;
+}
+
 
 .loading-container.animate, .image-container.animate {
     animation: height-expand 0.3s ease-in-out forwards;
