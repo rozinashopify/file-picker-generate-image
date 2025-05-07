@@ -1123,7 +1123,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                     onMouseEnter={() => setIsArrowHovered(true)}
                     onMouseLeave={() => setIsArrowHovered(false)}
                   >
-                    <Tooltip content="Exit generate mode">
+                    <Tooltip content="Return to files">
                       <Icon source={ChevronUpIcon} />
                     </Tooltip>
                   </div>
