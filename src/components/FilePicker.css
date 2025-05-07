@@ -63,8 +63,8 @@
 }
 
 .magic-button:hover:before {
-  filter: blur(2px);
-  opacity: 0.7;
+  filter: blur(3px);
+  opacity: 0.5;
 }
 
 .magic-button .Polaris-Button.Polaris-Button svg {
@@ -170,8 +170,7 @@
   top: 0px;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
-  height: 40px;
+  
   border-radius: var(--p-border-radius-full);
     background-color: var(--p-color-bg-surface);
     box-shadow: 0 .25rem .375rem -.0625rem #0000000a, 0 .0625rem .125rem -.03125rem #0000000a, 0 .03125rem .03125rem #0000000f, 0 0 0 .0625rem #00000013;
@@ -185,7 +184,10 @@
   cursor: pointer;
 }
 
-
+.file-grid-arrow-button>span {
+  display: inline-block;
+  padding: 6px;
+}
 
 
 .file-grid-arrow-button svg {
