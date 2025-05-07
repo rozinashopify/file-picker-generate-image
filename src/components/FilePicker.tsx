@@ -1127,9 +1127,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                     onMouseEnter={() => setIsArrowHovered(true)}
                     onMouseLeave={() => setIsArrowHovered(false)}
                   >
-                    <Tooltip content="Return to files">
                       <Icon source={ChevronUpIcon} /> Back to files
-                    </Tooltip>
                   </div>
                 )}
               </div>
