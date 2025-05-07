@@ -211,28 +211,12 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const [fromVariant, setFromVariant] = useState(false)
   const [currentAvatar, setCurrentAvatar] = useState(sidekickAvatarBlink)
   const [isFooterVisible, setIsFooterVisible] = useState(true)
-  const [isDragging, setIsDragging] = useState(false)
-  const [dragStartY, setDragStartY] = useState(0)
-  const [currentTranslateY, setCurrentTranslateY] = useState(0)
-  const [isFadeOut, setIsFadeOut] = useState(false)
   const [isGridHovered, setIsGridHovered] = useState(false)
   const dragHandleRef = useRef<HTMLDivElement>(null)
-  const dragThreshold = 100 // pixels to drag before triggering the close action
-  const [hasDragged, setHasDragged] = useState(false)
   const fileGridRef = useRef<HTMLDivElement>(null)
-  const [buttonVariant, setButtonVariant] = useState<'default' | 'animated'>('default')
 
   // On mount, read the query parameter
-  useEffect(() => {
-    // Use window.location.search directly (if not using react-router)
-    const params = new URLSearchParams(window.location.search)
-    const variant = params.get('button')
-    if (variant === 'animated' || variant === 'default') {
-      setButtonVariant(variant)
-    } else {
-      setButtonVariant('default')
-    }
-  }, [])
+  // Removed useEffect for buttonVariant
 
   // Measure section height when component mounts and when open changes
   useEffect(() => {
@@ -713,121 +697,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   // Handle arrow button hover
   const handleArrowHover = (isHovered: boolean) => {
     setIsArrowHovered(isHovered)
-    if (!isDragging) {
-      setIsFadeOut(isHovered)
-    }
   }
-
-  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
-    e.preventDefault()
-    setIsDragging(true)
-    setHasDragged(true)
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY
-    setDragStartY(clientY)
-    setCurrentTranslateY(isGenerateMode ? 370 : 0)
-  }
-
-  const handleArrowClick = (e: React.MouseEvent) => {
-    // Only trigger click if we haven't dragged
-    if (!hasDragged) {
-      handleBackClick()
-    }
-  }
-
-  // Add event listeners for mouse/touch events
-  useEffect(() => {
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (isDragging && fileGridRef.current) {
-        e.preventDefault()
-        const deltaY = e.clientY - dragStartY
-        const newTranslateY = Math.max(0, Math.min(370, currentTranslateY + deltaY))
-        
-        // Update file grid position
-        fileGridRef.current.style.transform = `translateY(${newTranslateY}px)`
-        setCurrentTranslateY(newTranslateY)
-        setDragStartY(e.clientY)
-        
-        // Update generate mode container elements
-        const generateModeContainer = document.querySelector('.generate-mode-container') as HTMLElement
-        if (generateModeContainer) {
-          const progress = newTranslateY / 370 // Calculate progress (0 to 1)
-          const moveUp = 40 * progress // Move up by 40px at most
-          const fadeOut = 1 - progress // Fade out as we drag
-          
-          generateModeContainer.classList.add('dragging')
-          // Set CSS variable for drag distance
-          generateModeContainer.style.setProperty('--drag-distance', `${moveUp}px`)
-          generateModeContainer.style.opacity = fadeOut.toString()
-        }
-      }
-    }
-
-    const handleGlobalTouchMove = (e: TouchEvent) => {
-      if (isDragging && fileGridRef.current) {
-        e.preventDefault()
-        const deltaY = e.touches[0].clientY - dragStartY
-        const newTranslateY = Math.max(0, Math.min(370, currentTranslateY + deltaY))
-        
-        // Update file grid position
-        fileGridRef.current.style.transform = `translateY(${newTranslateY}px)`
-        setCurrentTranslateY(newTranslateY)
-        setDragStartY(e.touches[0].clientY)
-        
-        // Update generate mode container elements
-        const generateModeContainer = document.querySelector('.generate-mode-container') as HTMLElement
-        if (generateModeContainer) {
-          const progress = newTranslateY / 370 // Calculate progress (0 to 1)
-          const moveUp = 40 * progress // Move up by 40px at most
-          const fadeOut = 1 - progress // Fade out as we drag
-          
-          generateModeContainer.classList.add('dragging')
-          // Set CSS variable for drag distance
-          generateModeContainer.style.setProperty('--drag-distance', `${moveUp}px`)
-          generateModeContainer.style.opacity = fadeOut.toString()
-        }
-      }
-    }
-
-    const handleGlobalMouseUp = () => {
-      if (isDragging) {
-        setIsDragging(false)
-        
-        // Reset generate mode container styles
-        const generateModeContainer = document.querySelector('.generate-mode-container') as HTMLElement
-        if (generateModeContainer) {
-          generateModeContainer.classList.remove('dragging')
-          generateModeContainer.style.removeProperty('--drag-distance')
-          generateModeContainer.style.opacity = ''
-        }
-        
-        if (currentTranslateY > 320) { // Halfway point
-          setIsFadeOut(true)
-          setCurrentTranslateY(370)
-        } else {
-          setIsFadeOut(false)
-          setCurrentTranslateY(0)
-          // If we're in generate mode and dragged up, go back to default mode
-          if (isGenerateMode) {
-            handleBackClick()
-          }
-        }
-      }
-    }
-
-    if (isDragging) {
-      window.addEventListener('mousemove', handleGlobalMouseMove)
-      window.addEventListener('mouseup', handleGlobalMouseUp)
-      window.addEventListener('touchmove', handleGlobalTouchMove)
-      window.addEventListener('touchend', handleGlobalMouseUp)
-    }
-
-    return () => {
-      window.removeEventListener('mousemove', handleGlobalMouseMove)
-      window.removeEventListener('mouseup', handleGlobalMouseUp)
-      window.removeEventListener('touchmove', handleGlobalTouchMove)
-      window.removeEventListener('touchend', handleGlobalMouseUp)
-    }
-  }, [isDragging, currentTranslateY, dragStartY])
 
   const actionBarMarkup = (
     <Box background="bg-surface">
@@ -935,13 +805,9 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
               <Button>Upload files</Button>
               <Button icon={ChevronDownIcon} accessibilityLabel="Create folder" />
             </ButtonGroup>
-            {buttonVariant === 'animated' ? (
-              <GenerateImageButtonAnimated onClick={handleGenerateClick} />
-            ) : (
-              <div className="generate-image-button magic-button" onClick={e => e.stopPropagation()}>
-                <GenerateImageButtonDefault onClick={handleGenerateClick} />
-              </div>
-            )}
+            <div className="generate-image-button magic-button" onClick={e => e.stopPropagation()}>
+              <GenerateImageButtonDefault onClick={handleGenerateClick} />
+            </div>
           </InlineStack>
           <Text as="p" variant="bodyMd" tone="subdued" alignment="center">
             Drag and drop images, videos, 3D models, and files
@@ -1236,26 +1102,18 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
               
               <div 
                 ref={fileGridRef}
-                className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''} ${isDragging ? 'dragging' : ''} ${isArrowHovered ? 'arrow-hovered' : ''}`}
+                className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''} ${isGridHovered ? 'arrow-hovered' : ''}`}
                 style={{ 
-                  transform: isDragging 
-                    ? `translateY(${currentTranslateY}px)` 
-                    : isGenerateMode 
-                      ? 'translateY(390px)' 
-                      : 'translateY(0px)', 
-                  opacity: isDragging 
-                    ? 0.8 
-                    : isGenerateMode 
-                      ? (isArrowHovered 
-                          ? 0.7 
-                          : isGridHovered 
-                            ? 0.4 
-                            : 0.2)
-                      : 1,
-                  transition: isDragging ? 'none' : 'transform 0.3s ease-out, opacity 0.3s ease-out'
+                  transform: isGenerateMode 
+                    ? 'translateY(390px)' 
+                    : 'translateY(0px)', 
+                  opacity: isGenerateMode 
+                    ? (isGridHovered 
+                        ? 0.4 
+                        : 0.2)
+                    : 1,
+                  transition: 'transform 0.3s ease-out, opacity 0.3s ease-out'
                 }}
-                onMouseDown={handleDragStart}
-                onTouchStart={handleDragStart}
                 onMouseEnter={() => setIsGridHovered(true)}
                 onMouseLeave={() => setIsGridHovered(false)}
               >
@@ -1272,10 +1130,8 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                 {isGenerateMode && (
                   <div 
                     ref={dragHandleRef}
-                    className={`file-grid-arrow-button ${isDragging ? 'dragging' : ''}`}
-                    onMouseEnter={() => handleArrowHover(true)}
-                    onMouseLeave={() => handleArrowHover(false)}
-                    onClick={handleArrowClick}
+                    className={`file-grid-arrow-button`}
+                    onClick={handleBackClick}
                   >
                     <Icon source={DragHandleIcon} />
                   </div>
