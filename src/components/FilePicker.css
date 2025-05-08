@@ -1095,3 +1095,99 @@
 .generate-mode-container.dragging.with-content.from-variant {
   transform: translateY(calc(-48px - var(--drag-distance, 0px))) !important;
 }
+
+.file-grid-arrow-button.alt {
+  background: none;
+  color: #fff;
+  border-radius: 24px;
+  font-weight: bold;
+  box-shadow: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  top: -12px;
+
+}
+
+.file-grid-arrow-button.alt:hover {
+  color: #222;
+}
+
+
+
+@keyframes spread-gradient-left {
+  0% {
+      background-size: 0% 100%;
+      background-position: right
+  }
+
+  to {
+      background-size: 100% 100%;
+      background-position: right
+  }
+}
+
+@keyframes spread-gradient-right {
+  0% {
+      background-size: 0% 100%;
+      background-position: left
+  }
+
+  to {
+      background-size: 100% 100%;
+      background-position: left
+  }
+}
+
+.file-grid-arrow-button.alt:before,.file-grid-arrow-button.alt:after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  width: 450px;
+  opacity: 0;
+  transition: opacity .2s ease-out;
+  z-index: 11;
+  background-repeat: no-repeat
+}
+
+.file-grid-arrow-button.alt:before {
+  transform: translate(-250px);
+  background-image: linear-gradient(270deg,var(--p-color-border-secondary) 0%,var(--p-color-border-secondary) 60%,transparent 100%);
+  background-position: right
+}
+
+.file-grid-arrow-button.alt:after {
+  transform: translate(250px);
+  background-image: linear-gradient(90deg,var(--p-color-border-secondary) 0%,var(--p-color-border-secondary) 60%,transparent 100%);
+  background-position: left
+}
+
+.file-grid-arrow-button.alt:hover:before,
+.file-grid-container.fade-out.alt-arrow-style:hover .file-grid-arrow-button.alt:before {
+  opacity: 1;
+  animation: spread-gradient-left .5s ease-out forwards
+}
+
+.file-grid-arrow-button.alt:hover:after,
+.file-grid-container.fade-out.alt-arrow-style:hover .file-grid-arrow-button.alt:after {
+  opacity: 1;
+  animation: spread-gradient-right .5s ease-out forwards
+}
+
+.file-grid-container.fade-out.arrow-hovered.alt-arrow-style .file-grid-fade,
+.file-grid-fade.grid-hovered.alt-arrow-style,
+.file-grid-container.fade-out.alt-arrow-style .file-grid-fade.grid-faded:hover {
+  opacity: 0.6;
+  transform: translateY(0px) !important;
+}
+
+.file-grid-arrow-button.alt svg {
+  transition: transform 0.2s ease-out;
+  fill: var(--p-color-icon-secondary) !important;
+}
+
+.file-grid-arrow-button.alt:hover svg,
+.file-grid-container.fade-out.alt-arrow-style:hover .file-grid-arrow-button.alt svg {
+  fill: var(--p-color-icon-hover) !important;
+  transform: translateY(-2px);
+}

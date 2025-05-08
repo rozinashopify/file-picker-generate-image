@@ -187,6 +187,10 @@ const GenerateImageButtonDefault = ({ onClick }: { onClick: () => void }) => (
 
 
 export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
+  // Read the URL parameter for arrow style
+  const searchParams = new URLSearchParams(window.location.search);
+  const arrowStyle = searchParams.get('arrowStyle'); // e.g., 'alt' or null
+
   const [searchValue, setSearchValue] = useState('')
   const [actionsPopoverActive, setActionsPopoverActive] = useState(false)
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
@@ -1097,13 +1101,15 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
               
               <div 
                 ref={fileGridRef}
-                className={`file-grid-container ${isGenerateMode ? 'fade-out' : ''} ${isArrowHovered ? 'arrow-hovered' : ''}`}
-                style={{ 
+                className={`file-grid-container${isGenerateMode ? ' fade-out' : ''}${isArrowHovered ? ' arrow-hovered' : ''}${arrowStyle === 'alt' ? ' alt-arrow-style' : ''}`}
+                style={{
                   transform: isGenerateMode 
                     ? 'translateY(390px)' 
                     : 'translateY(0px)', 
-                  transition: 'transform 0.3s ease-out, opacity 0.3s ease-out'
+                  transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
+                  ...(arrowStyle === 'alt' && isGenerateMode ? { cursor: 'pointer' } : {})
                 }}
+                {...(arrowStyle === 'alt' && isGenerateMode ? { onClick: handleBackClick } : {})}
               >
                 <div
                   className={`file-grid-fade${isGenerateMode ? (isGridHovered ? ' grid-hovered' : ' grid-faded') : ''}`}
@@ -1122,12 +1128,13 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                 {isGenerateMode && (
                   <div 
                     ref={dragHandleRef}
-                    className={`file-grid-arrow-button`}
-                    onClick={handleBackClick}
+                    className={`file-grid-arrow-button${arrowStyle === 'alt' ? ' alt' : ''}`}
+                    onClick={arrowStyle === 'alt' ? (e) => { e.stopPropagation(); handleBackClick(); } : handleBackClick}
                     onMouseEnter={() => setIsArrowHovered(true)}
                     onMouseLeave={() => setIsArrowHovered(false)}
                   >
-                      <Icon source={ChevronUpIcon} /> Back to files
+                      <Icon source={ChevronUpIcon} />
+                      {arrowStyle !== 'alt' && ' Back to files'}
                   </div>
                 )}
               </div>
