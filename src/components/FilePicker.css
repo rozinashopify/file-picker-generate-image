@@ -45,7 +45,7 @@
   bottom: 0 ;
   left: -1px;
   border-radius: 9px;
-  filter: blur(1px);
+  filter: blur(2px);
   background: conic-gradient(
     from var(--angle) at 50% 50%,
     #a0cbff 0deg,
@@ -77,6 +77,11 @@
   z-index: 1;
   background: var(--p-color-bg-surface) !important;
 
+}
+
+.Polaris-DropZone,
+.Polaris-DropZone:hover {
+  background: var(--p-color-bg-surface) !important;
 }
 
 .Polaris-DropZone .Polaris-ButtonGroup.Polaris-ButtonGroup--variantSegmented,
@@ -1105,7 +1110,7 @@
   padding: 10px;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
-  top: -12px;
+  top: -20px;
 
 }
 
@@ -1144,7 +1149,7 @@
   position: absolute;
   height: 1px;
   width: 450px;
-  opacity: 0;
+  opacity: 1;
   transition: opacity .2s ease-out;
   z-index: 11;
   background-repeat: no-repeat
@@ -1153,25 +1158,29 @@
 .file-grid-arrow-button.alt:before {
   transform: translate(-250px);
   background-image: linear-gradient(270deg,var(--p-color-border-secondary) 0%,var(--p-color-border-secondary) 60%,transparent 100%);
-  background-position: right
+  background-position: right;
+  animation: spread-gradient-left .5s ease-out forwards;
 }
 
 .file-grid-arrow-button.alt:after {
   transform: translate(250px);
   background-image: linear-gradient(90deg,var(--p-color-border-secondary) 0%,var(--p-color-border-secondary) 60%,transparent 100%);
-  background-position: left
+  background-position: left;
+  animation: spread-gradient-right .5s ease-out forwards
 }
 
 .file-grid-arrow-button.alt:hover:before,
 .file-grid-container.fade-out.alt-arrow-style:hover .file-grid-arrow-button.alt:before {
+  background-image: linear-gradient(270deg,var(--p-color-border-tertiary) 0%,var(--p-color-border-tertiary) 60%,transparent 100%);
   opacity: 1;
-  animation: spread-gradient-left .5s ease-out forwards
+  
 }
 
 .file-grid-arrow-button.alt:hover:after,
 .file-grid-container.fade-out.alt-arrow-style:hover .file-grid-arrow-button.alt:after {
   opacity: 1;
-  animation: spread-gradient-right .5s ease-out forwards
+  background-image: linear-gradient(90deg,var(--p-color-border-tertiary) 0%,var(--p-color-border-tertiary) 60%,transparent 100%);
+  
 }
 
 .file-grid-container.fade-out.arrow-hovered.alt-arrow-style .file-grid-fade,
