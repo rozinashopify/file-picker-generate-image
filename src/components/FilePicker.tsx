@@ -10,6 +10,7 @@ import {
   Text,
   Icon,
   Tooltip,
+  Spinner,
 } from '@shopify/polaris'
 import {
   ChevronDownIcon,
@@ -217,6 +218,8 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   const [isGridHovered, setIsGridHovered] = useState(false)
   const dragHandleRef = useRef<HTMLDivElement>(null)
   const fileGridRef = useRef<HTMLDivElement>(null)
+  const [isReporting, setIsReporting] = useState(false)
+  const [isReported, setIsReported] = useState(false)
 
   // On mount, read the query parameter
   // Removed useEffect for buttonVariant
@@ -276,6 +279,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     setIsLoading(false)
     setIsCollapsing(false)
     setIsFooterVisible(false)
+    setIsReported(false)
     
     // Find the modal footer and add a class to it
     setTimeout(() => {
@@ -318,6 +322,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
 
   const handleBadgeClick = (badgeText: string) => {
     setPromptValue(badgeText)
+    setIsReported(false)
     
     // If there's already an image, collapse it first
     if (generatedImage) {
@@ -352,6 +357,8 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
 
   const handleGenerateButtonClick = () => {
     console.log('handleGenerateButtonClick called with originalImage:', originalImage);
+    
+    setIsReported(false)
     
     // If there's already an image, collapse it first
     if (generatedImage) {
@@ -406,8 +413,17 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
   }
 
   const handleReportImage = () => {
-    // Implement report functionality
-    console.log('Report image clicked')
+    setIsReporting(true)
+    setTimeout(() => {
+      setIsReporting(false)
+      setIsReported(true)
+      setGeneratedImage(null)
+      setPromptValue("")
+      setIsLoading(false)
+      setIsCollapsing(false)
+      setOriginalImage(null)
+      setFromVariant(false)
+    }, 800)
   }
 
   const handleTryAgain = () => {
@@ -533,6 +549,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
 
   const handleGenerateVariation = (file: File) => {
     console.log('handleGenerateVariation called with file:', file);
+    setIsReported(false)
     setFromVariant(true)
     setIsGenerateMode(true)
     setOriginalImage(file)
@@ -817,22 +834,18 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
     if (isCollapsing) {
       return 'collapsing';
     }
-    
     // Initial state with no content
-    if (!isLoading && !generatedImage && !originalImage && !fromVariant) {
+    if (!isLoading && !generatedImage && !originalImage && !fromVariant && !isReported) {
       return 'animate-padding';
     }
-    
-    // State with content
-    if (isLoading || generatedImage || originalImage) {
+    // State with content (including reported)
+    if (isLoading || generatedImage || originalImage || isReported) {
       return fromVariant ? 'with-content from-variant' : 'with-content';
     }
-    
     // State without content but with variant
     if (fromVariant) {
       return 'from-variant';
     }
-    
     // Default state
     return 'no-padding';
   };
@@ -897,6 +910,12 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                           </BlockStack>
                         </Box>
                       </div>
+                    ) : isReported ? (
+                      <div className="error-container">
+                        <Text as="p" variant="bodyMd" alignment="center" tone="subdued">
+                          This image has been hidden because you reported harmful or inappropriate imagery.
+                        </Text>
+                      </div>
                     ) : generatedImage ? (
                       <div className={`image-container ${generatedImage ? 'animate' : ''} ${isCollapsing ? 'collapse' : ''}`}>
                         <Box>
@@ -910,15 +929,16 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
                               }} 
                             />
-
                             <div style={{ position: 'absolute', top: '16px', right: '16px' }}>
                               <InlineStack gap="300">
-                                <Tooltip content="Report image">
+                                <Tooltip content="Report for harmful or inappropriate content">
                                   <div className="image-action-button">
                                     <Button
-                                      icon={FlagIcon}
+                                      icon={isReporting ? <Spinner size="small" accessibilityLabel="Reporting" /> : FlagIcon}
                                       variant="tertiary"
                                       size="medium"
+                                      onClick={handleReportImage}
+                                      disabled={isReporting}
                                     />
                                   </div>
                                 </Tooltip>
