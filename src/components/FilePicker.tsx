@@ -931,7 +931,7 @@ export function FilePicker({ open, onClose, onFileSelect }: FilePickerProps) {
                             />
                             <div style={{ position: 'absolute', top: '16px', right: '16px' }}>
                               <InlineStack gap="300">
-                                <Tooltip content="Report for harmful or inappropriate content">
+                                <Tooltip content="Report for harmful or inappropriate content" width='120px'>
                                   <div className="image-action-button">
                                     <Button
                                       icon={isReporting ? <Spinner size="small" accessibilityLabel="Reporting" /> : FlagIcon}

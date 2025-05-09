@@ -420,7 +420,7 @@
     position: relative;
     z-index: 1;
     padding: var(--p-space-200) var(--p-space-200) var(--p-space-200) var(--p-space-300);
-    border-radius: var(--p-border-radius-200);
+    border-radius: var(--p-border-radius-300);
     box-shadow: 0px 100px 80px 0px rgba(0, 0, 0, 0.07), 0px 41.778px 33.422px 0px rgba(0, 0, 0, 0.05), 0px 22.336px 17.869px 0px rgba(0, 0, 0, 0.04), 0px 12.522px 10.017px 0px rgba(0, 0, 0, 0.04), 0px 6.65px 5.32px 0px rgba(0, 0, 0, 0.03), 0px 2.767px 2.214px 0px rgba(0, 0, 0, 0.02);
 }
 
@@ -711,6 +711,26 @@
 }
 
 
+.error-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: var(--p-border-radius-200);
+    height: 414px;
+    z-index: 1;
+    width: 620px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--p-color-bg-surface-secondary);
+}
+
+.Polaris-Spinner svg {
+  width: 16px;
+  height: 16px;
+}
+
 .loading-container.animate, .image-container.animate {
     animation: height-expand 0.3s ease-in-out forwards;
 }
@@ -734,6 +754,15 @@
 
 .image-action-button .Polaris-Button.Polaris-Button svg {
     fill: var(--p-color-icon-inverse) !important;
+}
+
+.image-action-button .Polaris-Button.Polaris-Button .Polaris-Spinner svg {
+  width: 16px;
+}
+
+.image-action-button .Polaris-Button.Polaris-Button .Polaris-Spinner {
+  display: block;
+  transform: translateY(2px)
 }
 
 .generate-button-container, .stop-button-container {
