@@ -1,4 +1,4 @@
-import { LegacyCard, Grid, Text, Thumbnail, Checkbox, Button, Box, BlockStack, InlineStack, Tooltip } from '@shopify/polaris'
+import { LegacyCard, Grid, Text, Thumbnail, Checkbox, Button, Box, BlockStack } from '@shopify/polaris'
 import { ImageMagicIcon } from '@shopify/polaris-icons'
 import { useState, useEffect } from 'react'
 import './FileGrid.css'
@@ -67,6 +67,9 @@ export function FileGrid({
 }: FileGridProps) {
   const [newFiles, setNewFiles] = useState<Set<string>>(new Set())
 
+  // Check for hideVariant URL parameter
+  const hideVariant = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('hideVariant') === '1';
+
   useEffect(() => {
     if (newFilesToHighlight.length > 0) {
       setNewFiles(new Set(newFilesToHighlight))
@@ -89,14 +92,14 @@ export function FileGrid({
           <Box>
             <div className={`file-container ${newFiles.has(file.id) ? 'highlight-new' : ''}`}>
               <div className="file-hover-actions">
-                <Tooltip content="Generate variation">
-                  <Button
-                    icon={ImageMagicIcon}
-                    onClick={() => onGenerateVariation?.(file)}
-                    variant="tertiary"
-                    size="slim"
-                  />
-                </Tooltip>
+                  {!hideVariant && (
+                    <Button
+                      icon={ImageMagicIcon}
+                      onClick={() => onGenerateVariation?.(file)}
+                      variant="tertiary"
+                      size="slim"
+                    />
+                  )}
               </div>
               <Box padding="400">
                 <BlockStack gap="200">
